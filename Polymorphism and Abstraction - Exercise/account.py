@@ -34,6 +34,25 @@ class Account:
     def __getitem__(self, idx):
         return self._transactions[idx]
 
+    def __reversed__(self):
+        return self._transactions[::-1]
+
+    def __gt__(self, other):
+        return self.balance > other.balance
+
+    def __eq__(self, other):
+        return self.balance == other.balance
+
+    def __ge__(self, other):
+        return self.balance >= other.balance
+
+    def __add__(self, other):
+        result = Account(f"{self.owner}&{other.owner}", self.amount + other.amount)
+        for tx in self:
+            result.add_transaction(tx)
+        for tx in other:
+            result.add_transaction(tx)
+        return result
 
 acc = Account('bob', 10)
 acc2 = Account('john')
