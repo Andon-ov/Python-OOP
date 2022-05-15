@@ -19,9 +19,11 @@
 #     def remove_ingredient(self, ingredient: str, quantity: int, price_per_quantity: float):
 #         if self.ordered:
 #             return f"Pizza {self.name} already prepared, and we can't make any changes!"
+#
 #         if ingredient not in self.ingredients:
 #             return f"Wrong ingredient selected! We do not use {ingredient} in {self.name}!"
-#         elif self.ingredients[ingredient] < quantity:
+#
+#         elif quantity> self.ingredients[ingredient]:
 #             return f"Please check again the desired quantity of {ingredient}!"
 #
 #         self.ingredients[ingredient] -= quantity
@@ -29,9 +31,9 @@
 #
 #     def make_order(self):
 #         self.ordered = True
-#         data = {f"{key}: {value}" for key, value in self.ingredients.items()}
+#         data = [f"{key}: {value}" for key, value in self.ingredients.items()]
 #         return f"You've ordered pizza {self.name} prepared with {', '.join(data)} and the price will be {self.price}lv."
-# Todo 91/100
+
 
 class PizzaDelivery:
     def __init__(self, name, price, ingredients: dict, ordered=False):
@@ -70,7 +72,7 @@ class PizzaDelivery:
 
     def make_order(self):
         self.ordered = True
-        print_ingredients = {f"{key}: {value}" for key, value in self.ingredients.items()}
+        print_ingredients = [f"{key}: {value}" for key, value in self.ingredients.items()]
         return f"You've ordered pizza {self.name} prepared with {', '.join(print_ingredients)} and the price will be {self.price}lv."
 
 
@@ -84,4 +86,4 @@ class PizzaDelivery:
 # print(margarita.make_order())
 # print(margarita.add_extra('cheese', 1, 1))
 
-# ToDo 82/100
+
