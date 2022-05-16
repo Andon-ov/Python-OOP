@@ -7,3 +7,4 @@ print(player.player_info())
 guild = Guild("UGT")
 print(guild.assign_player(player))
 print(guild.guild_info())
+# ToDo 91/100
