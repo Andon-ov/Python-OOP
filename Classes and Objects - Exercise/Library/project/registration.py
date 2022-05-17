@@ -45,3 +45,4 @@ class Registration:
     # /changes the username with the new one provided and returns the message
     # /"Username successfully changed to: {new_username} for user id: {user_id}".
     # /Changes his username in the rented_books dictionary as well (if present).
+#

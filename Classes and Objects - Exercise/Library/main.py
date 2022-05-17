@@ -32,4 +32,5 @@ library.return_book('J.K.Rowling', 'The Deathly Hallows', user)
 print(library.books_available)
 print(library.rented_books)
 print(user.books)
-#ToDo 92/100
+# ToDo 92/100
+#
