@@ -32,9 +32,8 @@ class Registration:
                 return "Please check again the provided username " \
                        "- it should be different than the username used so far!"
             user.username = new_username
-            return f"Username successfully changed to: {new_username} for user id: {user_id}"
+            return f"Username successfully changed to: {new_username} for user id: {user_id}"  # userid
         # /Changes his username in the rented_books dictionary as well (if present).
-
 
     # If the new username is the same for this id, returns the following message
     # /"Please check again the provided username - it should be different than the username used so far!".
