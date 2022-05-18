@@ -4,3 +4,4 @@ from project.dog import Dog
 dog = Dog()
 cat = Cat()
 print(dog.eat())
+print(cat.eat())

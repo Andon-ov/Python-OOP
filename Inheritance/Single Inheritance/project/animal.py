@@ -1,3 +1,10 @@
+# class Animal:
+#     def eat(self):
+#         return "eating…"
+
+
 class Animal:
-    def eat(self):
+
+    @staticmethod
+    def eat():
         return "eating…"

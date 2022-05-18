@@ -1,3 +1,34 @@
+# class Vehicle:
+#     def move(self):
+#         return "moving..."
+
+
+
+
+
+
+
+
 class Vehicle:
-    def move(self):
-        return "moving..."
+    @staticmethod
+    def move(): return "moving..."
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

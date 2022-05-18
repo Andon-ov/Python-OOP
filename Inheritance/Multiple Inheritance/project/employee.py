@@ -1,3 +1,9 @@
+# class Employee:
+#     def get_fired(self):
+#         return "fired..."
+
+
 class Employee:
-    def get_fired(self):
+    @staticmethod
+    def get_fired():
         return "fired..."

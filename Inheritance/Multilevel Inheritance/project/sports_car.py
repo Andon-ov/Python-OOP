@@ -1,6 +1,31 @@
+# from project.car import Car
+#
+#
+# class SportsCar(Car):
+#     def race(self):
+#         return "racing..."
 from project.car import Car
 
 
 class SportsCar(Car):
-    def race(self):
-        return "racing..."
+    @staticmethod
+    def race(): return "racing..."
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

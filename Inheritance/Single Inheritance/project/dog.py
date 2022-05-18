@@ -1,6 +1,14 @@
+# from project.animal import Animal
+#
+#
+# class Dog(Animal):
+#     def bark(self):
+#         return "barking…"
 from project.animal import Animal
 
 
 class Dog(Animal):
-    def bark(self):
+
+    @staticmethod
+    def bark():
         return "barking…"

@@ -1,3 +1,9 @@
+# class Person:
+#     def sleep(self):
+#         return "sleeping..."
+
+
 class Person:
-    def sleep(self):
+    @staticmethod
+    def sleep():
         return "sleeping..."
