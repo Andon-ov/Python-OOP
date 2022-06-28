@@ -4,14 +4,14 @@ class Hero:
         self.health = health
 
     def defend(self, damage):
-        if self.health > 0:
+        if self.health > damage:
             self.health -= damage
-            if self.health <= 0:
-                self.health = 0
-                return f"{self.name} was defeated"
+        else:
+            self.health = 0
+            return f"{self.name} was defeated"
 
-    def heal(self, amount):
-        self.health += amount
+    def heal(self, new_health):
+        self.health += new_health
 
 
 hero = Hero("Peter", 100)
@@ -19,3 +19,18 @@ print(hero.defend(50))
 hero.heal(50)
 print(hero.defend(99))
 print(hero.defend(1))
+
+# class Hero:
+#     def __init__(self, name, health):
+#         self.name = name
+#         self.health = health
+#
+#     def defend(self, damage):
+#         if self.health > 0:
+#             self.health -= damage
+#             if self.health <= 0:
+#                 self.health = 0
+#                 return f"{self.name} was defeated"
+#
+#     def heal(self, amount):
+#         self.health += amount
