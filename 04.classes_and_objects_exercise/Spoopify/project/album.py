@@ -1,6 +1,44 @@
 from project.song import Song
-#
-#
+
+
+class Album:
+    def __init__(self, name: str, *args):  # upon initialization and might receive one or more songs
+        self.name = name
+        self.published = False
+        self.songs = [x for x in args]
+
+    def add_song(self, song: Song):
+        if self.published:
+            return "Cannot add songs. Album is published."
+        if song.single:
+            return f"Cannot add {song.name}. It's a single"
+        if song in self.songs:
+            return "Song is already in the album."
+        self.songs.append(song)
+        return f"Song {song.name} has been added to the album {self.name}."
+
+    def remove_song(self, song_name: str):
+        if self.published:
+            return "Cannot remove songs. Album is published."
+        for i in self.songs:
+            if i.name == song_name:
+                self.songs.remove(i)
+                return f"Removed song {song_name} from album {self.name}."
+        return "Song is not in the album."
+
+    def publish(self):
+        if self.published:
+            return f"Album {self.name} is already published."
+        self.published = True
+        return f"Album {self.name} has been published."
+
+    def details(self):
+        result = f'Album {self.name}' + '\n'
+        for i in self.songs:
+            result += f'== {i.get_info()}' + '\n'
+
+        return result
+
 # class Album:
 #     def __init__(self, name, *songs):
 #         self.songs = [x for x in songs]
@@ -45,45 +83,45 @@ from project.song import Song
 #         self.published = True
 #         return f"Album {self.name} has been published."
 
-class Album:
-    def __init__(self, name, *songs):
-        self.name = name
-        self.published = False
-        self.songs = [x for x in songs]
-
-    def add_song(self, second_song:Song):
-        if self.published is True:
-            return "Cannot add songs. Album is published."
-
-        if second_song in self.songs:
-            return "Song is already in the album."
-
-        if second_song.single is True:
-            return f"Cannot add {second_song.name}. It's a single"
-
-        self.songs.append(second_song)
-        return f"Song {second_song.name} has been added to the album {self.name}."
-
-    def remove_song(self, song_name: str):
-        if self.published is True:
-            return "Cannot remove songs. Album is published."
-
-        for song in self.songs:
-            if song.name == song_name:
-                self.songs.remove(song)
-                return f"Removed song {song_name} from album {self.name}."
-        return "Song is not in the album."
-
-    def publish(self):
-        if self.published is True:
-            return f"Album {self.name} is already published."
-        self.published = True
-        return f"Album {self.name} has been published."
-
-    def details(self):
-        data = f"Album {self.name}"
-        for song in self.songs:
-            data += "\n"
-            data += f"== {song.get_info()}"
-        data += "\n"
-        return data
+# class Album:
+#     def __init__(self, name, *songs):
+#         self.name = name
+#         self.published = False
+#         self.songs = [x for x in songs]
+#
+#     def add_song(self, second_song:Song):
+#         if self.published is True:
+#             return "Cannot add songs. Album is published."
+#
+#         if second_song in self.songs:
+#             return "Song is already in the album."
+#
+#         if second_song.single is True:
+#             return f"Cannot add {second_song.name}. It's a single"
+#
+#         self.songs.append(second_song)
+#         return f"Song {second_song.name} has been added to the album {self.name}."
+#
+#     def remove_song(self, song_name: str):
+#         if self.published is True:
+#             return "Cannot remove songs. Album is published."
+#
+#         for song in self.songs:
+#             if song.name == song_name:
+#                 self.songs.remove(song)
+#                 return f"Removed song {song_name} from album {self.name}."
+#         return "Song is not in the album."
+#
+#     def publish(self):
+#         if self.published is True:
+#             return f"Album {self.name} is already published."
+#         self.published = True
+#         return f"Album {self.name} has been published."
+#
+#     def details(self):
+#         data = f"Album {self.name}"
+#         for song in self.songs:
+#             data += "\n"
+#             data += f"== {song.get_info()}"
+#         data += "\n"
+#         return data
