@@ -2,6 +2,7 @@ from project.library import Library
 from project.registration import Registration
 from project.user import User
 
+
 user = User(12, 'Peter')
 library = Library()
 registration = Registration()
@@ -32,5 +33,3 @@ library.return_book('J.K.Rowling', 'The Deathly Hallows', user)
 print(library.books_available)
 print(library.rented_books)
 print(user.books)
-# ToDo 92/100
-#
