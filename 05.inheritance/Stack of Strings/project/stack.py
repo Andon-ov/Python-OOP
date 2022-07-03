@@ -1,4 +1,51 @@
-from typing import List
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# from typing import List
 
 #
 # class Stack:
@@ -19,25 +66,25 @@ from typing import List
 #
 #     def __str__(self):
 #         return "[" + ", ".join(reversed(self.data)) + "]"
-class Stack:
-    def __init__(self):
-        self.data = []
-
-    def push(self, element):
-        self.data.append(element)
-
-    def pop(self):
-        return self.data.pop()
-
-    def top(self):
-        return self.data[-1]
-
-    def is_empty(self):
-        if not self.data:
-            return True
-        return False
-
-    def __str__(self):
-        return f"[{', '.join([x for x in self.data])}]"
+# class Stack:
+#     def __init__(self):
+#         self.data = []
+#
+#     def push(self, element):
+#         self.data.append(element)
+#
+#     def pop(self):
+#         return self.data.pop()
+#
+#     def top(self):
+#         return self.data[-1]
+#
+#     def is_empty(self):
+#         if not self.data:
+#             return True
+#         return False
+#
+#     def __str__(self):
+#         return f"[{', '.join([x for x in self.data])}]"
 
 
