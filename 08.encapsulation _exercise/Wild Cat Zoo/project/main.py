@@ -1,21 +1,3 @@
-from project.caretaker import Caretaker
-from project.cheetah import Cheetah
-from project.keeper import Keeper
-from project.lion import Lion
-from project.tiger import Tiger
-from project.vet import Vet
-from project.zoo import Zoo
-
-
-# zoo = Zoo("Zootopia", 3000, 5, 8)
-# lion = Lion("Gosho", "mail", 3)
-# tosho = Keeper("tosho", 22,2800)
-# print(zoo.add_animal(lion,100))
-# print(zoo.hire_worker(tosho))
-# print(zoo.pay_workers())
-# print(zoo.tend_animals())
-# print(zoo.profit(1000))
-# print(zoo.__dict__)
 
 from project.caretaker import Caretaker
 from project.cheetah import Cheetah
