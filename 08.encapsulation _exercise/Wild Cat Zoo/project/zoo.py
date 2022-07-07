@@ -33,7 +33,6 @@
 
 
 
-
 # from project.animal import Animal
 # from project.worker import Worker
 #
