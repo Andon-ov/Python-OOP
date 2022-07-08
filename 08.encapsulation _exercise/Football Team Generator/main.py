@@ -23,4 +23,3 @@ print(t.add_player(p))
 print("Teams players:", len(t._Team__players))
 print(t.remove_player("Pall"))
 print(t.remove_player("Pall"))
-
