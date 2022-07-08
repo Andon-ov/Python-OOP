@@ -1,34 +1,33 @@
-from math import floor
-
-
 class Integer:
     def __init__(self, value):
         self.value = value
 
     @classmethod
     def from_float(cls, float_value):
-        if isinstance(float_value, float):
-            return cls(floor(float_value))
-        return "value is not a float"
+        if not isinstance(float_value, float):
+            return "value is not a float"
+
+        return cls(int(float_value))
 
     @classmethod
     def from_roman(cls, value):
         roman = {'I': 1, 'V': 5, 'X': 10, 'L': 50, 'C': 100, 'D': 500, 'M': 1000}
-        summ= 0
-        for i in range(len(value)-1,-1,-1):
+        summ = 0
+        for i in range(len(value) - 1, -1, -1):
             num = roman[value[i]]
-            if 3*num < summ:
-                summ = summ-num
+            if 3 * num < summ:
+                summ = summ - num
             else:
-                summ = summ+num
-        value = summ
-        return cls(value)
+                summ = summ + num
+
+        return cls(summ)
 
     @classmethod
     def from_string(cls, value):
-        if isinstance(value, str):
-            return cls(int(value))
-        return "wrong type"
+        if not isinstance(value, str):
+            return "wrong type"
+        return cls(int(value))
+
 
 
 first_num = Integer(10)
