@@ -1,26 +1,14 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+class Dough:
+    def __init__(self, flour_type: str, baking_technique: str, weight: float):
+        self.flour_type = flour_type
+        self.baking_technique = baking_technique
+        self.weight = weight
+# • flour_type: str - if the flour type is an empty string, raise a ValueError with the message
+# "The flour type cannot be an empty string"
+# • baking_technique: str - if the technique is an empty string, raise a ValueError with the message
+# "The baking technique cannot be an empty string"
+# • weight: float - if the weight is 0 or less, raise a ValueError with the message
+# "The weight cannot be less or equal to zero"
 
 
 

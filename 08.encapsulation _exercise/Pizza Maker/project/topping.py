@@ -1,4 +1,10 @@
-
+class Topping:
+    def __init__(self,topping_type: str,weight: float):
+        self.topping_type = topping_type
+        self.weight = weight
+#     • topping_type: str - if the topping is an empty string, raise a ValueError with the message "The topping type cannot be an empty string"
+#     • weight: float - if the weight is 0 or less, raise a ValueError with the message "The weight cannot be less or equal to zero"
+# Hint: Use Getters and Setters.
 
 
 
