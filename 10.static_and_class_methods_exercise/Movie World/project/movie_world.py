@@ -27,25 +27,31 @@ class MovieWorld:
         if len(self.dvds) < MovieWorld.dvd_capacity():
             self.dvds.append(dvd)
 
-    def rent_dvd(self, customer_id: int, dvd_id: int):
-        customer = []
-        dvd = []
-
+    def __found_customer(self, customer_id):
         for i in self.customers:
             if i.id == customer_id:
-                customer.append(i)
-                for j in i.rented_dvds:
-                    if j.id == dvd_id:
-                        dvd.append(j)
-                        return f"{i.name} has already rented {j.name}"
+                return i
 
-        if dvd[0].age_restriction > customer[0].age:
-            return f"{customer[0].name} should be at least {dvd[0].age_restriction} to rent this movie"
+    def __found_dvd(self, dvd_id):
+        for i in self.dvds:
+            if i.id == dvd_id:
+                return i
 
-        if dvd[0].is_rented:
+    def rent_dvd(self, customer_id: int, dvd_id: int):
+
+        customer = self.__found_customer(customer_id)
+        dvd = self.__found_dvd(dvd_id)
+
+        if dvd in customer.rented_dvds:
+            return f"{dvd.name} has already rented {customer.name}"
+
+        if dvd.age_restriction > customer.age:
+            return f"{customer.name} should be at least {dvd.age_restriction} to rent this movie"
+
+        if dvd.is_rented:
             return "DVD is already rented"
-        customer[0].rented_dvds.append(dvd[0])
-        return f"{customer[0].name} has successfully rented {dvd[0].name}"
+        customer.rented_dvds.append(dvd)
+        return f"{customer.name} has successfully rented {dvd.name}"
 
     def return_dvd(self, customer_id, dvd_id):
         for i in self.customers:
@@ -56,10 +62,4 @@ class MovieWorld:
         return "{customer_name} does not have that DVD"
 
     def __repr__(self):
-        result = ''
-        for i in self.customers:
-            result += i.Customer() + '\n'
-        for j in self.dvds:
-            result += j.Dvd() + '\n'
-        return result
-
+        return '\n'.join([repr(x) for x in self.customers]) + '\n' + '\n'.join([repr(x) for x in self.dvds])
