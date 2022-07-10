@@ -1,43 +1,31 @@
+class PhotoAlbum:
+    def __init__(self, pages):
+        self.pages = pages
+        self.photos = []
 
+    # Each page can contain only 4 photos.
+    @classmethod
+    def from_photos_count(cls, photos_count: int):
+        pass
 
+    def add_photo(self, label: str):
+        pass
+        # – adds the photo in the first possible page and slot and return
+        # "{label} photo added successfully on page {page_number(starting from 1)} slot {slot_number(starting from 1)}".
+        # If there are no free slots left, return "No more free slots"
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    def display(self):
+        pass
+        # For example, if we have 1 page and 2 photos:
+        # -----------
+        # [] []
+        # -----------
+        # and if we have 2 empty pages:
+        # -----------
+        #
+        # -----------
+        #
+        # -----------
 
 # from math import ceil
 #
