@@ -11,33 +11,6 @@ class Topic:
     def __repr__(self):
         return f"Topic {self.id}: {self.topic} in {self.storage_folder}"
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 # class Topic:
 #     def __init__(self, id: int, topic: str, storage_folder: str):
 #         self.id = id

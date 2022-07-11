@@ -9,32 +9,6 @@ class Category:
     def __repr__(self):
         return f"Category {self.id}: {self.name}"
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 # class Category:
 #     def __init__(self, id: int, name: str):
 #         self.id = id

@@ -21,37 +21,57 @@ class Storage:
         if document not in self.documents:
             self.documents.append(document)
 
+    def __found_category(self, category_id):
+        for i in self.categories:
+            if i.id == category_id:
+                return i
+
+    def __found_topic(self, topic_id):
+        for i in self.topics:
+            if i.id == topic_id:
+                return i
+
+    def __found_document(self, document_id):
+        for i in self.documents:
+            if i.id == document_id:
+                return i
+
     def edit_category(self, category_id: int, new_name: str):
-        pass
-        # – edit the name of the category with the provided id
+        category = self.__found_category(category_id)
+        category.name = new_name
 
     def edit_topic(self, topic_id: int, new_topic: str, new_storage_folder: str):
-        pass
-        # – edit the topic with the given id
+        topic = self.__found_topic(topic_id)
+        topic.topic = new_topic
+        topic.storage_folder = new_storage_folder
 
     def edit_document(self, document_id: int, new_file_name: str):
-        pass
-        # – edit the document with the given id
+        document = self.__found_document(document_id)
+        document.file_name = new_file_name
 
     def delete_category(self, category_id):
-        pass
-        # – delete the category with the provided id
+        category = self.__found_category(category_id)
+        self.categories.remove(category)
 
     def delete_topic(self, topic_id):
-        pass
-        # – delete the topic with the provided id
+        topic = self.__found_topic(topic_id)
+        self.topics.remove(topic)
 
     def delete_document(self, document_id):
-        pass
-        # – delete the document with the provided id
+        document = self.__found_document(document_id)
+        self.documents.remove(document)
 
     def get_document(self, document_id):
-        pass
+        document = self.__found_document(document_id)
+        return document
 
-    #  – return the document with the provided id
     def __repr__(self):
-        pass
-        # – returns a string representation of each document on separate lines
+        result = ''
+        for i in self.documents:
+            result += repr(i)
+            result += '\n'
+        return result
+
 
 # from project.category import Category
 # from project.document import Document
