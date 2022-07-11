@@ -1,3 +1,6 @@
+from project.mapper import mapper
+
+
 class DVD:
     def __init__(self, name: str, id: int, creation_year: int, creation_month: str, age_restriction: int):
         self.name = name
@@ -9,28 +12,22 @@ class DVD:
 
     @classmethod
     def from_date(cls, id: int, name: str, date: str, age_restriction: int):
-        pass
-        # – it should create a new instance using the provided data. The date will be in format "day.month.year" - all of them numbers.
+        creation_year, creation_month = cls.found_data(date)
+        return cls(name, id, creation_year, creation_month, age_restriction)
+
+    @staticmethod
+    def found_data(data):
+        _, m, y = data.split('.')
+        m = mapper[int(m)]
+        y = int(y)
+
+        return y, m
+
+
 
     def __repr__(self):
         result = 'rented' if self.is_rented else 'not rented'
         return f"{self.id}: {self.name} ({self.creation_month} {self.creation_year}) has age restriction {self.age_restriction}. Status: {result}"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 # from project.mapper import mapper
 #
