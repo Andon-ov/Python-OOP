@@ -5,7 +5,7 @@ from project.subscription import Subscription
 from project.trainer import Trainer
 
 
-class Gum:
+class Gym:
     def __init__(self):
         self.customers = []
         self.trainers = []
@@ -35,10 +35,27 @@ class Gum:
 
     def subscription_info(self, subscription_id: int):
         result = ''
-        for i in self.subscriptions:
-            if i.id == subscription_id:
+        for subscription in self.subscriptions:
+            if subscription.id == subscription_id:
+                result += repr(subscription)
+                result += '\n'
+                result += repr(subscription.customer_id)
+                result += '\n'
+                result += repr(subscription.trainer_id)
+                result += '\n'
+                result += repr(subscription.Equipment)
+                result += '\n'
+                result += repr(subscription.exercise_id)
+        return result
 
 
+        # '''
+        # Subscription <1> on 14.05.2020
+        # Customer <1> John; Address: Maple Street; Email: john.smith@gmail.com
+        # Trainer <1> Peter
+        # Equipment <1> Treadmill
+        # Plan <1> with duration 20 minutes
+        # '''
 
         # – get the subscription, the customer and trainer, the plan and the equipment.
         # Then return their string representations each on a new line.
