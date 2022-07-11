@@ -1,19 +1,34 @@
+from project.category import Category
+from project.topic import Topic
 
 
+class Document:
+    def __init__(self, id: int, category_id: int, topic_id: int, file_name: str):
+        self.id = id
+        self.category_id = category_id
+        self.topic_id = topic_id
+        self.file_name = file_name
+        self.tags = []
 
+    @classmethod
+    def from_instances(cls, id: int, category: Category, topic: Topic, file_name: str):
+        return cls(id, category.id, topic.id, file_name)
 
+    def add_tag(self, tag_content: str):
+        pass
+        # – if the tag is not already in the tags list, add it to the tags list
 
+    def remove_tag(self, tag_content: str):
+        pass
+        # – if the tag is in the tags list, delete it
 
+    def edit(self, file_name: str):
+        pass
+        # – change the file name with the given one
 
-
-
-
-
-
-
-
-
-
+    def __repr__(self):
+        pass
+        # – returns a string representation of a document in the format: "Document {id}: {file_name}; category {category_id}, topic {topic_id}, tags: {tags joined by comma and space)}"
 
 
 

@@ -1,0 +1,4 @@
+# Upon initialization the class will receive the following parameters: trainer_id: int, equipment_id: int, duration: int (in minutes). Each plan should also have an id (autoincremented, starting from 1). To do the incrementation you should create a class attribute id equal to 1, which will keep the value of the id for the next plan's id. Create the following methods:
+#     • from_hours(trainer_id:int, equipment_id:int, hours:int) – creates new instance using the provided information
+#     • get_next_id() – static method that returns the id that will be given to the next plan
+#     • __repr__() – returns the information about the plan in the following format: "Plan <{id}> with duration {duration} minutes"
