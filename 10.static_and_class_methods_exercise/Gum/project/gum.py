@@ -1,9 +1,44 @@
-# Upon initialization the class will not receive any parameters. However, it should have the following attributes: customers (list of customer objects, empty upon initialization), trainers (list of trainer objects, empty upon initialization), equipment (list of equipment objects, empty upon initialization), plans (list of plan objects, empty upon initialization), subscriptions (list of subscription objects, empty upon initialization)
-# Create the following methods:
-#     • add_customer(customer: Customer) – add the customer in the customer list, if the customer is not already in it
-#     • add_trainer(trainer: Trainer) – add the trainer to the trainers list, if the trainer is not already in it
-#     • add_equipment(equipment: Equipment) – add the equipment to the equipment list, if the equipment is not already in it
-#     • add_plan(plan: ExercisePlan) – add the plan to the plans list, if the plan is not already in it
-#     • add_subscription(subscription: Subscription) – add the subscription in the subscriptions list, if the subscription is not already in it
-#     • subscription_info(subscription_id: int) – get the subscription, the customer and trainer, the plan and the equipment. Then return their string representations each on a new line.
-# Examples
+from project.customer import Customer
+from project.equipment import Equipment
+from project.exercise_plan import ExercisePlan
+from project.subscription import Subscription
+from project.trainer import Trainer
+
+
+class Gum:
+    def __init__(self):
+        self.customers = []
+        self.trainers = []
+        self.equipment = []
+        self.plans = []
+        self.subscriptions = []
+
+    def add_customer(self, customer: Customer):
+        if customer not in self.customers:
+            self.customers.append(customer)
+
+    def add_trainer(self, trainer: Trainer):
+        if trainer not in self.trainers:
+            self.trainers.append(trainer)
+
+    def add_equipment(self, equipment: Equipment):
+        if equipment not in self.equipment:
+            self.equipment.append(equipment)
+
+    def add_plan(self, plan: ExercisePlan):
+        if plan not in self.plans:
+            self.plans.append(plan)
+
+    def add_subscription(self, subscription: Subscription):
+        if subscription not in self.subscriptions:
+            self.subscriptions.append(subscription)
+
+    def subscription_info(self, subscription_id: int):
+        result = ''
+        for i in self.subscriptions:
+            if i.id == subscription_id:
+
+
+
+        # – get the subscription, the customer and trainer, the plan and the equipment.
+        # Then return their string representations each on a new line.
