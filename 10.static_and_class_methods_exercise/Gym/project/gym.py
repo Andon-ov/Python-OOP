@@ -37,15 +37,16 @@ class Gym:
         result = ''
         for subscription in self.subscriptions:
             if subscription.id == subscription_id:
+
                 result += repr(subscription)
                 result += '\n'
-                result += repr(subscription.customer_id)
+                result += repr(*[x for x in self.customers if x.id == subscription_id])
                 result += '\n'
-                result += repr(subscription.trainer_id)
+                result += repr(*[x for x in self.trainers if x.id == subscription_id])
                 result += '\n'
-                result += repr(subscription.Equipment)
+                result += repr(*[x for x in self.equipment if x.id == subscription_id])
                 result += '\n'
-                result += repr(subscription.exercise_id)
+                result += repr(*[x for x in self.plans if x.id == subscription_id])
         return result
 
 

@@ -18,5 +18,5 @@ class ExercisePlan:
         duration_in_min = hours * 60
         return cls(trainer_id, equipment_id, duration_in_min)
 
-    def repr__(self):
+    def __repr__(self):
         return f"Plan <{self.id}> with duration {self.duration} minutes"
