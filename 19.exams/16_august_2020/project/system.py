@@ -1,15 +1,12 @@
 from project.hardware.heavy_hardware import HeavyHardware
 from project.hardware.power_hardware import PowerHardware
+from project.software.express_software import ExpressSoftware
+from project.hardware.hardware import Hardware
 
 
 class System:
     _hardware = []
     _software = []
-
-    # _hardware - an empty list that will be storing all the hardware components
-    # _software - an empty list that will be storing all the software components
-
-    # All described methods below should be static!
 
     @staticmethod
     def register_power_hardware(name: str, capacity: int, memory: int):
@@ -21,16 +18,16 @@ class System:
 
     @staticmethod
     def register_express_software(hardware_name: str, name: str, capacity_consumption: int, memory_consumption: int):
-        pass
+        hardware_obj = found_hardware(hardware_name)
+        if hardware_obj is None:
+            return "Hardware does not exist"
 
-        # for hardware in System._hardware:
-        #     if hardware.name == hardware_name:
-        #         pass
-        # hardware = found_hardware(hardware_name)
+        software_obj = ExpressSoftware(name, capacity_consumption, memory_consumption)
+        hardware_obj.install(software_obj)
+        System._software.append(software_obj)
 
-    # If the hardware with the given name does NOT exist, return the message "Hardware does not exist"
     # Otherwise, create an express software, install it on the hardware, and add it to the software list
-    # If the installation is not possible, raise Exception with the message "Software cannot be installed"
+
     @staticmethod
     def register_light_software(hardware_name: str, name: str, capacity_consumption: int, memory_consumption: int):
         pass
@@ -71,3 +68,10 @@ class System:
     # Capacity Usage: {total capacity used of all installed software components } / {total capacity of the hardware}
     # Type: {hardware_type}
     # Software Components: {names of all software components separated by ', '} (or 'None' if no software components)"
+
+    @staticmethod
+    def found_hardware(hardware_name):
+        for hardware in System._hardware:
+            if hardware.name == hardware_name:
+                return hardware
+        return None
