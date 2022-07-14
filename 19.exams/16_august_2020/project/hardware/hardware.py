@@ -13,6 +13,10 @@ class Hardware:
     def install(self, software: Software):
         if software.capacity_consumption > self.available_capacity or software.memory_consumption > self.available_memory:
             raise ValueError("Software cannot be installed")
+        '''
+        Otherwise, raise Exception with the message "Software cannot be installed"
+        here have a error - need try except this error
+        '''
 
         self.software_components.append(software)
 
