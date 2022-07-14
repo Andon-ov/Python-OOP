@@ -1,7 +1,6 @@
 from project.hardware.heavy_hardware import HeavyHardware
 from project.hardware.power_hardware import PowerHardware
 from project.software.express_software import ExpressSoftware
-
 from project.software.light_software import LightSoftware
 
 
@@ -61,25 +60,23 @@ class System:
         hardware_result = ''
         for hardware in System._hardware:
             hardware_result += f'Hardware Component - {hardware.name}' + '\n'
-            express_software = sum([1 for software in hardware.software_components if software.software_type == "Express"])
+            express_software = sum(
+                [1 for software in hardware.software_components if software.software_type == "Express"])
             light_software = sum([1 for software in hardware.software_components if software.software_type == "Light"])
             hardware_result += f'Express Software Components: {express_software}' + '\n'
             hardware_result += f'Light Software Components: {light_software}' + '\n'
             hardware_result += f'Memory Usage: {sum([x.memory_consumption for x in hardware.software_components])} / {hardware.memory}' + '\n'
-            hardware_result += f'Capacity Usage: {sum([x.capacity_consumption for x in hardware.software_components]) } / {hardware.capacity}' + '\n'
+            hardware_result += f'Capacity Usage: {sum([x.capacity_consumption for x in hardware.software_components])} / {hardware.capacity}' + '\n'
             hardware_result += f'Type: {hardware.hardware_type}' + '\n'
             names_software_components = [software.name for software in hardware.software_components]
-            software_names = ', '.join([x for x in names_software_components]) if len(names_software_components) > 0 else 'None'
+            software_names = ', '.join([x for x in names_software_components]) if len(
+                names_software_components) > 0 else 'None'
             hardware_result += f'Software Components: {software_names}' + '\n'
 
         return hardware_result
 
-
-
-
         # Memory Usage: {total memory used of all installed software components} / {total memory of the hardware}
         # Capacity Usage: {total capacity used of all installed software components } / {total capacity of the hardware}
-
 
         # Memory Usage: 205 / 350
         # Capacity Usage: 50 / 50
