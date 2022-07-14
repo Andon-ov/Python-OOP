@@ -26,4 +26,4 @@ class Hardware:
 
     @property
     def available_memory(self):
-        return self.capacity - sum([x.memory_consumption for x in self.software_components])
+        return self.memory - sum([x.memory_consumption for x in self.software_components])
