@@ -1,7 +1,7 @@
 from project.hardware.heavy_hardware import HeavyHardware
 from project.hardware.power_hardware import PowerHardware
 from project.software.express_software import ExpressSoftware
-from project.hardware.hardware import Hardware
+
 from project.software.light_software import LightSoftware
 
 
@@ -19,7 +19,6 @@ class System:
 
     @staticmethod
     def register_express_software(hardware_name: str, name: str, capacity_consumption: int, memory_consumption: int):
-        # hardware_obj = found_hardware(hardware_name)
         hardware_obj = [x for x in System._hardware if x.name == hardware_name][0]
         if hardware_obj is None:
             return "Hardware does not exist"
@@ -57,42 +56,30 @@ class System:
         result += f'Total Capacity Taken: {sum([x.capacity_consumption for x in System._software])} / {sum([x.capacity for x in System._hardware])}' + '\n'
         return result.strip()
 
-    # "System Analysis
-    # Hardware Components: {number_of_hardware_components}
-    # Software Components: {number_of_software_components}
-    # Total Operational Memory: {total memory consumption for all registered software components} / {total memory for all registered hardware components}
-    # Total Capacity Taken: {total capacity consumption for all registered software components} /{total capacity of all registered hardware components}"
-
-    # System Analysis
-    # Hardware Components: 2
-    # Software Components: 5
-    # Total Operational Memory: 455 / 650
-    # Total Capacity Taken: 160 / 850
-
     @staticmethod
     def system_split():
-        pass
+        hardware_result = ''
+        for hardware in System._hardware:
+            hardware_result += f'Hardware Component - {hardware.name}' + '\n'
+            express_software = sum([1 for software in hardware.software_components if software.software_type == "Express"])
+            light_software = sum([1 for software in hardware.software_components if software.software_type == "Light"])
+            hardware_result += f'Express Software Components: {express_software}' + '\n'
+            hardware_result += f'Light Software Components: {light_software}' + '\n'
+            hardware_result += f'Memory Usage: {sum([x.memory_consumption for x in hardware.software_components])} / {hardware.memory}' + '\n'
+            hardware_result += f'Capacity Usage: {sum([x.capacity_consumption for x in hardware.software_components]) } / {hardware.capacity}' + '\n'
+            hardware_result += f'Type: {hardware.hardware_type}' + '\n'
+            names_software_components = [software.name for software in hardware.software_components]
+            software_names = ', '.join([x for x in names_software_components]) if len(names_software_components) > 0 else 'None'
+            hardware_result += f'Software Components: {software_names}' + '\n'
 
-    # Return the following information (as a string) for each hardware component:
-    # "Hardware Component - {component name}
-    # Express Software Components: {number of the installed express software components}
-    # Light Software Components: {number of the installed light software components}
-    # Memory Usage: {total memory used of all installed software components} / {total memory of the hardware}
-    # Capacity Usage: {total capacity used of all installed software components } / {total capacity of the hardware}
-    # Type: {hardware_type}
-    # Software Components: {names of all software components separated by ', '} (or 'None' if no software components)"
+        return hardware_result
 
-    # Hardware Component - HDD
-    # Express Software Components: 1
-    # Light Software Components: 1
-    # Memory Usage: 205 / 350
-    # Capacity Usage: 50 / 50
-    # Type: Power
-    # Software Components: Test, Test3
-    # Hardware Component - SSD
-    # Express Software Components: 0
-    # Light Software Components: 2
-    # Memory Usage: 50 / 300
-    # Capacity Usage: 60 / 800
-    # Type: Heavy
-    # Software Components: Windows, Unix
+
+
+
+        # Memory Usage: {total memory used of all installed software components} / {total memory of the hardware}
+        # Capacity Usage: {total capacity used of all installed software components } / {total capacity of the hardware}
+
+
+        # Memory Usage: 205 / 350
+        # Capacity Usage: 50 / 50

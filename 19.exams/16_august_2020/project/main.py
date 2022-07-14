@@ -29,6 +29,6 @@ System.register_light_software("SSD", "Windows", 20, 50)
 System.register_express_software("SSD", "Linux", 50, 100)
 System.register_light_software("SSD", "Unix", 20, 50)
 print(System.analyze())
-#
-# System.release_software_component("SSD", "Linux")
-# print(System.system_split())
+
+System.release_software_component("SSD", "Linux")
+print(System.system_split())
