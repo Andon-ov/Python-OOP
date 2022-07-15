@@ -18,33 +18,58 @@ class System:
 
     @staticmethod
     def register_express_software(hardware_name: str, name: str, capacity_consumption: int, memory_consumption: int):
-        hardware_obj = [x for x in System._hardware if x.name == hardware_name][0]
-        if hardware_obj is None:
+        try:
+            hardware_obj = [x for x in System._hardware if x.name == hardware_name][0]
+            software_obj = ExpressSoftware(name, capacity_consumption, memory_consumption)
+            hardware_obj.install(software_obj)
+            System._software.append(software_obj)
+        except IndexError:
             return "Hardware does not exist"
-
-        software_obj = ExpressSoftware(name, capacity_consumption, memory_consumption)
-        hardware_obj.install(software_obj)
-        System._software.append(software_obj)
+        except Exception as ex:
+            return str(ex)
 
     @staticmethod
     def register_light_software(hardware_name: str, name: str, capacity_consumption: int, memory_consumption: int):
-        hardware_obj = [x for x in System._hardware if x.name == hardware_name][0]
-        if hardware_obj is None:
-            return "Hardware does not exist"
+        try:
+            hardware_obj = [x for x in System._hardware if x.name == hardware_name][0]
+            software_obj = LightSoftware(name, capacity_consumption, memory_consumption)
+            hardware_obj.install(software_obj)
+            System._software.append(software_obj)
 
-        software_obj = LightSoftware(name, capacity_consumption, memory_consumption)
-        hardware_obj.install(software_obj)
-        System._software.append(software_obj)
+        except IndexError:
+            return "Hardware does not exist"
+        except Exception as ex:
+            return str(ex)
+
+#    @staticmethod
+#     def register_express_software(hardware_name: str, name: str, capacity_consumption: int, memory_consumption: int):
+#         hardware_obj = [x for x in System._hardware if x.name == hardware_name][0]
+#         if hardware_obj is None:
+#             return "Hardware does not exist"
+#
+#         software_obj = ExpressSoftware(name, capacity_consumption, memory_consumption)
+#         hardware_obj.install(software_obj)
+#         System._software.append(software_obj)
+#
+#     @staticmethod
+#     def register_light_software(hardware_name: str, name: str, capacity_consumption: int, memory_consumption: int):
+#         hardware_obj = [x for x in System._hardware if x.name == hardware_name][0]
+#         if hardware_obj is None:
+#             return "Hardware does not exist"
+#
+#         software_obj = LightSoftware(name, capacity_consumption, memory_consumption)
+#         hardware_obj.install(software_obj)
+#         System._software.append(software_obj)
 
     @staticmethod
     def release_software_component(hardware_name: str, software_name: str):
-        software_obj = [x for x in System._software if x.name == software_name][0]
-        hardware_obj = [x for x in System._hardware if x.name == hardware_name][0]
-        if hardware_obj is None or software_obj is None:
+        try:
+            hardware_obj = [x for x in System._hardware if x.name == hardware_name][0]
+            software_obj = [x for x in System._software if x.name == software_name][0]
+            hardware_obj.uninstall(software_obj)
+            System._software.remove(software_obj)
+        except IndexError:
             return "Some of the components do not exist"
-
-        hardware_obj.uninstall(software_obj)
-        System._software.remove(software_obj)
 
     @staticmethod
     def analyze():
@@ -74,9 +99,3 @@ class System:
             hardware_result += f'Software Components: {software_names}' + '\n'
 
         return hardware_result
-
-        # Memory Usage: {total memory used of all installed software components} / {total memory of the hardware}
-        # Capacity Usage: {total capacity used of all installed software components } / {total capacity of the hardware}
-
-        # Memory Usage: 205 / 350
-        # Capacity Usage: 50 / 50
