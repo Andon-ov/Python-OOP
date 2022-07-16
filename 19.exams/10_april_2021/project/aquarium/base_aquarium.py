@@ -9,8 +9,8 @@ class BaseAquarium(ABC):
     def __init__(self, name: str, capacity: int):
         self.name = name
         self.capacity = capacity  # It represents the number of fish an aquarium can have.
-        self.decorations: List[BaseDecoration] = []
-        self.fish: List[BaseFish] = []
+        self.decorations = []
+        self.fish = []
 
     @property
     def name(self):
