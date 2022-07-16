@@ -1,41 +1,43 @@
-from abc import ABC,abstractmethod
+from abc import ABC, abstractmethod
+
+from project.validator import Validator
 
 
 class Drink(ABC):
-    pass
+    @abstractmethod
+    def __init__(self, name, portion: float, price: float, brand: str):
+        self.brand = brand
+        self.price = price
+        self.portion = portion
+        self.name = name
 
+    @property
+    def name(self):
+        return self.__name
 
+    @name.setter
+    def name(self, value):
+        Validator.raise_error_if_empty_string_or_whitespace(value, "Name cannot be empty string or white space!")
+        self.__name = value
 
-# Structure
-#
-# The class should have the following attributes:
-#
-# name: string - passed upon initialization.
-#
-# If the name is an empty string or whitespace, raise a ValueError with the message "Name cannot be empty string or white space!"
-#
-# portion: float - passed upon initialization. It represents the size of the drink in milliliters.
-#
-# If the portion is less than or equal to 0, raise a ValueError with the message "Portion cannot be less than or equal to zero!"
-#
-# price: float - passed upon initialization.
-#
-# brand: string - passed upon initialization.
-#
-# If the brand name is an empty string or whitespace, raise a ValueError with the message "Brand cannot be empty string or white space!"
-#
-#
-#
-# Methods
-#
-# __init__(name: str, portion: float, price: float, brand: str)
-#
-# The __init__ method should have a name, a portion, a price, and a brand.
-#
-# __repr__()
-#
-# Override the repr method, so it returns a string with the information about each drink in the following format:
-#
-# " - {drink_name} {brand_name} - {portion}ml - {price}lv"
-#
-# The portion size and the price should be formatted to the second decimal point.
+    @property
+    def portion(self):
+        return self.__portion
+
+    @portion.setter
+    def portion(self, value):
+        Validator.raise_error_if_price_less_than_or_equal_to_zero(value,
+                                                                  "Portion cannot be less than or equal to zero!")
+        self.__portion = value
+
+    @property
+    def brand(self):
+        return self.__brand
+
+    @brand.setter
+    def brand(self, value):
+        Validator.raise_error_if_empty_string_or_whitespace(value, "Brand cannot be empty string or white space!")
+        self.__brand = value
+
+    def __repr__(self):
+        return f" - {self.name} {self.brand} - {self.portion:.02f}ml - {self.price:.02f}lv"
