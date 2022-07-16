@@ -41,7 +41,7 @@ class BaseAquarium(ABC):
         self.fish.append(fish)
         return f"Successfully added {fish.__class__.__name__} to {self.name}."
 
-        # Possible fish_types are: "FreshwaterFish" and "SaltwaterFish".
+
 
     def remove_fish(self, fish: BaseFish):
         if fish in self.fish:
@@ -56,8 +56,8 @@ class BaseAquarium(ABC):
 
     def __str__(self):
         result = f'{self.name}:' + '\n'
-        result += f'Fish: {[x.name if len(self.fish) > 0 else None for x in self.fish]}' + '\n'
+        result += f'Fish: {[x.name if len(self.fish) > 0 else "none" for x in self.fish]}' + '\n'
         result += f"Decorations: {len(self.decorations)}"
         result += f"Comfort: {self.calculate_comfort()}"
         return result
-    #  If the Aquarium does not have fish, you should replace the fish names with the word "none" instead.
+
