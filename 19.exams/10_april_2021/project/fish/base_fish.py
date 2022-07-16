@@ -1,5 +1,6 @@
 class BaseFish:
     increases_fish_size = 5
+
     def __init__(self, name: str, species: str, size: int, price: float):
 
         self.name = name
@@ -39,4 +40,3 @@ class BaseFish:
 
     def eat(self):
         self.size += self.increases_fish_size
-

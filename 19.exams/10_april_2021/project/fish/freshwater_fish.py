@@ -10,5 +10,4 @@ class FreshwaterFish(BaseFish):
     # The FreshwaterFish could only live in FreshwaterAquarium!
 
     def eat(self):
-        pass
-        # return self.size + self.increases_fish_size
+        return self.size + self.increases_fish_size
