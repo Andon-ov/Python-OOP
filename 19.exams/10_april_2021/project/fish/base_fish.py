@@ -1,4 +1,5 @@
 class BaseFish:
+    increases_fish_size = 5
     def __init__(self, name: str, species: str, size: int, price: float):
 
         self.name = name
@@ -37,7 +38,5 @@ class BaseFish:
         self._price = value
 
     def eat(self):
-        pass
-    # The eat() method increases the Fish's size.
-    # Keep in mind that some types of Fish can implement the method in a different way.
-    # The method increases the fish’s size by 5.
+        self.size += BaseFish.increases_fish_size
+
