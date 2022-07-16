@@ -14,13 +14,13 @@ class BaseAquarium(ABC):
 
     @property
     def name(self):
-        return self._name
+        return self.__name
 
     @name.setter
     def name(self, value):
         if value == '':
             raise ValueError("Aquarium name cannot be an empty string.")
-        self._name = value
+        self.__name = value
 
     def calculate_comfort(self):
         result = 0
@@ -34,9 +34,12 @@ class BaseAquarium(ABC):
         return
 
     def add_fish(self, fish: BaseFish):
+        fish_type = fish.__class__.__name__[:8]
+        aqua_type = self.__class__.__name__[:8]
+
         if self.capacity == len(self.fish):
             return "Not enough capacity."
-        if not self.fish_type == fish.__class__.__name__:
+        if not fish_type == aqua_type:
             return "Water not suitable."
         self.fish.append(fish)
         return f"Successfully added {fish.__class__.__name__} to {self.name}."

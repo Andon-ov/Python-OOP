@@ -42,6 +42,5 @@ class BaseFish(ABC):
             raise ValueError("Price cannot be equal to or below zero.")
         self.__price = value
 
-
     def eat(self):
         self.size += self.EAT_INCREMENTAL

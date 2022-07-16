@@ -10,4 +10,4 @@ class FreshwaterFish(BaseFish):
     # The FreshwaterFish could only live in FreshwaterAquarium!
 
     def eat(self):
-        return self.size + self.EAT_INCREMENTAL
+        self.size += self.EAT_INCREMENTAL
