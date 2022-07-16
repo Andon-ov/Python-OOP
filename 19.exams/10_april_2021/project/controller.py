@@ -1,44 +1,59 @@
 from typing import List
 
 from project.aquarium.base_aquarium import BaseAquarium
+from project.aquarium.freshwater_aquarium import FreshwaterAquarium
+from project.aquarium.saltwater_aquarium import SaltwaterAquarium
 from project.decoration.decoration_repository import DecorationRepository
+from project.decoration.ornament import Ornament
+from project.decoration.plant import Plant
 
 
 class Controller:
     def __init__(self):
-        self.decorations_repository: DecorationRepository
+        self.decorations_repository = DecorationRepository()
         self.aquariums: List[BaseAquarium] = []
 
     def add_aquarium(self, aquarium_type: str, aquarium_name: str):
+
         if aquarium_type not in ['FreshwaterAquarium', 'SaltwaterAquarium']:
             return "Invalid aquarium type."
-        # self.aquariums.append(BaseAquarium(''.join(aquarium_type)(aquarium_name))
+        if aquarium_type == 'FreshwaterAquarium':
+            self.aquariums.append(FreshwaterAquarium(aquarium_name))
+            return f"Successfully added {aquarium_type}."
+        else:
+            self.aquariums.append(SaltwaterAquarium(aquarium_name))
+            return f"Successfully added {aquarium_type}."
 
-    # Creates an aquarium of the given type and then adds it to the list of aquariums. Valid types are: "FreshwaterAquarium" and "SaltwaterAquarium".
+    def add_decoration(self, decoration_type: str):
+        if decoration_type not in ["Ornament", "Plant"]:
+            return "Invalid decoration type."
 
-    # If the Aquarium is added successfully, the method should return the following message:
-    # "Successfully added {aquarium_type}."
-    @classmethod
-    def add_decoration(cls, decoration_type: str):
-        pass
+        if decoration_type == 'Ornament':
+            self.decorations_repository.add(Ornament())
+            return f"Successfully added {decoration_type}."
+        else:
+            self.decorations_repository.add(Plant())
+            return f"Successfully added {decoration_type}."
 
-    # Creates a decoration of the given type and adds it to the DecorationRepository. Valid types are: "Ornament" and "Plant".
-    # If the decoration type is invalid, return the following message:
-    # "Invalid decoration type."
-    # The method should return the following string if the operation is successful:
-    # "Successfully added {decoration_type}."
     def insert_decoration(self, aquarium_name: str, decoration_type: str):
+        for d in self.decorations_repository.decorations:
+            if d.__clas__.__name__ == decoration_type:
+                for a in self.aquariums:
+                    if a.name == aquarium_name:
+                        a.decorations.append(d)
+                        self.decorations_repository.decorations.remove(d)
+                        return f"Successfully added {decoration_type} to {aquarium_name}."
+
+            else:
+                return "There isn't a decoration of type {decoration_type}."
+
+
+    def add_fish(self, aquarium_name: str, fish_type: str, fish_name: str, fish_species: str, price: float):
         pass
 
-    # If there is such decoration and such aquarium, you should add the first occurrence of the desired decoration to the aquarium with the given name. You should remove the decoration from the DecorationRepository and return the following message:
-    # "Successfully added {decoration_type} to {aquarium_name}."
-    # If there is no such decoration, you should return the following message:
-    # "There isn't a decoration of type {decoration_type}."
-    @classmethod
-    def add_fish(cls, aquarium_name: str, fish_type: str, fish_name: str, fish_species: str, price: float):
-        pass
+    # Creates a fish of the given type and adds it to the aquarium with the given name.
+    # Valid fish types are: "FreshwaterFish" and "SaltwaterFish". If the fish type is invalid, you should return a massage:
 
-    # Creates a fish of the given type and adds it to the aquarium with the given name. Valid fish types are: "FreshwaterFish" and "SaltwaterFish". If the fish type is invalid, you should return a massage:
     # "There isn't a fish of type {fish_type}."
     # If the fish type is valid, return one of the following strings:
     # "Not enough capacity." - if there is not enough capacity to add the fish in the aquarium.
@@ -49,10 +64,8 @@ class Controller:
         for a in self.aquariums:
             if a.name == aquarium_name:
                 a.feed()
+                return f"Fish fed: {len(a.fish)}"
 
-    # Feeds all fish in the aquarium with the given name.
-    # Returns a string with information about how many fish were successfully fed, in the following format:
-    # "Fish fed: {fed_count}"
     def calculate_value(self, aquarium_name: str):
         pass
 

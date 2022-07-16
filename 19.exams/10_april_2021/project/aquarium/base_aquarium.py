@@ -41,8 +41,6 @@ class BaseAquarium(ABC):
         self.fish.append(fish)
         return f"Successfully added {fish.__class__.__name__} to {self.name}."
 
-
-
     def remove_fish(self, fish: BaseFish):
         if fish in self.fish:
             self.fish.remove(fish)
@@ -60,4 +58,3 @@ class BaseAquarium(ABC):
         result += f"Decorations: {len(self.decorations)}"
         result += f"Comfort: {self.calculate_comfort()}"
         return result
-
