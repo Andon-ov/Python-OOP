@@ -32,7 +32,7 @@ class BaseAquarium:
             return "Not enough capacity."
         self.fish.append(fish)
         return f"Successfully added {fish.__class__.__name__} to {self.name}."
-        # if the Fish is added successfully in the Aquarium
+
         # Possible fish_types are: "FreshwaterFish" and "SaltwaterFish".
 
     def remove_fish(self, fish):

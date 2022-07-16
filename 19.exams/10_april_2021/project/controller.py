@@ -1,24 +1,21 @@
 from typing import List
 
 from project.aquarium.base_aquarium import BaseAquarium
+from project.decoration.decoration_repository import DecorationRepository
 
 
 class Controller:
     def __init__(self):
-        self.decorations_repository
+        self.decorations_repository: DecorationRepository
         self.aquariums: List[BaseAquarium] = []
 
-    # decorations_repository: DecorationRepository – new decoration repository upon initialization.
-
-    # Methods
-    # __init__()
-    # An instance of the Controller class will have decorations_repository and aquariums.
     def add_aquarium(self, aquarium_type: str, aquarium_name: str):
-        pass
+        if aquarium_type not in ['FreshwaterAquarium', 'SaltwaterAquarium']:
+            return "Invalid aquarium type."
+        # self.aquariums.append(BaseAquarium(''.join(aquarium_type)(aquarium_name))
 
     # Creates an aquarium of the given type and then adds it to the list of aquariums. Valid types are: "FreshwaterAquarium" and "SaltwaterAquarium".
-    # If the aquarium type is invalid, you should return the following message:
-    # "Invalid aquarium type."
+
     # If the Aquarium is added successfully, the method should return the following message:
     # "Successfully added {aquarium_type}."
     @classmethod
