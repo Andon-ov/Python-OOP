@@ -15,8 +15,7 @@ class DecorationRepository:
 
     def find_by_type(self, decoration_type: str):
         for d in self.decorations:
-            if d.type == decoration_type:
+            if d.__class__.__name__ == decoration_type:
                 return d
-
         return None
 # Returns the first decoration of the given type if there is. Otherwise, returns a message "None".
