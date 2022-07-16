@@ -1,3 +1,4 @@
+from project.factory import FoodFactory, DrinkFactory, TableFactory
 from project.validator import Validator
 
 
@@ -13,6 +14,10 @@ class Bakery:
         self.total_income = 0
         # the total income from all the completed bills. 0 by default.
 
+        self.food_factory = FoodFactory()
+        self.drink_factory = DrinkFactory()
+        self.table_factory = TableFactory()
+
     @property
     def name(self):
         return self.__name
@@ -23,31 +28,32 @@ class Bakery:
         self.__name = value
 
     def add_food(self, food_type: str, name: str, price: float):
-        pass
+        try:
+            food = self.food_factory.create_food(food_type, name, price, self.food_menu)
+            self.food_menu.append(food)
+            return f"Added {name} ({food_type}) to the food menu"
+        except ValueError as error:
+            return str(error)
 
-    # Creates a food with the correct type and adds it to the menu. The possible types of food are "Bread" and "Cake". If the food is created and added successfully, returns:
-    # "Added {baked_food_name} ({baked_food_type}) to the food menu"
-    # If a baked food with the given name already exists in the food menu, raise an Exception with message "{food_type} {name} is already in the menu!"
     def add_drink(self, drink_type: str, name: str, portion: float, brand: str):
-        pass
+        try:
+            drink = self.drink_factory.create_drunk(drink_type, name, portion, brand, self.drinks_menu)
 
-    #
-    # Creates a drink with the correct type and adds it to the menu. The possible types of drinks are "Tea" and "Water".  If the drink is created and added successfully, returns:
-    #
-    # "Added {drink_name} ({drink_brand}) to the drink menu"
-    #
-    # If a drink with the given name already exists in the drink menu, raise Exception with the message "{drink_type} {name} is already in the menu!"
-    #
+            self.drinks_menu.append(drink)
+            return f"Added {name} ({brand}) to the drink menu"
+
+        except ValueError as error:
+            return str(error)
+
     def add_table(self, table_type: str, table_number: int, capacity: int):
-        pass
+        try:
+            table = self.table_factory.create_table(table_type, table_number, capacity, self.tables_repository)
+            self.tables_repository.append(table)
+            return f"Added table number {table_number} in the bakery"
 
-    #
-    # Creates a table with the correct type, adds it to the table repository. The possible types of tables are "InsideTable" and "OutsideTable".  If the table is created and added successfully, returns:
-    #
-    # "Added table number {table_number} in the bakery"
-    #
-    # If a table with the given number already exists in the table repository, raise Exception with the message "Table {table_number} is already in the bakery!"
-    #
+        except ValueError as error:
+            return str(error)
+
     def reserve_table(self, number_of_people: int):
         pass
 
@@ -62,7 +68,6 @@ class Bakery:
     #
     def order_food(self, table_number: int, food_name1: str, food_name2: str):
         pass
-
 
     #
     # The order_food method will receive a table's number and a different number of strings with food's names.
@@ -93,7 +98,7 @@ class Bakery:
     #
     # {food_name_not_in_the_menuN}"
     #
-    def order_drink(self,table_number: int, drinks_name1: str, drink_name2: str):
+    def order_drink(self, table_number: int, drinks_name1: str, drink_name2: str):
         pass
 
     #
@@ -125,7 +130,7 @@ class Bakery:
     #
     # {drink_name_not_in_the_menuN}"
     #
-    def leave_table(self,table_number: int):
+    def leave_table(self, table_number: int):
         pass
 
     #
@@ -145,4 +150,3 @@ class Bakery:
     #
     def get_total_income(self):
         return f"Total income: {self.total_income:.02f}lv"
-
