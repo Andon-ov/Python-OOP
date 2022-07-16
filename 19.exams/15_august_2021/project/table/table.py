@@ -31,37 +31,42 @@ class Table(ABC):
         self.__capacity = value
 
     def reserve(self, number_of_people: int):
-        pass
+        self.is_reserved = True
+        self.number_of_people = number_of_people
 
-    # Reserves the table with the count of people given.
 
     def order_food(self, baked_food: BakedFood):
-        pass
+        self.food_orders.append(baked_food)
 
-    # Orders the provided food.
+
 
     def order_drink(self, drink: Drink):
-        pass
+        self.drink_orders.append(drink)
 
-    # Orders the provided drink.
 
     def get_bill(self):
-        pass
+        result = 0
+        for do in self.drink_orders:
+            result += do.price
+        for fo in self.food_orders:
+            result += fo.price
+        return result
 
-    # Returns the bill for all the ordered drinks and food.
 
     def clear(self):
-        pass
+        self.food_orders = []
+        self.drink_orders = []
+        self.number_of_people = 0
+        self.is_reserved: bool = False
 
     # Removes all the ordered drinks and food and finally frees the seats at the table.
 
     def free_table_info(self):
-        pass
+        result = ''
+        if not self.is_reserved:
+            result += f"Table: {self.table_number}" + '\n'
+            result += f"Type: {self.__class__.__name__}"+ '\n'
+            result += f"Capacity: {self.capacity}"
+        return result
 
-    # Only if the table is free, returns a string in the following format:
 
-    "Table: {table_number}"
-
-    "Type: {table_type}"
-
-    "Capacity: {table_capacity}"

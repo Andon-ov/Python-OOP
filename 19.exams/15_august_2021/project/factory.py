@@ -13,11 +13,11 @@ class FoodFactory:
     }
 
     @staticmethod
-    def create_food(food_type, name, price, food_list):
+    def create_food(f_type, name, price, food_list: list):
         for food in food_list:
             if food.name == name:
-                raise Exception(f"{food_type} {name} is already in the menu!")
-            return FoodFactory.food_types[food_type](name, price)
+                raise Exception(f"{f_type} {name} is already in the menu!")
+            return FoodFactory.food_types[f_type](name, price)
 
 
 class DrinkFactory:
@@ -27,13 +27,13 @@ class DrinkFactory:
     }
 
     @staticmethod
-    def create_drunk(drink_type, name, portion, brand, list_drink):
+    def create_drunk(d_type, name, portion, brand, list_drink: list):
 
         for drunk in list_drink:
             if drunk.name == name:
-                raise Exception(f"{drink_type} {name} is already in the menu!")
+                raise Exception(f"{d_type} {name} is already in the menu!")
 
-            return DrinkFactory.drink_type[drink_type](name, portion, brand)
+            return DrinkFactory.drink_type[d_type](name, portion, brand)
 
 
 class TableFactory:
@@ -42,12 +42,11 @@ class TableFactory:
         "OutsideTable": OutsideTable
     }
 
-
     @staticmethod
-    def create_table(table_type: str, table_number: int, capacity: int, list_tables):
+    def create_table(t_type: str, table_number: int, capacity: int, list_tables: list):
 
         for table in list_tables:
             if table.number == table_number:
                 raise Exception(f"Table {table_number} is already in the bakery!")
 
-            return TableFactory.table_type[table_type](table_number, capacity)
+            return TableFactory.table_type[t_type](table_number, capacity)

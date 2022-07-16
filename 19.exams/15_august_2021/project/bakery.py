@@ -1,13 +1,18 @@
+from typing import List
+
+from project.baked_food.baked_food import BakedFood
+from project.drink.drink import Drink
 from project.factory import FoodFactory, DrinkFactory, TableFactory
+from project.table.table import Table
 from project.validator import Validator
 
 
 class Bakery:
     def __init__(self, name):
         self.name = name
-        self.food_menu = []
-        self.drinks_menu = []
-        self.tables_repository = []
+        self.food_menu: List[BakedFood] = []
+        self.drinks_menu: List[Drink] = []
+        self.tables_repository: List[Table] = []
         self.total_income = 0
 
         self.food_factory = FoodFactory()
