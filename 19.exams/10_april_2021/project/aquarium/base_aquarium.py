@@ -1,10 +1,11 @@
+from abc import ABC, abstractmethod
 from typing import List
 
 from project.decoration.base_decoration import BaseDecoration
 from project.fish.base_fish import BaseFish
 
 
-class BaseAquarium:
+class BaseAquarium(ABC):
     def __init__(self, name: str, capacity: int):
         self.name = name
         self.capacity = capacity  # It represents the number of fish an aquarium can have.
@@ -27,24 +28,31 @@ class BaseAquarium:
             result += d.comfort
         return result
 
+    @property
+    @abstractmethod
+    def fish_type(self):
+        return
+
     def add_fish(self, fish: BaseFish):
         if self.capacity == len(self.fish):
             return "Not enough capacity."
+        if not self.fish_type == fish.__class__.__name__:
+            return "Water not suitable."
         self.fish.append(fish)
         return f"Successfully added {fish.__class__.__name__} to {self.name}."
 
         # Possible fish_types are: "FreshwaterFish" and "SaltwaterFish".
 
-    def remove_fish(self, fish):
+    def remove_fish(self, fish: BaseFish):
         if fish in self.fish:
             self.fish.remove(fish)
 
-    def add_decoration(self, decoration):
+    def add_decoration(self, decoration: BaseDecoration):
         self.decorations.append(decoration)
 
     def feed(self):
         for f in self.fish:
-            f.feed()
+            f.eat()
 
     def __str__(self):
         result = f'{self.name}:' + '\n'
@@ -53,4 +61,3 @@ class BaseAquarium:
         result += f"Comfort: {self.calculate_comfort()}"
         return result
     #  If the Aquarium does not have fish, you should replace the fish names with the word "none" instead.
-
