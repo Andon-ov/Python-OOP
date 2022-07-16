@@ -17,9 +17,11 @@ class Controller:
 
         if aquarium_type not in ['FreshwaterAquarium', 'SaltwaterAquarium']:
             return "Invalid aquarium type."
+
         if aquarium_type == 'FreshwaterAquarium':
             self.aquariums.append(FreshwaterAquarium(aquarium_name))
             return f"Successfully added {aquarium_type}."
+
         else:
             self.aquariums.append(SaltwaterAquarium(aquarium_name))
             return f"Successfully added {aquarium_type}."
@@ -31,6 +33,7 @@ class Controller:
         if decoration_type == 'Ornament':
             self.decorations_repository.add(Ornament())
             return f"Successfully added {decoration_type}."
+
         else:
             self.decorations_repository.add(Plant())
             return f"Successfully added {decoration_type}."
