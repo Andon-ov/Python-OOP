@@ -16,50 +16,50 @@ class System:
     def register_heavy_hardware(name: str, capacity: int, memory: int):
         System._hardware.append(HeavyHardware(name, capacity, memory))
 
+    # @staticmethod
+    # def register_express_software(hardware_name: str, name: str, capacity_consumption: int, memory_consumption: int):
+    #     try:
+    #         hardware_obj = [x for x in System._hardware if x.name == hardware_name][0]
+    #         software_obj = ExpressSoftware(name, capacity_consumption, memory_consumption)
+    #         hardware_obj.install(software_obj)
+    #         System._software.append(software_obj)
+    #     except IndexError:
+    #         return "Hardware does not exist"
+    #     except Exception as ex:
+    #         return str(ex)
+    #
+    # @staticmethod
+    # def register_light_software(hardware_name: str, name: str, capacity_consumption: int, memory_consumption: int):
+    #     try:
+    #         hardware_obj = [x for x in System._hardware if x.name == hardware_name][0]
+    #         software_obj = LightSoftware(name, capacity_consumption, memory_consumption)
+    #         hardware_obj.install(software_obj)
+    #         System._software.append(software_obj)
+    #
+    #     except IndexError:
+    #         return "Hardware does not exist"
+    #     except Exception as ex:
+    #         return str(ex)
+
     @staticmethod
     def register_express_software(hardware_name: str, name: str, capacity_consumption: int, memory_consumption: int):
-        try:
-            hardware_obj = [x for x in System._hardware if x.name == hardware_name][0]
-            software_obj = ExpressSoftware(name, capacity_consumption, memory_consumption)
-            hardware_obj.install(software_obj)
-            System._software.append(software_obj)
-        except IndexError:
+        hardware_obj = [x for x in System._hardware if x.name == hardware_name][0]
+        if hardware_obj is None:
             return "Hardware does not exist"
-        except Exception as ex:
-            return str(ex)
+
+        software_obj = ExpressSoftware(name, capacity_consumption, memory_consumption)
+        hardware_obj.install(software_obj)
+        System._software.append(software_obj)
 
     @staticmethod
     def register_light_software(hardware_name: str, name: str, capacity_consumption: int, memory_consumption: int):
-        try:
-            hardware_obj = [x for x in System._hardware if x.name == hardware_name][0]
-            software_obj = LightSoftware(name, capacity_consumption, memory_consumption)
-            hardware_obj.install(software_obj)
-            System._software.append(software_obj)
-
-        except IndexError:
+        hardware_obj = [x for x in System._hardware if x.name == hardware_name][0]
+        if hardware_obj is None:
             return "Hardware does not exist"
-        except Exception as ex:
-            return str(ex)
 
-#    @staticmethod
-#     def register_express_software(hardware_name: str, name: str, capacity_consumption: int, memory_consumption: int):
-#         hardware_obj = [x for x in System._hardware if x.name == hardware_name][0]
-#         if hardware_obj is None:
-#             return "Hardware does not exist"
-#
-#         software_obj = ExpressSoftware(name, capacity_consumption, memory_consumption)
-#         hardware_obj.install(software_obj)
-#         System._software.append(software_obj)
-#
-#     @staticmethod
-#     def register_light_software(hardware_name: str, name: str, capacity_consumption: int, memory_consumption: int):
-#         hardware_obj = [x for x in System._hardware if x.name == hardware_name][0]
-#         if hardware_obj is None:
-#             return "Hardware does not exist"
-#
-#         software_obj = LightSoftware(name, capacity_consumption, memory_consumption)
-#         hardware_obj.install(software_obj)
-#         System._software.append(software_obj)
+        software_obj = LightSoftware(name, capacity_consumption, memory_consumption)
+        hardware_obj.install(software_obj)
+        System._software.append(software_obj)
 
     @staticmethod
     def release_software_component(hardware_name: str, software_name: str):
