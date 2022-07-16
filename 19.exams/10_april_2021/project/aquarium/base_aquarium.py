@@ -58,7 +58,8 @@ class BaseAquarium(ABC):
 
     def __str__(self):
         result = f'{self.name}:' + '\n'
-        result += f'Fish: {[x.name if len(self.fish) > 0 else "none" for x in self.fish]}' + '\n'
+        result += f'Fish: {" ".join([x.name if len(self.fish) > 0 else "none" for x in self.fish])}' + '\n'
         result += f"Decorations: {len(self.decorations)}" + '\n'
         result += f"Comfort: {self.calculate_comfort()}"
         return result
+

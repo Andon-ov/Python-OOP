@@ -82,13 +82,18 @@ class Controller:
         return f"The value of Aquarium {aquarium_name} is {result:.02f}."
 
     def report(self):
-        pass
+        result = ''
+        for a in self.aquariums:
+            result += str(a)
+        return result
+
 
     # Returns information about each aquarium. You can use the overridden __str__ Aquarium method.
     # "{aquarium name1}:
     # Fish: {fish_name1} {fish_name2} {fish_name3} (…) / none
     # Decorations: {decorations_count}
     # Comfort: {aquarium_comfort}
+
     # {aquarium name2}:
     # Fish: {fish_name1} {fish_name2} {fish_name3} (…) / none
     # Decorations: {decorations_count}

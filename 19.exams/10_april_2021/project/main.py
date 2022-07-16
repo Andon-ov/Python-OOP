@@ -9,3 +9,4 @@ print(controller.add_fish("Testov", 'FreshwaterFish', "Nemo2", "Ludiq", 5))
 
 
 print(controller.feed_fish('Testov'))
+print(controller.report())
