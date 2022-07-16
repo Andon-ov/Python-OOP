@@ -1,9 +1,13 @@
-# 7.SaltwaterFish
-# In the file saltwater_fish.py the class SaltwaterFish should be implemented. The SaltwaterFish could only live in SaltwaterAquarium!
-# Structure
-# The class should inherit from the BaseFish class.
-# Methods
-# __init__(name: str, species: str, price: float)
-# An instance of the SaltwaterFish class should have a name, a species, a price upon initialization and will have 5 initial size.
-# eat()
-# The method increases the fish’s size by 2.
+from project.fish.base_fish import BaseFish
+
+
+class SaltwaterFish(BaseFish):
+    increases_fish_size = 3
+
+    # The SaltwaterFish could only live in SaltwaterAquarium!
+    def __init__(self, name: str, species: str, price: float):
+        super().__init__(name, species, 5, price)
+
+    def eat(self):
+        pass
+        # return self.size + self.increases_fish_size

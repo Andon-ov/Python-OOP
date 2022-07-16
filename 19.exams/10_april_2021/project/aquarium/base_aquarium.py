@@ -1,32 +1,56 @@
-# 8.BaseAquarium
-# In the base_aquarium.py file the class BaseAquarium should be implemented. It is a base class of any type of aquarium, and it should not be able to be instantiated.
-# Structure
-# The class should have the following attributes:
-# name: string - passed upon initialization. If the name is empty string, raise a ValueError with message: "Aquarium name cannot be an empty string."
-# oAll passed names would be unique and it will not be necessary to check if a given name already exists.
-# capacity:  int - passed upon initialization. It represents the number of fish an aquarium can have.
-# decorations: list - empty list upon initialization that will contain all the decorations (objects).
-# fish: list - empty list upon initialization that will contain all the fish (objects).
-#
-# Methods
-# __init__(name: str, capacity: int)
-# The __init__ method should have a name, a capacity, decorations and fish.
-# calculate_comfort()
-# Returns the sum of each decoration’s comfort in the Aquarium.
-# add_fish(fish)
-# Adds a fish (object) in the Aquarium and return one of the following strings:
-# "Not enough capacity." - if there is not enough capacity to add the Fish in the Aquarium
-# "Successfully added {fish_type} to {aquarium_name}." - if the Fish is added successfully in the Aquarium
-# oPossible fish_types are: "FreshwaterFish" and "SaltwaterFish".
-# remove_fish(fish)
-# Removes a fish object from the Aquarium.
-# add_decoration(decoration)
-# Adds a decoration object in the Aquarium.
-# feed()
-# The feed() method feeds all fish in the aquarium.
-# __str__()
-# Returns a String with information about the Aquarium in the format below. If the Aquarium does not have fish, you should replace the fish names with the word "none" instead.
-# "{aquarium name}:
-# Fish: {fish_name1} {fish_name2} {fish_name3} (…) / none
-# Decorations: {decorations_count}
-# Comfort: {aquarium_comfort}"
+from typing import List
+
+from project.decoration.base_decoration import BaseDecoration
+from project.fish.base_fish import BaseFish
+
+
+class BaseAquarium:
+    def __init__(self, name: str, capacity: int):
+        self.name = name
+        self.capacity = capacity  # It represents the number of fish an aquarium can have.
+        self.decorations: List[BaseDecoration] = []
+        self.fish: List[BaseFish] = []
+
+    @property
+    def name(self):
+        return self._name
+
+    @name.setter
+    def name(self, value):
+        if value == '':
+            raise ValueError("Aquarium name cannot be an empty string.")
+        self._name = value
+
+    def calculate_comfort(self):
+        result = 0
+        for d in self.decorations:
+            result += d.comfort
+        return result
+
+    def add_fish(self, fish: BaseFish):
+        if self.capacity == len(self.fish):
+            return "Not enough capacity."
+        self.fish.append(fish)
+        return f"Successfully added {fish.__class__.__name__} to {self.name}."
+        # if the Fish is added successfully in the Aquarium
+        # Possible fish_types are: "FreshwaterFish" and "SaltwaterFish".
+
+    def remove_fish(self, fish):
+        if fish in self.fish:
+            self.fish.remove(fish)
+
+    def add_decoration(self, decoration):
+        self.decorations.append(decoration)
+
+    def feed(self):
+        for f in self.fish:
+            f.feed()
+
+    def __str__(self):
+        result = f'{self.name}:' + '\n'
+        result += f'Fish: {[x.name if len(self.fish) > 0 else None for x in self.fish]}' + '\n'
+        result += f"Decorations: {len(self.decorations)}"
+        result += f"Comfort: {self.calculate_comfort()}"
+        return result
+    #  If the Aquarium does not have fish, you should replace the fish names with the word "none" instead.
+

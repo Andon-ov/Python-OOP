@@ -38,5 +38,5 @@ class BaseFish:
         self._price = value
 
     def eat(self):
-        self.size += BaseFish.increases_fish_size
+        self.size += self.increases_fish_size
 
