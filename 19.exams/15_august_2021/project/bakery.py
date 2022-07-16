@@ -6,13 +6,9 @@ class Bakery:
     def __init__(self, name):
         self.name = name
         self.food_menu = []
-        #  an empty list that will contain every type of food in the bakery's menu.
         self.drinks_menu = []
-        #  an empty list that will contain every type of drink in the bakery's menu.
         self.tables_repository = []
-        # an empty list that will contain every table at the bakery.
         self.total_income = 0
-        # the total income from all the completed bills. 0 by default.
 
         self.food_factory = FoodFactory()
         self.drink_factory = DrinkFactory()
