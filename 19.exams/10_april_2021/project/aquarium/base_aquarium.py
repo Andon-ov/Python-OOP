@@ -36,13 +36,16 @@ class BaseAquarium(ABC):
     def add_fish(self, fish: BaseFish):
         fish_type = fish.__class__.__name__[:8]
         aqua_type = self.__class__.__name__[:8]
+        aqua_name = self.name
+        fish_name = fish.__class__.__name__
 
         if self.capacity == len(self.fish):
             return "Not enough capacity."
         if not fish_type == aqua_type:
             return "Water not suitable."
+
         self.fish.append(fish)
-        return f"Successfully added {fish.__class__.__name__} to {self.name}."
+        return f"Successfully added {fish_name} to {aqua_name}."
 
     def remove_fish(self, fish: BaseFish):
         if fish in self.fish:
