@@ -1,7 +1,6 @@
-# 10.SaltwaterAquarium
-# In the file saltwater_aquarium.py the class SaltwaterAquarium should be implemented.
-# Structure
-# The class should inherit from the BaseAquarium class.
-# Methods
-# __init__(name: str)
-# An instance of the SaltwaterAquarium class should have a name upon initialization and 25 initial capacity.
+from project.aquarium.base_aquarium import BaseAquarium
+
+
+class SaltwaterAquarium(BaseAquarium):
+    def __init__(self, name: str):
+        super().__init__(name, 25)
