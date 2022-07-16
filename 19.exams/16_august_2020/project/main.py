@@ -19,7 +19,6 @@ def zero_test():
 if __name__ == "__main__":
     zero_test()
 # from project.system import System
-#
 # System.register_power_hardware("HDD", 200, 200)
 # System.register_heavy_hardware("SSD", 400, 400)
 # print(System.analyze())
@@ -32,3 +31,5 @@ if __name__ == "__main__":
 #
 # System.release_software_component("SSD", "Linux")
 # print(System.system_split())
+
+# https://youtu.be/HvmxsnZ1hPM
