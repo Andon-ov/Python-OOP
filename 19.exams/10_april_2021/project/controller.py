@@ -60,12 +60,12 @@ class Controller:
 
         if fish_type == "FreshwaterFish":
             fish = FreshwaterFish(fish_name, fish_species, price)
-            aquarium.add_fish(fish)
-            return f"Successfully added {fish_name} to {aquarium_name}."
+            return aquarium.add_fish(fish)
+
         else:
             fish = SaltwaterFish(fish_name, fish_species, price)
-            aquarium.add_fish(fish)
-            return f"Successfully added {fish_name} to {aquarium_name}."
+            return aquarium.add_fish(fish)
+
 
     def feed_fish(self, aquarium_name: str):
         aquarium = self.__found_aquarium(aquarium_name)

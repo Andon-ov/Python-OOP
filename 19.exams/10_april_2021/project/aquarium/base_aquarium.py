@@ -43,7 +43,7 @@ class BaseAquarium(ABC):
             return "Water not suitable."
 
         self.fish.append(fish)
-        # return
+        return f"Successfully added {fish.name} to {self.name}."
 
     def remove_fish(self, fish: BaseFish):
         if fish in self.fish:

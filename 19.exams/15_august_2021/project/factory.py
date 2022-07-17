@@ -17,7 +17,7 @@ class FoodFactory:
         for food in food_list:
             if food.name == name:
                 raise Exception(f"{f_type} {name} is already in the menu!")
-            return FoodFactory.food_types[f_type](name, price)
+        return FoodFactory.food_types[f_type](name, price)
 
 
 class DrinkFactory:
@@ -33,7 +33,7 @@ class DrinkFactory:
             if drunk.name == name:
                 raise Exception(f"{d_type} {name} is already in the menu!")
 
-            return DrinkFactory.drink_type[d_type](name, portion, brand)
+        return DrinkFactory.drink_type[d_type](name, portion, brand)
 
 
 class TableFactory:
@@ -49,4 +49,4 @@ class TableFactory:
             if table.number == table_number:
                 raise Exception(f"Table {table_number} is already in the bakery!")
 
-            return TableFactory.table_type[t_type](table_number, capacity)
+        return TableFactory.table_type[t_type](table_number, capacity)
