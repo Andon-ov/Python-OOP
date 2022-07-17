@@ -59,7 +59,8 @@ class Bakery:
         pass
 
     #
-    # Finds the first possible table which is not reserved, and its capacity is enough for the number of people provided. Then reserves the table and returns:
+    # Finds the first possible table which is not reserved,
+    # and its capacity is enough for the number of people provided. Then reserves the table and returns:
     #
     # "Table {table_number} has been reserved for {number_of_people} people"
     #
