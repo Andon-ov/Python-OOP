@@ -56,50 +56,29 @@ class Bakery:
             return str(error)
 
     def reserve_table(self, number_of_people: int):
-        pass
+        for table in self.tables_repository:
+            if table.is_reserved is False and table.capacity >= number_of_people:
+                table.is_reserved = True
+                return f"Table {table.table_number} has been reserved for {number_of_people} people"
 
-    #
-    # Finds the first possible table which is not reserved,
-    # and its capacity is enough for the number of people provided. Then reserves the table and returns:
-    #
-    # "Table {table_number} has been reserved for {number_of_people} people"
-    #
-    # Otherwise, returns:
-    #
-    # "No available table for {number_of_people} people"
-    #
-    def order_food(self, table_number: int, food_name1: str, food_name2: str):
-        pass
+        return f"No available table for {number_of_people} people"
 
-    #
-    # The order_food method will receive a table's number and a different number of strings with food's names.
-    #
-    # Finds the table with that number. If there is no such table returns:
-    #
-    # "Could not find table {table_number}"
-    #
-    # Otherwise, adds the food which could be ordered (are in the menu) in the table's orders, returns the information about the ordered food and the food that is not in the menu in the format:
-    #
-    # "Table {table_number} ordered:
-    #
-    #  - {baked_food_name1}: {portion1}g - {price1}lv
-    #
-    #  - {baked_food_name2}: {portion2}g - {price2}lv
-    #
-    # …
-    #
-    #  - {baked_food_nameN}: {portionN}g - {priceN}lv
-    #
-    # {bakery_name} does not have in the menu:
-    #
-    # {food_name_not_in_the_menu1}
-    #
-    # {food_name_not_in_the_menu2}
-    #
-    # …
-    #
-    # {food_name_not_in_the_menuN}"
-    #
+    def order_food(self, table_number: int, *food_name):
+        result = f'Table {table_number} ordered:' + '\n'
+        for table in self.tables_repository:
+            if not table_number == table.table_number:
+                return f"Could not find table {table_number}"
+
+            for food in food_name:
+                if food in self.food_menu:
+                    table.food_orders.append(food)
+                    result += f"- {food.name}: {food.portion}g - {food.price}lv" + '\n'
+
+                if food not in self.food_menu:
+                    result += f"{self.name} does not have in the menu:" + '\n'
+                    result += f"{food.name}" + '\n'
+        return result
+
     def order_drink(self, table_number: int, drinks_name1: str, drink_name2: str):
         pass
 
