@@ -64,61 +64,67 @@ class Bakery:
         return f"No available table for {number_of_people} people"
 
     def order_food(self, table_number: int, *food_name):
+        foods = []
+        table = ''
         result = f'Table {table_number} ordered:' + '\n'
-        for table in self.tables_repository:
-            if not table_number == table.table_number:
+        for all_table in self.tables_repository:
+            if not table_number == all_table.table_number:
                 return f"Could not find table {table_number}"
+            table = all_table
 
-            for food in food_name:
-                if food in self.food_menu:
-                    table.food_orders.append(food)
-                    result += f"- {food.name}: {food.portion}g - {food.price}lv" + '\n'
+        for ordered_food in food_name:
+            for all_food in self.food_menu:
+                if all_food.__class__.__name__ == ordered_food:
+                    foods.append(all_food)
+        for food in foods:
+            if food in self.food_menu:
+                table.food_orders.append(food)
+                result += f"- {food.name}: {food.portion}g - {food.price}lv" + '\n'
 
-                if food not in self.food_menu:
-                    result += f"{self.name} does not have in the menu:" + '\n'
-                    result += f"{food}" + '\n'
+            if food not in self.food_menu:
+                result += f"{self.name} does not have in the menu:" + '\n'
+                result += f"{food}" + '\n'
         return result
 
     def order_drink(self, table_number: int, *drinks_name):
+        drinks = []
+        table = ''
         result = f'Table {table_number} ordered:' + '\n'
-        for table in self.tables_repository:
-            if not table_number == table.table_number:
+        for all_table in self.tables_repository:
+            if not table_number == all_table.table_number:
                 return f"Could not find table {table_number}"
+            table = all_table
 
-            for drink in drinks_name:
-                if drink in self.food_menu:
-                    # if drink == da namerq obekta!!!
-                    table.food_orders.append(drink)
-                    result += f"- {drink.name} {drink.brand_name} - {drink.portion}ml - {drink.price}lv" + '\n'
+        for drinks_ in drinks_name:
+            for all_drink in self.drinks_menu:
+                if drinks_ == all_drink.__class__.__name__:
+                    drinks.append(all_drink)
 
-                if drink not in self.food_menu:
-                    result += f"{self.name} does not have in the menu:" + '\n'
-                    result += f"{drink}" + '\n'
+        for drink in drinks:
+            if drink in self.drinks_menu:
+                table.drink_orders.append(drink)
+                result += f"- {drink.name} {drink.brand} - {drink.portion}ml - {drink.price}lv" + '\n'
+
+            if drink not in self.drinks_menu:
+                result += f"{self.name} does not have in the menu:" + '\n'
+                result += f"{drink}" + '\n'
         return result
 
     def leave_table(self, table_number: int):
-        result = f"Table: {table_number}"
+        result = f"Table: {table_number}" + '\n'
 
         for table in self.tables_repository:
             if table_number == table.table_number:
-
                 bill = sum([x.price for x in table.food_orders]) + sum([x.price for x in table.drink_orders])
-                print(bill)
+                table.clear()
+                result += f"Bill: {bill:.02f}"
 
-    #
-    # Finds the table with the same table number, gets the bill for that table and clears it. Finally returns:
-    #
-    # "Table: {table_number}"
-    #
-    # "Bill: {table_bill}"
-    #
-    # The bill price should be formatted to the second decimal point.
-    #
+        return result
+
     def get_free_tables_info(self):
-        pass
+        for table in self.tables_repository:
+            if table.is_reserved is False:
+                return table.free_table_info()
 
-    #
-    # For each free table, returns the table info. Each table info should start on a new row.
-    #
     def get_total_income(self):
         return f"Total income: {self.total_income:.02f}lv"
