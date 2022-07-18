@@ -38,15 +38,17 @@ class SpaceStation:
         pass
 
     # If the planet does not exist, raise an Exception with the following message: "Invalid planet name!"
+
     # You should start by choosing the astronauts that are most suitable for the mission:
     # You should pick up to 5 astronauts with the highest amount of oxygen among the ones with oxygen above 30 units.
     # If you don't have any suitable astronauts, raise an Exception with the following message: "You need at least one astronaut to explore the planet!"
+
     # The astronauts start going out in open space one by one, sorted in descending order by the amount of oxygen they have:
     # An astronaut lands on a planet and starts collecting its items one by one starting from the last one in the collection. Each time he/she finds an item he/she takes a breath.
     # If an astronaut runs out of oxygen, he/ she should return to the space station, and the next astronaut starts exploring.
+
     # A mission is successful when all the items from the planet are collected:
     # If it is successful, return the following message, with the name of the explored planet and the number of the astronauts that had gone out in open space: "Planet: {planet_name} was explored. {astronauts} astronauts participated in collecting items."
-    #
     # Otherwise, return: "Mission is not completed."
 
     def report(self):
