@@ -50,18 +50,22 @@ class SpaceStation:
         # , adds it to the repository, and returns the following message: "Successfully added Planet: {planet_name}."
 
     def retire_astronaut(self, name: str):
-        try:
-            # Retires the astronaut from the space station by removing them from the repository and returns the
-            # following message: "Astronaut {astronaut_name} was retired!"
-            for astronaut in self.astronaut_repository.astronauts:
-                if astronaut.name == name:
-                    self.astronaut_repository.astronauts.remove(astronaut)
-                    return f"Astronaut {name} was retired!"
-        except IndexError:
-            # If an astronaut with that name doesn't exist,
-            # raise Exception with the following message: "Astronaut {astronaut_name} doesn't exist!"
 
-            raise Exception(f"Astronaut {name} doesn't exist!")
+        # Retires the astronaut from the space station by removing them from the repository and returns the
+        # following message: "Astronaut {astronaut_name} was retired!"
+        for astronaut in self.astronaut_repository.astronauts:
+            if astronaut.name == name:
+
+                self.astronaut_repository.astronauts.remove(astronaut)
+                return f"Astronaut {name} was retired!"
+            else:
+                raise Exception(f"Astronaut {name} doesn't exist!")
+        #  Дали не трябва да го направя по нормалня начин!!!
+
+        # If an astronaut with that name doesn't exist,
+        # raise Exception with the following message: "Astronaut {astronaut_name} doesn't exist!"
+
+
 
     def recharge_oxygen(self):
         for astronaut in self.astronaut_repository.astronauts:
@@ -69,9 +73,14 @@ class SpaceStation:
         # The method increases the oxygen of each astronaut by 10 units. There is no capacity limit.
 
     def send_on_mission(self, planet_name: str):
-        pass
+        planet = None
+        # If the planet does not exist, raise an Exception with the following message: "Invalid planet name!"
+        for all_planet in self.planet_repository.planets:
+            if not all_planet.name == planet_name:
+                raise Exception("Invalid planet name!")
+            planet = all_planet
 
-    # If the planet does not exist, raise an Exception with the following message: "Invalid planet name!"
+
 
     # You should start by choosing the astronauts that are most suitable for the mission:
     # You should pick up to 5 astronauts with the highest amount of oxygen among the ones with oxygen above 30 units.
