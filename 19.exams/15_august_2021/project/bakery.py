@@ -76,43 +76,34 @@ class Bakery:
 
                 if food not in self.food_menu:
                     result += f"{self.name} does not have in the menu:" + '\n'
-                    result += f"{food.name}" + '\n'
+                    result += f"{food}" + '\n'
         return result
 
-    def order_drink(self, table_number: int, drinks_name1: str, drink_name2: str):
-        pass
+    def order_drink(self, table_number: int, *drinks_name):
+        result = f'Table {table_number} ordered:' + '\n'
+        for table in self.tables_repository:
+            if not table_number == table.table_number:
+                return f"Could not find table {table_number}"
 
-    #
-    # The order_drink method will receive a table's number and different number of strings with drink's names.
-    #
-    # Finds the table with that number. If there is no such table, it returns:
-    #
-    # "Could not find table {table_number}"
-    #
-    # Otherwise, adds the drinks which could be ordered (are in the menu) in the table's orders, returns orders of the drinks which are in the menu and the ones that are not:
-    #
-    # "Table {table_number} ordered:
-    #
-    #  - {drink_name1} {brand_name1} - {portion1}ml - {price1}lv
-    #
-    #  - {drink_name2} {brand_name2} - {portion2}ml - {price2}lv
-    #
-    # …
-    #
-    #  - {drink_nameN} {brand_nameN} - {portionN}ml - {priceN}lv
-    #
-    # {bakery_name} does not have in the menu:
-    #
-    # {drink_name_not_in_the_menu1}
-    #
-    # {drink_name_not_in_the_menu2}
-    #
-    # …
-    #
-    # {drink_name_not_in_the_menuN}"
-    #
+            for drink in drinks_name:
+                if drink in self.food_menu:
+                    # if drink == da namerq obekta!!!
+                    table.food_orders.append(drink)
+                    result += f"- {drink.name} {drink.brand_name} - {drink.portion}ml - {drink.price}lv" + '\n'
+
+                if drink not in self.food_menu:
+                    result += f"{self.name} does not have in the menu:" + '\n'
+                    result += f"{drink}" + '\n'
+        return result
+
     def leave_table(self, table_number: int):
-        pass
+        result = f"Table: {table_number}"
+
+        for table in self.tables_repository:
+            if table_number == table.table_number:
+
+                bill = sum([x.price for x in table.food_orders]) + sum([x.price for x in table.drink_orders])
+                print(bill)
 
     #
     # Finds the table with the same table number, gets the bill for that table and clears it. Finally returns:
