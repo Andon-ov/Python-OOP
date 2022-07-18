@@ -10,4 +10,4 @@ print(space_station.add_astronaut("Geodesist", "Sasho"))
 print(space_station.add_planet("Zimnca", "Lupata, Motika"))
 print(space_station.add_planet("Burgas", "Batki, Kaki"))
 
-# print(space_station.retire_astronaut("Peshoo"))
+print(space_station.retire_astronaut("Peshoo"))

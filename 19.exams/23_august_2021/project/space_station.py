@@ -65,7 +65,11 @@ class SpaceStation:
         # If an astronaut with that name doesn't exist,
         # raise Exception with the following message: "Astronaut {astronaut_name} doesn't exist!"
 
-
+        # try:
+        #     self.astronaut_repository.astronauts.remove(self.astronaut_repository.find_by_name(name))
+        #     return f"Astronaut {name} was retired!"
+        # except ValueError:
+        #     raise Exception(f"Astronaut {name} doesn't exist!")
 
     def recharge_oxygen(self):
         for astronaut in self.astronaut_repository.astronauts:
