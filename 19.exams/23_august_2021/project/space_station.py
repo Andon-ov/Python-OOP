@@ -98,26 +98,54 @@ class SpaceStation:
         if not most_suitable_astronauts:
             raise Exception("You need at least one astronaut to explore the planet!")
 
-    # The astronauts start going out in open space one by one,
-    # sorted in descending order by the amount of oxygen they have:
+        astronauts = sorted(most_suitable_astronauts, key=lambda x: x.oxygen)
+        astronaut_gone_out_in_open_space = 1
+        items = planet.items
+        # The astronauts start going out in open space one by one,
+        # sorted in descending order by the amount of oxygen they have: while True:
+        while True:
+            if not astronauts:
+                break
+            if not items:
+                break
 
-    # An astronaut lands on a planet and starts collecting its items one by one
-    # starting from the last one in the collection. Each time he/she finds an item he/she takes a breath.
+            astronaut = astronauts.pop()
 
-    # If an astronaut runs out of oxygen, he/ she should return to the space station,
-    # and the next astronaut starts exploring.
+            while astronaut.oxygen > 0:
+                item = items.pop()
+                astronaut.backpack.append(item)
+                astronaut.breathe()
+                # An astronaut lands on a planet and starts collecting its items one by one
+                # starting from the last one in the collection. Each time he/she finds an item he/she takes a breath.
+                if astronaut.oxygen <= 0 and len(astronauts) > 0:
+                    astronaut_gone_out_in_open_space += 1
+                    continue
+                if astronaut.oxygen <= 0 or not items:
+                    if not items:
+                        self.number_of_successful_missions += 1
+                        return f"Planet: {planet_name} was explored. {astronaut_gone_out_in_open_space} astronauts participated in collecting items."
+                    if not astronauts:
+                        self.number_of_not_completed_missions += 1
+                        return "Mission is not completed."
+                # If an astronaut runs out of oxygen, he/ she should return to the space station,
+                # and the next astronaut starts exploring.
 
-    # A mission is successful when all the items from the planet are collected:
-    # If it is successful, return the following message, with the name of the explored planet and the number of the astronauts that had gone out in open space: "Planet: {planet_name} was explored. {astronauts} astronauts participated in collecting items."
-    # Otherwise, return: "Mission is not completed."
+
+
+# A mission is successful when all the items from the planet are collected:
+# If it is successful, return the following message, with the name of the explored planet
+# and the number of the astronauts that had gone out in open space:
+# "Planet: {planet_name} was explored. {astronauts} astronauts participated in collecting items."
+
+# Otherwise, return: "Mission is not completed."
 
     def report(self):
-        result = f'{self.number_of_successful_missions} successful missions!'+'\n'
-        result += f'{self.number_of_not_completed_missions} missions were not completed!'+'\n'
-        result += f"Astronauts' info:"+'\n'
+        result = f'{self.number_of_successful_missions} successful missions!' + '\n'
+        result += f'{self.number_of_not_completed_missions} missions were not completed!' + '\n'
+        result += f"Astronauts' info:" + '\n'
         for astronaut in self.astronaut_repository.astronauts:
             in_bag = "none" if not astronaut.backpack else ', '.join(astronaut.backpack)
-            result += f'Name: {astronaut.name}'+'\n'
-            result += f'Oxygen: {astronaut.oxygen}'+'\n'
-            result += f'Backpack items: {in_bag}'+'\n'
+            result += f'Name: {astronaut.name}' + '\n'
+            result += f'Oxygen: {astronaut.oxygen}' + '\n'
+            result += f'Backpack items: {in_bag}' + '\n'
         return result
