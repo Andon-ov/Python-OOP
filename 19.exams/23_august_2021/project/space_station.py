@@ -11,6 +11,12 @@ class SpaceStation:
         self.planet_repository = PlanetRepository()
         self.astronaut_repository = AstronautRepository()
 
+        self.number_of_successful_missions = 0
+        self.number_of_not_completed_missions = 0
+
+
+
+
         # planet_repository: a new repository created for each space station
         # astronaut_repository: a new repository created for each space station
 
@@ -53,23 +59,23 @@ class SpaceStation:
 
         # Retires the astronaut from the space station by removing them from the repository and returns the
         # following message: "Astronaut {astronaut_name} was retired!"
-        for astronaut in self.astronaut_repository.astronauts:
-            if astronaut.name == name:
-
-                self.astronaut_repository.astronauts.remove(astronaut)
-                return f"Astronaut {name} was retired!"
-            else:
-                raise Exception(f"Astronaut {name} doesn't exist!")
-        #  Дали не трябва да го направя по нормалня начин!!!
+        # for astronaut in self.astronaut_repository.astronauts:
+        #     if astronaut.name == name:
+        #
+        #         self.astronaut_repository.astronauts.remove(astronaut)
+        #         return f"Astronaut {name} was retired!"
+        #     else:
+        #         raise Exception(f"Astronaut {name} doesn't exist!")
+        # #  Дали не трябва да го направя по нормалня начин!!!
 
         # If an astronaut with that name doesn't exist,
         # raise Exception with the following message: "Astronaut {astronaut_name} doesn't exist!"
 
-        # try:
-        #     self.astronaut_repository.astronauts.remove(self.astronaut_repository.find_by_name(name))
-        #     return f"Astronaut {name} was retired!"
-        # except ValueError:
-        #     raise Exception(f"Astronaut {name} doesn't exist!")
+        try:
+            self.astronaut_repository.astronauts.remove(self.astronaut_repository.find_by_name(name))
+            return f"Astronaut {name} was retired!"
+        except ValueError:
+            raise Exception(f"Astronaut {name} doesn't exist!")
 
     def recharge_oxygen(self):
         for astronaut in self.astronaut_repository.astronauts:
@@ -77,18 +83,26 @@ class SpaceStation:
         # The method increases the oxygen of each astronaut by 10 units. There is no capacity limit.
 
     def send_on_mission(self, planet_name: str):
-        planet = None
         # If the planet does not exist, raise an Exception with the following message: "Invalid planet name!"
-        for all_planet in self.planet_repository.planets:
-            if not all_planet.name == planet_name:
-                raise Exception("Invalid planet name!")
-            planet = all_planet
+        planet = self.planet_repository.find_by_name(planet_name)
+        if planet is None:
+            raise Exception(f"Invalid planet name!")
+
+        # You should start by choosing the astronauts that are most suitable for the mission:
+        # You should pick up to 5 astronauts with the highest amount of oxygen among the ones with oxygen above 30 units.
+
+        most_suitable_astronauts = []
+        for astronaut in self.astronaut_repository.astronauts:
+            if astronaut.oxygen > 30:
+                if not len(most_suitable_astronauts) == 5:
+                    most_suitable_astronauts.append(astronaut)
+        # If you don't have any suitable astronauts,
+        # raise an Exception with the following message: "You need at least one astronaut to explore the planet!"
+        if not most_suitable_astronauts:
+            raise Exception("You need at least one astronaut to explore the planet!")
 
 
 
-    # You should start by choosing the astronauts that are most suitable for the mission:
-    # You should pick up to 5 astronauts with the highest amount of oxygen among the ones with oxygen above 30 units.
-    # If you don't have any suitable astronauts, raise an Exception with the following message: "You need at least one astronaut to explore the planet!"
 
     # The astronauts start going out in open space one by one, sorted in descending order by the amount of oxygen they have:
     # An astronaut lands on a planet and starts collecting its items one by one starting from the last one in the collection. Each time he/she finds an item he/she takes a breath.

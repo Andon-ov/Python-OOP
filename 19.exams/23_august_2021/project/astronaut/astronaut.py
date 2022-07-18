@@ -25,7 +25,6 @@ class Astronaut(ABC):
                                                             "Astronaut name cannot be empty string or whitespace!")
         self.__name = value
 
-
     def breathe(self):
         self.oxygen -= self.TAKE_A_BREATH
 
