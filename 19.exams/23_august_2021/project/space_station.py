@@ -10,20 +10,20 @@ class SpaceStation:
         # planet_repository: a new repository created for each space station
         # astronaut_repository: a new repository created for each space station
 
-    def add_astronaut(self,astronaut_type: str, name: str):
+    def add_astronaut(self, astronaut_type: str, name: str):
         pass
 
     # Creates an astronaut with the given name of the given type, adds them to the repository and returns the following message: "Successfully added {astronaut_type}: {astronaut_name}."
     # If an astronaut with that name is already in the repository returns: "{astronaut_name} is already added."
     # The valid astronaut types are "Biologist", "Geodesist" and "Meteorologist". If the astronaut type is invalid, raise an Exception with the message: "Astronaut type is not valid!"
 
-    def add_planet(self,name: str, items: str):
+    def add_planet(self, name: str, items: str):
         pass
 
     # Creates a planet with the provided name and items (single string with words, separated by ", "), adds it to the repository, and returns the following message: "Successfully added Planet: {planet_name}."
     # If a planet with that name is already in the repository returns: "{planet_name} is already added."
 
-    def retire_astronaut(self,name: str):
+    def retire_astronaut(self, name: str):
         pass
 
     # Retires the astronaut from the space station by removing them from the repository and returns the following message: "Astronaut {astronaut_name} was retired!"
@@ -31,9 +31,10 @@ class SpaceStation:
 
     def recharge_oxygen(self):
         pass
+
     # The method increases the oxygen of each astronaut by 10 units. There is no capacity limit.
 
-    def send_on_mission(self,planet_name: str):
+    def send_on_mission(self, planet_name: str):
         pass
 
     # If the planet does not exist, raise an Exception with the following message: "Invalid planet name!"
