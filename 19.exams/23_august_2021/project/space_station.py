@@ -14,9 +14,6 @@ class SpaceStation:
         self.number_of_successful_missions = 0
         self.number_of_not_completed_missions = 0
 
-
-
-
         # planet_repository: a new repository created for each space station
         # astronaut_repository: a new repository created for each space station
 
@@ -101,36 +98,26 @@ class SpaceStation:
         if not most_suitable_astronauts:
             raise Exception("You need at least one astronaut to explore the planet!")
 
+    # The astronauts start going out in open space one by one,
+    # sorted in descending order by the amount of oxygen they have:
 
+    # An astronaut lands on a planet and starts collecting its items one by one
+    # starting from the last one in the collection. Each time he/she finds an item he/she takes a breath.
 
-
-    # The astronauts start going out in open space one by one, sorted in descending order by the amount of oxygen they have:
-    # An astronaut lands on a planet and starts collecting its items one by one starting from the last one in the collection. Each time he/she finds an item he/she takes a breath.
-    # If an astronaut runs out of oxygen, he/ she should return to the space station, and the next astronaut starts exploring.
+    # If an astronaut runs out of oxygen, he/ she should return to the space station,
+    # and the next astronaut starts exploring.
 
     # A mission is successful when all the items from the planet are collected:
     # If it is successful, return the following message, with the name of the explored planet and the number of the astronauts that had gone out in open space: "Planet: {planet_name} was explored. {astronauts} astronauts participated in collecting items."
     # Otherwise, return: "Mission is not completed."
 
     def report(self):
-        pass
-    # Returns information about the number of successful missions, the number of not completed missions, and information about all the astronauts in the space station. If an astronaut doesn't have items in the backpack, return "none" instead:
-    # "{number_of_successful_missions} successful missions!
-    #
-    # {number_of_not_completed_missions} missions were not completed!
-    #
-    # Astronauts' info:
-    #
-    # Name: {astronaut_name1}
-    #
-    # Oxygen: {astronaut_oxygen1}
-    #
-    # Backpack items: {bag_item1, bag_item2, bag_item3, …, bag_itemn \ "none"}
-    #
-    # ...
-    #
-    # Name: {astronaut_nameN}
-    #
-    # Oxygen: {astronaut_oxygenN}
-    #
-    # Backpack items: {bag_item1, bag_item2, bag_item3, …, bag_itemn \ "none"}"
+        result = f'{self.number_of_successful_missions} successful missions!'+'\n'
+        result += f'{self.number_of_not_completed_missions} missions were not completed!'+'\n'
+        result += f"Astronauts' info:"+'\n'
+        for astronaut in self.astronaut_repository.astronauts:
+            in_bag = "none" if not astronaut.backpack else ', '.join(astronaut.backpack)
+            result += f'Name: {astronaut.name}'+'\n'
+            result += f'Oxygen: {astronaut.oxygen}'+'\n'
+            result += f'Backpack items: {in_bag}'+'\n'
+        return result

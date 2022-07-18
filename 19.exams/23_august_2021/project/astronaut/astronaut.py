@@ -10,7 +10,6 @@ class Astronaut(ABC):
     def __init__(self, name: str, oxygen: int):
         self.name = name
         self.oxygen = oxygen
-        # The oxygen of an astronaut in units
 
         self.backpack = []
         # In the backpack, each astronaut will collect items while on a mission
