@@ -17,3 +17,5 @@ class Planet:
         Validator.raise_error_if_empty_string_or_whitespace(value,"Planet name cannot be empty string or whitespace!")
         self.__name = value
 
+    # def __repr__(self): # samo za probata
+    #     return f'Planet: {self.name}, Items {self.items}'
