@@ -26,3 +26,8 @@ class Supply(ABC):
     def energy(self, value):
         Validator.raise_error_for_negative_number(value, "Energy cannot be less than zero.")
         self.__energy = value
+
+
+    #     @abstractmethod
+    #     def details(self):
+    #         ...

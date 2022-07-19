@@ -6,3 +6,7 @@ class Food(Supply):
         super().__init__(name, energy)
 
         # food has 25 units of energy as an optional parameter.
+
+    #
+    # def details(self):
+    #     return f"Food: {self.name}, {self.energy}"
