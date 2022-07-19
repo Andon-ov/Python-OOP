@@ -5,7 +5,7 @@ from project.validator import Validator
 class Driver:
     def __init__(self, name: str):
         self.name = name
-        self.car: Car = None
+        self.car = None
         # The default value is None.
         # One driver drives ONLY one car.
         self.number_of_wins: int = 0

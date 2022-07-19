@@ -7,7 +7,6 @@ class Car(ABC):
     MIN_SPEED_LIMIT = 0
     MAX_SPEED_LIMIT = 0
 
-    @abstractmethod
     def __init__(self, model: str, speed_limit: int):
         self.model = model
         self.speed_limit = speed_limit
@@ -30,5 +29,15 @@ class Car(ABC):
     @speed_limit.setter
     def speed_limit(self, value):
         Validator.speed_limits(value, self.MIN_SPEED_LIMIT, self.MAX_SPEED_LIMIT,
-                               f"Invalid speed limit! Must be between {self.MIN_SPEED_LIMIT} and {self.MAX_SPEED_LIMIT}!")
+                               f"Invalid speed limit! Must be between {self.MIN_SPEED_LIMIT} and {self.MIN_SPEED_LIMIT}!")
         self.__speed_limit = value
+
+    # @abstractmethod
+    # @property
+    # def min_speed_limit(self):
+    #     return
+    #
+    # @abstractmethod
+    # @property
+    # def max_speed_limit(self):
+    #     return

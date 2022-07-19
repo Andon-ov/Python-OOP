@@ -1,7 +1,6 @@
 from project.car.car import Car
 
 
-# minimum speed limit is 250, and its maximum speed limit is 450 (inclusive)
 
 class MuscleCar(Car):
     MIN_SPEED_LIMIT = 250
@@ -10,3 +9,10 @@ class MuscleCar(Car):
     def __init__(self, model: str, speed_limit: int):
         super().__init__(model, speed_limit)
 
+    @property
+    def min_speed_limit(self):
+        return 250
+
+    @property
+    def max_speed_limit(self):
+        return 450
