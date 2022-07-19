@@ -89,13 +89,41 @@ class Controller:
             # to the driver and return the message "Driver {driver_name} chose the car {car_model}."
 
     def add_driver_to_race(self, race_name: str, driver_name: str):
-        pass
-        # Adds a driver (object) with the given name to the race with the given name (if they both exist).
-        # If the race does not exist in the races' list, raise an Exception with the message "Race {name} could not be found!"
-        # If the driver does not exist in the drivers' list, raise an Exception with the message "Driver {name} could not be found!"
+        driver = ''
+        race = ''
         # First, check if the race exists!
-        # A driver can participate in a race, ONLY if he has a car. If the driver doesn't own a car, raise an Exception with the message "Driver {driver_name} could not participate in the race!"
-        # If they both exist and the driver owns a car, you should add the driver (object) to the race and return the message "Driver {driver_name} added in {race_name} race."
+        for all_race in self.races:
+            if all_race.name == race_name:
+                race = all_race
+                break
+        else:
+            # If the race does not exist in the races' list, raise an Exception with the message
+            # "Race {name} could not be found!"
+            raise Exception(f"Race {race_name} could not be found!")
+
+        for all_driver in self.drivers:
+            if all_driver.name == driver_name:
+                driver = all_driver
+                break
+        else:
+            # If the driver does not exist in the drivers' list, raise an
+            # Exception with the message "Driver {name} could not be found!"
+            raise Exception(f"Driver {driver_name} could not be found!")
+
+        if not driver == '' and driver.car is None:
+            raise Exception(f"Driver {driver_name} could not participate in the race!")
+
+            # A driver can participate in a race, ONLY if he has a car.
+            # If the driver doesn't own a car, raise an Exception with the message
+            # "Driver {driver_name} could not participate in the race!"
+        if not driver == "" and not race == '':
+            race.drivers.append(driver)
+            return f"Driver {driver_name} added in {race_name} race."
+
+        # If they both exist and the driver owns a car, you should add the driver (object) to the race
+        # and return the message "Driver {driver_name} added in {race_name} race."
+        # Adds a driver (object) with the given name to the race with the given name (if they both exist)
+
         # If the driver has already participated in the race, return the message "Driver {driver_name} is already added in {race_name} race."
 
     def start_race(self, race_name: str):
@@ -115,9 +143,15 @@ class Controller:
 
         # If the race exists and participants in the race are at least 3, the race starts.
         # Race Start
-        winners = sorted(race.drivers, key=lambda driver: driver.car.MAX_SPEED_LIMIT)[:3]
-        print(winners)
-        # [x.number_of_wins + 1 for x in winners]
+
+        winners = sorted(race.drivers, key=lambda driver: -driver.car.speed_limit)
+        winners = winners[-4:-1]
+        result = ''
+        for winner in winners:
+            winner.number_of_wins += 1
+            result += f"Driver {winner.name} wins the {race_name} race with a speed of {winner.car.speed_limit}." + '\n'
+        return result.strip()
+
         # The fastest 3 cars win the race and increase their number of wins by 1.
         # You should return a message for each of them in descending order in the format:
         # "Driver {fastest_driver_name} wins the {race_name} race with a speed of {speed_limit}."
