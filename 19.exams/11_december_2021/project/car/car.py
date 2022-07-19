@@ -19,6 +19,14 @@ class Car(ABC):
         Validator.raise_error_when_model_have_les_4_symbols(value, f"Model {value} is less than 4 symbols!")
         self.__model = value
 
+    @property
+    def speed_limit(self):
+        return self.__speed_limit
+
+    @speed_limit.setter
+    def speed_limit(self, value):
+        # Validator
+        self.__speed_limit = value
 # speed_limit: int
 # Every type of car has a different range of speed limit.
 # If it is not in the valid range,
