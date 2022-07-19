@@ -28,6 +28,7 @@ class Player:
 
     @property
     def age(self):
+
         return self.__age
 
     @age.setter
