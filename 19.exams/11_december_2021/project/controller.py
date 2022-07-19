@@ -118,6 +118,12 @@ class Controller:
             # If the driver doesn't own a car, raise an Exception with the message
             # "Driver {driver_name} could not participate in the race!"
         if not driver == "" and not race == '':
+
+            if driver in race.drivers:
+                return f"Driver {driver_name} is already added in {race_name} race."
+                # If the driver has already participated in the race,
+                # return the message "Driver {driver_name} is already added in {race_name} race."
+
             race.drivers.append(driver)
             return f"Driver {driver_name} added in {race_name} race."
 
@@ -125,7 +131,7 @@ class Controller:
         # and return the message "Driver {driver_name} added in {race_name} race."
         # Adds a driver (object) with the given name to the race with the given name (if they both exist)
 
-        # If the driver has already participated in the race, return the message "Driver {driver_name} is already added in {race_name} race."
+
 
     def start_race(self, race_name: str):
         all_race = {x.name for x in self.races}
@@ -145,8 +151,8 @@ class Controller:
         # If the race exists and participants in the race are at least 3, the race starts.
         # Race Start
 
-        winners = sorted(race.drivers, key=lambda driver: -driver.car.speed_limit)
-        winners = winners[-4:-1]
+        winners = sorted(race.drivers, key=lambda driver: driver.car.speed_limit, reverse=True)[:3]
+
         result = ''
         for winner in winners:
             winner.number_of_wins += 1
