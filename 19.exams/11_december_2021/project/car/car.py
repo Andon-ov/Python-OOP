@@ -1,9 +1,12 @@
-from abc import ABC,abstractmethod
+from abc import ABC, abstractmethod
 
 from project.validator import Validator
 
 
 class Car(ABC):
+    MIN_SPEED_LIMIT = 0
+    MAX_SPEED_LIMIT = 0
+
     @abstractmethod
     def __init__(self, model: str, speed_limit: int):
         self.model = model
@@ -26,12 +29,6 @@ class Car(ABC):
 
     @speed_limit.setter
     def speed_limit(self, value):
-        # Validator
+        Validator.speed_limits(value, self.MIN_SPEED_LIMIT, self.MAX_SPEED_LIMIT,
+                               f"Invalid speed limit! Must be between {self.MIN_SPEED_LIMIT} and {self.MAX_SPEED_LIMIT}!")
         self.__speed_limit = value
-# speed_limit: int
-# Every type of car has a different range of speed limit.
-# If it is not in the valid range,
-# raise a ValueError with the message "Invalid speed limit! Must be between {min_speed_limit} and {max_speed_limit}!"
-
-# All speed limit values will be unique. You do NOT need to check it explicitly.
-
