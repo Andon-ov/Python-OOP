@@ -1,9 +1,10 @@
-from abc import ABC
+from abc import ABC,abstractmethod
 
 from project.validator import Validator
 
 
 class Car(ABC):
+    @abstractmethod
     def __init__(self, model: str, speed_limit: int):
         self.model = model
         self.speed_limit = speed_limit
