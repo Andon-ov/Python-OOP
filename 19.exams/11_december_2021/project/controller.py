@@ -42,6 +42,7 @@ class Controller:
         return f"Race {race_name} is created."
         # Creates a race with the given name and adds it to the races' list.
         # If the race is successfully created, the method should return the message "Race {name} is created."
+
         # If the race with the given name already exists, throw an Exception with the message
         # "Race {name} is already created!"
 

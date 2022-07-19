@@ -12,7 +12,7 @@ class Creator:
         }
 
         if car_type not in cars:
-            return
+            return None
         car = cars[car_type](model, speed_limit)
         if model in all_models:
             raise Exception(f"Car {model} is already created!")
