@@ -3,7 +3,6 @@ from project.controller import Controller
 controller = Controller()
 print(controller.create_driver("Peter"))
 print(controller.create_car("SportsCar", "Porsche 718 Boxster", 470))
-print(controller.create_car("SportsCar", "Porsche 718 Boxster", 470))
 print(controller.add_car_to_driver("Peter", "SportsCar"))
 print(controller.create_car("SportsCar", "Porsche 911", 580))
 print(controller.add_car_to_driver("Peter", "SportsCar"))
