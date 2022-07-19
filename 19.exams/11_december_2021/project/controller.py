@@ -46,13 +46,47 @@ class Controller:
         # "Race {name} is already created!"
 
     def add_car_to_driver(self, driver_name: str, car_type: str):
-        pass
-        # Set the last car added from the given type to the driver with the given name (if they both exist).
-        # If the driver does not exist in the drivers' list, raise an Exception with the message "Driver {name} could not be found!"
-        # If there is no available car (all cars from that type are taken or does not exist) from the given type in the cars' list, raise an Exception with the message "Car {car_type} could not be found!". The car types are "MuscleCar" and "SportsCar".
         # First, check if the driver exists!
-        # If there is an available car (the car is not taken), but the driver already has a car, change it with the new one, change it to taken and return the message "Driver {name} changed his car from {old_model} to {new_model}."
-        # If they both exist, the driver doesn't own a car, and the car is not taken, you should set the car (object) to the driver and return the message "Driver {driver_name} chose the car {car_model}."
+        driver = ''
+        car = ''
+        for all_driver in self.drivers:
+            if all_driver.name == driver_name:
+                driver = all_driver
+                break
+        else:
+            # If the driver does not exist in the drivers' list,
+            # raise an Exception with the message "Driver {name} could not be found!"
+            raise Exception(f"Driver {driver_name} could not be found!")
+        # cars = reversed(self.cars)
+        # Set the last car added from the given type
+        # to the driver with the given name (if they both exist).
+        for all_car in self.cars[::-1]:
+            if all_car.__class__.__name__ == car_type and all_car.is_taken is False:
+                car = all_car
+                break
+        else:
+            raise Exception(f"Car {car_type} could not be found!")
+            # If there is no available car (all cars from that type are taken or does not exist)
+            # from the given type in the cars' list, raise an Exception with the message
+            # "Car {car_type} could not be found!". The car types are "MuscleCar" and "SportsCar".
+
+        if not car == "" and not driver == '':
+            # If there is an available car (the car is not taken), but the driver already has a car,
+            # change it with the new one, change it to taken and return the message
+            # "Driver {name} changed his car from {old_model} to {new_model}."
+            car_old_model = driver.car
+            if not driver.car is None:
+                driver.car = car
+                car_old_model.is_taken = False
+                car.is_taken = True
+                return f"Driver {driver.name} changed his car from {car_old_model.model} to {car.model}."
+
+            driver.car = car
+            car.is_taken = True
+            return f"Driver {driver_name} chose the car {car.model}."
+
+            # If they both exist, the driver doesn't own a car, and the car is not taken, you should set the car (object)
+            # to the driver and return the message "Driver {driver_name} chose the car {car_model}."
 
     def add_driver_to_race(self, race_name: str, driver_name: str):
         pass
@@ -68,7 +102,8 @@ class Controller:
         all_race = {x.name for x in self.races}
         if race_name not in all_race:
             raise Exception(f"Race {race_name} could not be found!")
-        # If the race does not exist in the races' list, raise an Exception with the message "Race {name} could not be found!"
+        # If the race does not exist in the races' list, raise an Exception with the message
+        # "Race {name} could not be found!"
         race = ''
         for r in self.races:
             if r.name == race_name:
