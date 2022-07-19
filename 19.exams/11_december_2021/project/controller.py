@@ -151,7 +151,7 @@ class Controller:
         # If the race exists and participants in the race are at least 3, the race starts.
         # Race Start
 
-        winners = sorted(race.drivers, key=lambda driver: driver.car.speed_limit, reverse=True)[:3]
+        winners = sorted(race.drivers, key=lambda driver: -driver.car.speed_limit, reverse=True)[:3]
 
         result = ''
         for winner in winners:
