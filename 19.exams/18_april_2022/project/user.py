@@ -33,16 +33,27 @@ class User:
         self.__age = value
 
     def __str__(self):
+
         result = f"Username: {self.username}, Age: {self.age}"
-
         # "Username: {username}, Age: {age}"
-        # "Liked movies:"
-        # "{details() of each movie liked by the user, on separate lines}"
-
+        if self.movies_liked:
+            result += "Liked movies:" + '\n'
+            result += f"{[x.details() for x in self.movies_liked]}" + '\n'
+            # "Liked movies:"
+            # "{details() of each movie liked by the user, on separate lines}"
+        elif not self.movies_liked:
+            result += "No movies liked." + '\n'
             # If no liked movies: "No movies liked."
 
-        # "Owned movies:"
-        # "{details() of every movie owned by the user}"
+        if self.movies_owned:
+            result += "Owned movies:" + '\n'
+            result += f"{[x.details() for x in self.movies_owned]}" + '\n'
+            # "Owned movies:"
+            # "{details() of every movie owned by the user}"
 
+        elif not self.movies_owned:
+            result += "No movies owned." + '\n'
             # If no owned movies: "No movies owned."
-        return result
+
+        return result.strip()
+
