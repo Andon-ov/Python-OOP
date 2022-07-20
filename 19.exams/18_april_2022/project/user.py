@@ -1,13 +1,15 @@
 from typing import List
 
+from project.movie_specification.movie import Movie
+
 
 class User:
     def __init__(self, username: str, age: int):
         self.username = username
         self.age = age
-        self.movies_liked: List[Movies] = []
+        self.movies_liked: List[Movie] = []
         # An empty list that will contain all movies (objects) liked by the user
-        self.movies_owned: List[Movies] = []
+        self.movies_owned: List[Movie] = []
         # An empty list that will contain all movies (objects) owned by the user
 
     @property
@@ -32,7 +34,6 @@ class User:
 
     def __str__(self):
         result = f"Username: {self.username}, Age: {self.age}"
-        return result
 
         # "Username: {username}, Age: {age}"
         # "Liked movies:"
@@ -44,3 +45,4 @@ class User:
         # "{details() of every movie owned by the user}"
 
             # If no owned movies: "No movies owned."
+        return result
