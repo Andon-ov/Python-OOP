@@ -23,4 +23,5 @@ class Fantasy(Movie):
     # "Fantasy movies must be restricted for audience under 6 years!"
 
     def details(self):
-        return f"Fantasy - Title:{self.title}, Year:{self.year}, Age restriction:{self.age_restriction}, Likes:{self.likes}, Owned by:{self.owner}"
+        pass
+        # return f"Fantasy - Title:{self.title}, Year:{self.year}, Age restriction:{self.age_restriction}, Likes:{self.likes}, Owned by:{self.owner}"

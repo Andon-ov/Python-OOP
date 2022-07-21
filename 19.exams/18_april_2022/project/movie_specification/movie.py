@@ -1,10 +1,10 @@
-import abc
+from abc import ABC, abstractmethod
 
 from project.user import User
 
 
-class Movie(abc.ABC):
-
+class Movie(ABC):
+    @abstractmethod
     def __init__(self, title: str, year: int, owner: object, age_restriction: int):
         self.title = title
         self.year = year
@@ -48,7 +48,6 @@ class Movie(abc.ABC):
         # If the owner is NOT an object of type User, raise a ValueError with the message
         # "The owner must be an object of type User!"
 
-    @abc.abstractmethod
     def details(self):
-        pass
+        return f"{self.__class__.__name__} - Title:{self.title}, Year:{self.year}, Age restriction:{self.age_restriction}, Likes:{self.likes}, Owned by:{self.owner}"
     # It returns a string with information about the movie by its type.

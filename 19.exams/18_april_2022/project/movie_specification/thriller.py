@@ -21,4 +21,5 @@ class Thriller(Movie):
     # "Thriller movies must be restricted for audience under 16 years!"
 
     def details(self):
-        return f"Thriller - Title:{self.title}, Year:{self.year}, Age restriction:{self.age_restriction}, Likes:{self.likes}, Owned by:{self.owner}"
+        pass
+        # return f"Thriller - Title:{self.title}, Year:{self.year}, Age restriction:{self.age_restriction}, Likes:{self.likes}, Owned by:{self.owner}"

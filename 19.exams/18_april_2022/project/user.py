@@ -1,15 +1,13 @@
-from typing import List
 
-from project.movie_specification.movie import Movie
 
 
 class User:
     def __init__(self, username: str, age: int):
         self.username = username
         self.age = age
-        self.movies_liked: List[Movie] = []
+        self.movies_liked = [] #: List[Movie]
         # An empty list that will contain all movies (objects) liked by the user
-        self.movies_owned: List[Movie] = []
+        self.movies_owned = [] #: List[Movie] =
         # An empty list that will contain all movies (objects) owned by the user
 
     @property
