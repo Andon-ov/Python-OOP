@@ -1,10 +1,7 @@
 from abc import ABC, abstractmethod
 
-from project.validator import Validator
-
 
 class Supply(ABC):
-    @abstractmethod
     def __init__(self, name: str, energy: int):
         self.name = name
         self.energy = energy
@@ -14,8 +11,9 @@ class Supply(ABC):
         return self.__name
 
     @name.setter
-    def name(self, value):
-        Validator.raise_error_for_empty_string(value, "Name cannot be an empty string.")
+    def name(self, value: str):
+        if value.strip() == "":
+            raise ValueError("Name cannot be an empty string.")
         self.__name = value
 
     @property
@@ -23,11 +21,11 @@ class Supply(ABC):
         return self.__energy
 
     @energy.setter
-    def energy(self, value):
-        Validator.raise_error_for_negative_number(value, "Energy cannot be less than zero.")
+    def energy(self, value: int):
+        if value < 0:
+            raise ValueError("Energy cannot be less than zero.")
         self.__energy = value
 
-
-    #     @abstractmethod
-    #     def details(self):
-    #         ...
+    @abstractmethod
+    def details(self):
+        pass
