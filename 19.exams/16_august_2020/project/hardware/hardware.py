@@ -16,6 +16,9 @@ class Hardware:
 
         self.software_components.append(software)
 
+    # If there is enough capacity and memory, add the software object to the software components.
+    # Otherwise, raise Exception with the message "Software cannot be installed"
+
     def uninstall(self, software: Software):
         if software in self.software_components:
             self.software_components.remove(software)
