@@ -26,7 +26,7 @@ class System:
             software = ExpressSoftware(name, capacity_consumption, memory_consumption)
             hardware.install(software)
             System._software.append(software)
-        except:
+        except Exception:
             raise Exception("Software cannot be installed")
 
     @staticmethod
@@ -39,7 +39,7 @@ class System:
             software = LightSoftware(name, capacity_consumption, memory_consumption)
             hardware.install(software)
             System._software.append(software)
-        except:
+        except Exception:
             raise Exception("Software cannot be installed")
 
     @staticmethod
