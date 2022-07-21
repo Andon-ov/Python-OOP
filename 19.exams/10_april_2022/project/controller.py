@@ -7,7 +7,6 @@ class Controller:
         self.players: list = []
         # An empty list that will contain all the players (objects)
         self.supplies: list = []
-
         # An empty list that will contain all the supplies (objects)
 
 
