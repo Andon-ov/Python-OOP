@@ -67,7 +67,6 @@ class Controller:
         self.supplies.remove(sustenance)
         return f"{player.name} sustained successfully with {sustenance.name}."
 
-
         # Use the last supply added from the given type to sustain the player
         # (increase his stamina with the supply's energy value and remove the supply from the list)
         # and return the message "{player_name} sustained successfully with {supply_name}."
@@ -76,18 +75,55 @@ class Controller:
         # but his stamina cannot enhance above 100 (it should be set to 100).
 
     def duel(self, first_player_name: str, second_player_name: str):
-        pass
+        # Note: there will be no case where both players will have equal stamina values at the beginning or in the end.
+        # Note: the players will always exist in the players list.
 
-    # The two players participate in a duel, each of them could only attack once.
-    # If a player's stamina is 0, he could not participate in a duel. In that case, return a message "Player {player_name} does not have enough stamina." and discontinue the duel. If both players' stamina is 0, return the message for both players on separate lines, starting from the first one given.
-    # If both players have a positive value of stamina, the duel begins:
-    # oThe player with a lower value of stamina attacks first. He reduces the other player's stamina by a value equal to one-half of his own (the attacker's) stamina.
-    # oNext, the other player attacks the same way (reduces the first player's stamina by a value equal to one-half of his own (the second attacker's) stamina).
-    # oIf, during the duel, a player's stamina becomes equal to or less than 0, it should be set to 0. The player immediately loses the duel, and the other player becomes a winner.
-    # oOtherwise, the winner is the player who has left with more stamina.
-    # oReturn the winner's name in the format: "Winner: {winner_name}"
-    # Note: there will be no case where both players will have equal stamina values at the beginning or in the end.
-    # Note: the players will always exist in the players list.
+        player1 = self.found_player(first_player_name)
+        player2 = self.found_player(second_player_name)
+        if player1.stamina == 0:
+            return f"Player {player1.name} does not have enough stamina."
+        if player2.stamina == 0:
+            return f"Player {player2.name} does not have enough stamina."
+        # If a player's stamina is 0, he could not participate in a duel.
+        # In that case, return a message "Player {player_name} does not have enough stamina."
+        # and discontinue the duel. If both players' stamina is 0,
+        # return the message for both players on separate lines, starting from the first one given.
+        players = sorted([player1, player2], key=lambda pl: pl.stamina)
+        first = players[0]
+        second = players[1]
+        # The two players participate in a duel, each of them could only attack once.
+        # If both players have a positive value of stamina, the duel begins:
+        # The player with a lower value of stamina attacks first.
+
+        # while player1.stamina > 0 or player2.stamina > 0:
+
+        # He reduces the other player's stamina by a value equal to one-half of his own (the attacker's) stamina.
+        if second.stamina - (first.stamina / 2) < 0:
+            second.stamina = 0
+            return f"Winner: {first.name}"
+
+        else:
+            second.stamina -= first.stamina / 2
+
+        # Next, the other player attacks the same way
+        # (reduces the first player's stamina by a value equal to one-half of his own (the second attacker's) stamina).
+        if first.stamina - (second.stamina / 2) < 0:
+            second.stamina = 0
+            return f"Winner: {second.name}"
+        else:
+            first.stamina -= second.stamina / 2
+
+
+        # If, during the duel, a player's stamina becomes equal to or less than 0, it should be set to 0.
+        # The player immediately loses the duel, and the other player becomes a winner.
+
+        # if first.stamina == 0 or second.stamina == 0:
+
+        winner_is = sorted([player1, player2], key=lambda pl: -pl.stamina)[0]
+        return f"Winner: {winner_is.name}"
+
+            # Otherwise, the winner is the player who has left with more stamina.
+            # oReturn the winner's name in the format: "Winner: {winner_name}"
 
     def next_day(self):
         pass
