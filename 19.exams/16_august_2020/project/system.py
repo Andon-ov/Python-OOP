@@ -22,7 +22,7 @@ class System:
     def register_express_software(hardware_name: str, name: str, capacity_consumption: int, memory_consumption: int):
         hardware = System.found_hardware(hardware_name)
         # If the hardware with the given name does NOT exist, return the message "Hardware does not exist"
-        if not hardware:
+        if hardware is None:
             return "Hardware does not exist"
         try:
             software = ExpressSoftware(name, capacity_consumption, memory_consumption)
@@ -31,25 +31,11 @@ class System:
         except Exception:
             raise "Software cannot be installed"
 
-        # Otherwise, create an express software, install it on the hardware, and add it to the software list
-        # If the installation is not possible, raise Exception with the message "Software cannot be installed"
-
-
-        # try:
-        #     hardware_obj = [x for x in System._hardware if x.name == hardware_name][0]
-        #     software_obj = ExpressSoftware(name, capacity_consumption, memory_consumption)
-        #     hardware_obj.install(software_obj)
-        #     System._software.append(software_obj)
-        # except IndexError:
-        #     return "Hardware does not exist"
-        # except Exception as ex:
-        #     return str(ex)
-
     @staticmethod
     def register_light_software(hardware_name: str, name: str, capacity_consumption: int, memory_consumption: int):
         hardware = System.found_hardware(hardware_name)
         # If the hardware with the given name does NOT exist, return the message "Hardware does not exist"
-        if not hardware:
+        if hardware is None:
             return "Hardware does not exist"
         try:
             software = LightSoftware(name, capacity_consumption, memory_consumption)
@@ -57,17 +43,6 @@ class System:
             System._software.append(software)
         except Exception:
             raise "Software cannot be installed"
-
-        # try:
-        #     hardware_obj = [x for x in System._hardware if x.name == hardware_name][0]
-        #     software_obj = LightSoftware(name, capacity_consumption, memory_consumption)
-        #     hardware_obj.install(software_obj)
-        #     System._software.append(software_obj)
-        #
-        # except IndexError:
-        #     return "Hardware does not exist"
-        # except Exception as ex:
-        #     return str(ex)
 
     # @staticmethod
     # def register_express_software(hardware_name: str, name: str, capacity_consumption: int, memory_consumption: int):
@@ -93,19 +68,10 @@ class System:
     def release_software_component(hardware_name: str, software_name: str):
         hardware = System.found_hardware(hardware_name)
         software = System.found_software(software_name)
-        if not software or hardware:
-
+        if software is None or hardware is None:
             return "Some of the components do not exist"
         hardware.uninstall(software)
         System._software.remove(software)
-
-        # try:
-        #     hardware_obj = [x for x in System._hardware if x.name == hardware_name][0]
-        #     software_obj = [x for x in System._software if x.name == software_name][0]
-        #     hardware_obj.uninstall(software_obj)
-        #     System._software.remove(software_obj)
-        # except IndexError:
-        #     return "Some of the components do not exist"
 
     @staticmethod
     def analyze():
@@ -141,9 +107,11 @@ class System:
         for hardware in System._hardware:
             if hardware.name == hardware_name:
                 return hardware
+        return None
 
     @staticmethod
     def found_software(software_name):
         for software in System._software:
             if software.name == software_name:
                 return software
+        return None
