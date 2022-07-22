@@ -10,8 +10,6 @@ class Movie(ABC):
         self.year = year
         self.owner = owner
         self.age_restriction = age_restriction
-        # The movie is unsuitable for people under the given age.
-        # The age restriction value depends on the movie genre.
         self.likes: int = 0
 
     @property
@@ -20,7 +18,7 @@ class Movie(ABC):
 
     @title.setter
     def title(self, value: str):
-        if value.strip() == "":
+        if len(value) == 0:
             raise ValueError("The title cannot be empty string!")
         self.__title = value
 
@@ -40,14 +38,12 @@ class Movie(ABC):
 
     @owner.setter
     def owner(self, value: User):
-        if not isinstance(value, User):
+        # if not isinstance(value, User):
+        if not type(value).__name__ == 'User':
             raise ValueError("The owner must be an object of type User!")
         self.__owner = value
-        # owner: User
-        # A user object that represents the one who made the movie
-        # If the owner is NOT an object of type User, raise a ValueError with the message
-        # "The owner must be an object of type User!"
 
+    @abstractmethod
     def details(self):
-        return f"{self.__class__.__name__} - Title:{self.title}, Year:{self.year}, Age restriction:{self.age_restriction}, Likes:{self.likes}, Owned by:{self.owner}"
-    # It returns a string with information about the movie by its type.
+
+        return f"{self.__class__.__name__} - Title:{self.title}, Year:{self.year}, Age restriction:{self.age_restriction}, Likes:{self.likes}, Owned by:{self.owner.username}"

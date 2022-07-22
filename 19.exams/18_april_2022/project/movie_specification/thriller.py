@@ -16,10 +16,7 @@ class Thriller(Movie):
             raise ValueError("Thriller movies must be restricted for audience under 16 years!")
         self.__age_restriction = value
 
-    # If no age restriction is given, it should be set to 16 (years).
-    # If the age restriction is less than 16, raise a ValueError with the message
-    # "Thriller movies must be restricted for audience under 16 years!"
-
     def details(self):
         pass
+
         # return f"Thriller - Title:{self.title}, Year:{self.year}, Age restriction:{self.age_restriction}, Likes:{self.likes}, Owned by:{self.owner}"

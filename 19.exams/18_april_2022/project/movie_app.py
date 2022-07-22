@@ -11,13 +11,14 @@ class MovieApp:
 
     def register_user(self, username: str, age: int):
         # Creates an instance of the User class with the given username and age, and:
-        user = User(username, age)
+
 
         # If a user with the same username is already registered,
         # raise an Exception with the message "User already exists!"
         if username in self.USERNAME:
             raise Exception("User already exists!")
 
+        user = User(username, age)
         # If the user (object) is not in the users_collection list,
         # add him/her and return the message "{username} registered successfully." self.USERNAME.add(username)
         self.users_collection.append(user)
@@ -66,23 +67,26 @@ class MovieApp:
         # The method edits the movie attributes with the given values and returns the message
         # "{username} successfully edited {movie_title} movie."
         for attribute, value in kwargs.items():
-            if attribute == "title":
-                movie.title = value
-            elif attribute == "year":
-                movie.year = value
-            else:
-                movie.age_restriction = value
+            setattr(movie, attribute, value)
+
+            # if attribute == "title":
+            #     movie.title = value
+            # elif attribute == "year":
+            #     movie.year = value
+            # else:
+            #     movie.age_restriction = value
 
             return f"{username} successfully edited {movie.title} movie."
 
     def delete_movie(self, username: str, movie: Movie):
+        # da go testq!!!
         # Only the owner of the movie given can delete it.
         user = self.found_user_with_username(username)
 
         # If the movie is not uploaded,
         # raise an Exception with the message "The movie {movie_title} is not uploaded!"
         if movie not in self.movies_collection:
-            raise Exception("The movie {movie_title} is not uploaded!")
+            raise Exception(f"The movie {movie.title} is not uploaded!")
 
         # If the user does not own that movie, raise Exception with the message
         # "{username given} is not the owner of the movie {movie_title}!"
@@ -135,10 +139,11 @@ class MovieApp:
         # If there are no movies uploaded, it returns: "No movies found."
         if not self.movies_collection:
             return "No movies found."
-        sorted_movie = sorted(self.movies_collection, key=lambda a: (a.year, a.title))
+        sorted_movie = sorted(self.movies_collection, key=lambda a: (-a.year, a.title))
         result = ''
         for i in sorted_movie:
-            result += i.details()
+
+            result += Movie.details(i)
             result += '\n'
 
         return result.strip()
