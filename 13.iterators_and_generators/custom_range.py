@@ -7,8 +7,10 @@ class custom_range:
 
     def __iter__(self):
         return self
-
+    # returns "next" value
+    # the value in "for" loop
     def __next__(self):
+        # No more values to iterate
         if self.next_value > self.end:
             raise StopIteration
 
