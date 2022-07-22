@@ -5,7 +5,11 @@ class Player:
         self.name = name
         self.age = age
         self.stamina = stamina
-        self.need_sustenance: bool = False if self.stamina < 100 else True
+
+
+    @property
+    def need_sustenance(self):
+        return  self.stamina < 100
 
     @property
     def name(self):
