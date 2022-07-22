@@ -3,10 +3,13 @@ class custom_range:
     def __init__(self, start, end):
         self.end = end
         self.start = start - 1
-        self.next_value = start
+        self.next_value = start # the value to return at "next" call
 
+    # Returns interator object ot "self"
+    # The interator should have '__next__'
     def __iter__(self):
         return self
+
     # returns "next" value
     # the value in "for" loop
     def __next__(self):
