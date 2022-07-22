@@ -113,7 +113,6 @@ class Controller:
         else:
             first.stamina -= second.stamina / 2
 
-
         # If, during the duel, a player's stamina becomes equal to or less than 0, it should be set to 0.
         # The player immediately loses the duel, and the other player becomes a winner.
 
@@ -122,15 +121,22 @@ class Controller:
         winner_is = sorted([player1, player2], key=lambda pl: -pl.stamina)[0]
         return f"Winner: {winner_is.name}"
 
-            # Otherwise, the winner is the player who has left with more stamina.
-            # oReturn the winner's name in the format: "Winner: {winner_name}"
+        # Otherwise, the winner is the player who has left with more stamina.
+        # oReturn the winner's name in the format: "Winner: {winner_name}"
 
     def next_day(self):
-        pass
+        # First, the stamina of each added player gets reduced by the result of multiplying their age by 2
+        for player in self.players:
+            # If a player's stamina becomes less than 0, it should be set to 0
+            if player.stamina - (player.age * 2) < 0:
+                player.stamina = 0
+            else:
+                player.stamina -= player.age * 2
+        # Then, you need to sustain each player by giving them one food (first) and one drink (second)
+        for player in self.players:
+            self.sustain(player.name, "Food")
+            self.sustain(player.name, "Drink")
 
-    # First, the stamina of each added player gets reduced by the result of multiplying their age by 2
-    # If a player's stamina becomes less than 0, it should be set to 0
-    # Then, you need to sustain each player by giving them one food (first) and one drink (second)
 
     def __str__(self):
         result = ''
