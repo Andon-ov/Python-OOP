@@ -37,6 +37,6 @@ class StudentTest(TestCase):
     def setUp(self) -> None:
         self.test_student = Student('Donko')
 
-# test
+
 if __name__ == "__main__":
     main()
