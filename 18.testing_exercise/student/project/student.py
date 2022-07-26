@@ -30,13 +30,3 @@ class Student:
         raise Exception("Cannot remove course. Course not found.")
 
 
-from unittest import TestCase, main
-
-
-class StudentTest(TestCase):
-    def setUp(self) -> None:
-        self.test_student = Student('Donko')
-
-
-if __name__ == "__main__":
-    main()
