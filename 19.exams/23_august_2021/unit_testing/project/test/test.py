@@ -14,12 +14,12 @@ class LibraryTest(TestCase):
         self.assertEqual(self.library_test.books_by_authors, {})
         self.assertEqual(self.library_test.readers, {})
 
-    def test_property_name(self):
-        self.assertEqual(self.library_test.name, "My Library")
-
-    def test_name_setter_work_correctly(self):
-        self.library_test.name = 'Test Name'
-        self.assertEqual(self.library_test.name, 'Test Name')
+    # def test_property_name(self):
+    #     self.assertEqual(self.library_test.name, "My Library")
+    #
+    # def test_name_setter_work_correctly(self):
+    #     self.library_test.name = 'Test Name'
+    #     self.assertEqual(self.library_test.name, 'Test Name')
 
     def test_name_setter_raise_value_error(self):
         with self.assertRaises(ValueError) as ex:
@@ -29,6 +29,7 @@ class LibraryTest(TestCase):
     def test_add_book(self):
         author = "Vazov"
         title = 'PodIgoto'
+        title2 = 'Gusla'
 
         self.library_test.add_book(author, title)
         actual_result = self.library_test.books_by_authors
@@ -41,7 +42,12 @@ class LibraryTest(TestCase):
         title2 = 'Gusla'
 
         self.library_test.add_book(author, title)
+        self.library_test.add_book(author, title)
         self.library_test.add_book(author, title2)
+
+        # self.assertEqual(1, len(self.library_test.books_by_authors))
+        # self.assertTrue(author in self.library_test.books_by_authors)
+        # self.assertEqual([title, title2], self.library_test.books_by_authors[author])
 
         actual_result = self.library_test.books_by_authors
         expected_result = {author: [title, title2]}
@@ -68,6 +74,8 @@ class LibraryTest(TestCase):
         expected_result = self.library_test.readers
 
         self.assertEqual(actual_result, expected_result)
+        # self.assertEqual(1, len(self.library_test.readers))
+        # self.assertTrue(name in self.library_test.readers)
 
     def test_cant_add_reader_already_registered(self):
         name = 'Vanko'
@@ -79,12 +87,13 @@ class LibraryTest(TestCase):
         self.assertEqual(actual_result, expected_result)
 
         # 61/100
+
     def test_rent_book_reader_is_not_registered(self):
         name = "Ivan"
         author = "Vazov"
         title = 'PodIgoto'
 
-        self.library_test.add_book(author, title)
+        # self.library_test.add_book(author, title)
 
         actual_result = self.library_test.rent_book(name, author, title)
         expected_result = f"{name} is not registered in the {self.library_test.name} Library."
@@ -107,6 +116,7 @@ class LibraryTest(TestCase):
         author = "Vazov"
         title = 'PodIgoto'
         title2 = 'Gusla'
+
         self.library_test.add_reader(name)
         self.library_test.add_book(author, title)
         actual_result = self.library_test.rent_book(name, author, title2)
@@ -122,10 +132,13 @@ class LibraryTest(TestCase):
         self.library_test.add_reader(name)
         self.library_test.add_book(author, title)
         self.library_test.rent_book(name, author, title)
+
         actual_result = self.library_test.books_by_authors
         expected_result = {author: []}
         self.assertEqual(actual_result, expected_result)
         # 92/100
+        self.assertEqual([{author: title}], self.library_test.readers[name])
+        # 100/100
 
 if __name__ == "__main__":
     main()
