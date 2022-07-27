@@ -58,17 +58,74 @@ class LibraryTest(TestCase):
         actual_result = self.library_test.books_by_authors
         expected_result = {author: [title], author2: [title]}
         self.assertEqual(actual_result, expected_result)
+
     # 46/100
 
-    # def test_add_reader
-    # def test_cant_add_reader
+    def test_add_reader_work_currently(self):
+        name = 'Vanko'
+        self.library_test.add_reader(name)
+        actual_result = {name: []}
+        expected_result = self.library_test.readers
 
-    # def test_rent_book
-    # def test_rent_book
-    # def test_rent_book
-    # def test_rent_book
+        self.assertEqual(actual_result, expected_result)
 
+    def test_cant_add_reader_already_registered(self):
+        name = 'Vanko'
+        self.library_test.add_reader(name)
+
+        actual_result = self.library_test.add_reader(name)
+        expected_result = f"{name} is already registered in the {self.library_test.name} library."
+
+        self.assertEqual(actual_result, expected_result)
+
+        # 61/100
+    def test_rent_book_reader_is_not_registered(self):
+        name = "Ivan"
+        author = "Vazov"
+        title = 'PodIgoto'
+
+        self.library_test.add_book(author, title)
+
+        actual_result = self.library_test.rent_book(name, author, title)
+        expected_result = f"{name} is not registered in the {self.library_test.name} Library."
+
+        self.assertEqual(actual_result, expected_result)
+
+    def test_rent_book_library_does_not_have_any_author_books(self):
+        name = "Ivan"
+        author = "Vazov"
+        title = 'PodIgoto'
+        self.library_test.add_reader(name)
+
+        actual_result = self.library_test.rent_book(name, author, title)
+        expected_result = f"{self.library_test.name} Library does not have any {author}'s books."
+
+        self.assertEqual(actual_result, expected_result)
+
+    def test_rent_book_library_does_not_have_this_book_title(self):
+        name = "Ivan"
+        author = "Vazov"
+        title = 'PodIgoto'
+        title2 = 'Gusla'
+        self.library_test.add_reader(name)
+        self.library_test.add_book(author, title)
+        actual_result = self.library_test.rent_book(name, author, title2)
+        expected_result = f"""{self.library_test.name} Library does not have {author}'s "{title2}"."""
+
+        self.assertEqual(actual_result, expected_result)
+
+    def test_rent_book_work_currently(self):
+        name = "Ivan"
+        author = "Vazov"
+        title = 'PodIgoto'
+
+        self.library_test.add_reader(name)
+        self.library_test.add_book(author, title)
+        self.library_test.rent_book(name, author, title)
+        actual_result = self.library_test.books_by_authors
+        expected_result = {author: []}
+        self.assertEqual(actual_result, expected_result)
+        # 92/100
 
 if __name__ == "__main__":
     main()
-
