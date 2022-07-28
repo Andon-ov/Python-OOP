@@ -4,10 +4,10 @@ from time import time
 def exec_time(func):
     def wrapped(*args):
         start = time()
-        func(*args)
+        result = func(*args)
         end = time()
 
-        return end - start
+        return f"{func.__name__} was called for {end - start} ms."
 
     return wrapped
 
