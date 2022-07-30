@@ -6,19 +6,20 @@ class PhotoAlbum:
 
     def __init__(self, pages):
         self.pages = pages
-        self.photos = self.__init_photos(pages)
+        self.photos = self.build_photos()
 
-    @staticmethod
-    def __init_photos(pages):
+    def build_photos(self):
         result = []
-        for _ in range(pages):
-            result.append([])
+        for _ in range(self.pages):
+            result.append([] * self.PHOTOS_PER_PAGE)
         return result
 
     @classmethod
     def from_photos_count(cls, photos_count: int):
-        pages = ceil(photos_count // PhotoAlbum.PHOTOS_PER_PAGE)
+        pages = ceil(photos_count / PhotoAlbum.PHOTOS_PER_PAGE)
+        #  have a error here with //
         return cls(pages)
+
 
     def add_photo(self, label: str):
         for idx, page in enumerate(self.photos):
@@ -39,7 +40,6 @@ class PhotoAlbum:
 
         return result.strip()
 
-#ToDo 85/100
 
 # album = PhotoAlbum(2)
 
