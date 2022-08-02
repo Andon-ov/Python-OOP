@@ -7,7 +7,7 @@ class BakedFood(ABC):
     @abstractmethod
     def __init__(self, name: str, portion: float, price: float):
         self.name = name
-        self.portion = portion  # It represents the size of the baked food in grams.
+        self.portion = portion
         self.price = price
 
     @property

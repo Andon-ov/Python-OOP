@@ -37,11 +37,7 @@ class Table(ABC):
         self.drink_orders.append(drink)
 
     def get_bill(self):
-        result = 0
-        for do in self.drink_orders:
-            result += do.price
-        for fo in self.food_orders:
-            result += fo.price
+        result = sum(x.price for x in self.drink_orders) + sum(x.price for x in self.food_orders)
         return result
 
     def clear(self):
@@ -53,7 +49,5 @@ class Table(ABC):
     def free_table_info(self):
         result = ''
         if not self.is_reserved:
-            result += f"Table: {self.table_number}" + '\n'
-            result += f"Type: {self.__class__.__name__}" + '\n'
-            result += f"Capacity: {self.capacity}"
+            result = f"Table: {self.table_number}\nType: {self.__class__.__name__}\nCapacity: {self.capacity}"
         return result
