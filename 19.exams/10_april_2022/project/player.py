@@ -20,7 +20,7 @@ class Player:
         if value.strip() == "":
             raise ValueError("Name not valid!")
         if value in self.players_names:
-            raise Exception("Name {name} is already used!")
+            raise Exception(f"Name {value} is already used!")
         self.__name = value
 
     @property
