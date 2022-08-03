@@ -63,51 +63,47 @@ class Bakery:
 
         return f"No available table for {number_of_people} people"
 
-    def order_food(self, table_number: int, *food_name):
-        foods = []
-        table = ''
+    def order_food(self, table_number: int, *foods_by_name):
+
+        foods_not_in_menu = list(foods_by_name)
+        table = self.found_table_by_number(table_number)
+
+        if table is None:
+            return f"Could not find table {table_number}"
+
         result = f'Table {table_number} ordered:' + '\n'
-        for all_table in self.tables_repository:
-            if not table_number == all_table.table_number:
-                return f"Could not find table {table_number}"
-            table = all_table
 
-        for ordered_food in food_name:
-            for all_food in self.food_menu:
-                if all_food.__class__.__name__ == ordered_food:
-                    foods.append(all_food)
-        for food in foods:
-            if food in self.food_menu:
-                table.food_orders.append(food)
-                result += f"- {food.name}: {food.portion}g - {food.price}lv" + '\n'
+        for foods_name in foods_by_name:
+            for food in self.food_menu:
+                if food.name == foods_name:
+                    result += f"- {food.name}: {food.portion}g - {food.price}lv" + '\n'
+                    table.order_food(food)
+                    foods_not_in_menu.remove(foods_name)
 
-            if food not in self.food_menu:
-                result += f"{self.name} does not have in the menu:" + '\n'
-                result += f"{food}" + '\n'
+        result += f"{self.name} does not have in the menu:" + '\n'
+        for food in foods_not_in_menu:
+            result += f"{food}" + '\n'
         return result
 
-    def order_drink(self, table_number: int, *drinks_name):
-        drinks = []
-        table = ''
+    def order_drink(self, table_number: int, *drinks_by_name):
+        table = self.found_table_by_number(table_number)
+        drinks_not_in_menu = list(drinks_by_name)
+
+        if table is None:
+            return f"Could not find table {table_number}"
+
         result = f'Table {table_number} ordered:' + '\n'
-        for all_table in self.tables_repository:
-            if not table_number == all_table.table_number:
-                return f"Could not find table {table_number}"
-            table = all_table
 
-        for drinks_ in drinks_name:
-            for all_drink in self.drinks_menu:
-                if drinks_ == all_drink.__class__.__name__:
-                    drinks.append(all_drink)
+        for drinks_name in drinks_by_name:
+            for drink in self.drinks_menu:
+                if drink.name == drinks_name:
+                    result += f"- {drink.name} {drink.brand} - {drink.portion}ml - {drink.price}lv" + '\n'
+                    table.order_drink(drink)
+                    drinks_not_in_menu.remove(drinks_name)
 
-        for drink in drinks:
-            if drink in self.drinks_menu:
-                table.drink_orders.append(drink)
-                result += f"- {drink.name} {drink.brand} - {drink.portion}ml - {drink.price}lv" + '\n'
-
-            if drink not in self.drinks_menu:
-                result += f"{self.name} does not have in the menu:" + '\n'
-                result += f"{drink}" + '\n'
+        result += f"{self.name} does not have in the menu:" + '\n'
+        for drink in drinks_not_in_menu:
+            result += f"{drink}" + '\n'
         return result
 
     def leave_table(self, table_number: int):
@@ -118,6 +114,7 @@ class Bakery:
                 bill = sum([x.price for x in table.food_orders]) + sum([x.price for x in table.drink_orders])
                 table.clear()
                 result += f"Bill: {bill:.02f}"
+                self.total_income += bill
 
         return result
 
@@ -128,3 +125,9 @@ class Bakery:
 
     def get_total_income(self):
         return f"Total income: {self.total_income:.02f}lv"
+
+    def found_table_by_number(self, table_number):
+        for table in self.tables_repository:
+            if table.table_number == table_number:
+                return table
+        return None
