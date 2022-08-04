@@ -63,48 +63,55 @@ class Bakery:
         return f"No available table for {number_of_people} people"
 
     def order_food(self, table_number: int, *foods_by_name):
-
-        foods_not_in_menu = list(foods_by_name)
         table = self.found_table_by_number(table_number)
 
         if table is None:
             return f"Could not find table {table_number}"
 
+        order_foods = f'Table {table_number} ordered:' + '\n'
+        skype_order_foods = f"{self.name} does not have in the menu:" + '\n'
 
-        result = f'Table {table_number} ordered:' + '\n'
+        for food_name in foods_by_name:
+            food = self.find_food_by_name(food_name)
 
-        for foods_name in foods_by_name:
-            for food in self.food_menu:
-                if food.name == foods_name:
-                    result += f"- {food.name}: {food.portion}g - {food.price}lv" + '\n'
-                    table.order_food(food)
-                    foods_not_in_menu.remove(foods_name)
+            if food is None:
+                skype_order_foods += food_name + '\n'
+            else:
+                order_foods += str(food) + '\n'
+                table.order_food(food)
 
-        result += f"{self.name} does not have in the menu:" + '\n'
-        for food in foods_not_in_menu:
-            result += f"{food}" + '\n'
-        return result
+        return order_foods + skype_order_foods.strip()
+
+    def find_food_by_name(self, food_name):
+        for food in self.food_menu:
+            if food.name == food_name:
+                return food
+        return None
+
+    def find_drink_by_name(self, drink_name):
+        for drink in self.drinks_menu:
+            if drink.name == drink_name:
+                return drink
+        return None
 
     def order_drink(self, table_number: int, *drinks_by_name):
         table = self.found_table_by_number(table_number)
-        drinks_not_in_menu = list(drinks_by_name)
+
+        order_drink = f'Table {table_number} ordered:' + '\n'
+        skype_order_drink = f"{self.name} does not have in the menu:" + '\n'
 
         if table is None:
             return f"Could not find table {table_number}"
 
-        result = f'Table {table_number} ordered:' + '\n'
-
         for drinks_name in drinks_by_name:
-            for drink in self.drinks_menu:
-                if drink.name == drinks_name:
-                    result += f"- {drink.name} {drink.brand} - {drink.portion}ml - {drink.price}lv" + '\n'
-                    table.order_drink(drink)
-                    drinks_not_in_menu.remove(drinks_name)
+            drink = self.find_drink_by_name(drinks_name)
+            if drink is None:
+                skype_order_drink += drinks_name + '\n'
+            else:
+                order_drink += str(drink) + '\n'
+                table.order_drink(drink)
 
-        result += f"{self.name} does not have in the menu:" + '\n'
-        for drink in drinks_not_in_menu:
-            result += f"{drink}" + '\n'
-        return result
+        return order_drink + skype_order_drink.strip()
 
     def leave_table(self, table_number: int):
         result = f"Table: {table_number}" + '\n'
