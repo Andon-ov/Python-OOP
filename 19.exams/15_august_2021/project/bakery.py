@@ -29,31 +29,29 @@ class Bakery:
         self.__name = value
 
     def add_food(self, food_type: str, name: str, price: float):
-        try:
-            food = self.food_factory.create_food(food_type, name, price, self.food_menu)
-            self.food_menu.append(food)
-            return f"Added {name} ({food_type}) to the food menu"
-        except ValueError as error:
-            return str(error)
+        if any(x.name == name for x in self.food_menu):
+            raise Exception(f"{food_type} {name} is already in the menu!")
+
+        food = self.food_factory.create_food(food_type, name, price)
+        self.food_menu.append(food)
+        return f"Added {name} ({food_type}) to the food menu"
 
     def add_drink(self, drink_type: str, name: str, portion: float, brand: str):
-        try:
-            drink = self.drink_factory.create_drunk(drink_type, name, portion, brand, self.drinks_menu)
+        if any(x.name == name for x in self.drinks_menu):
+            raise Exception(f"{drink_type} {name} is already in the menu!")
 
-            self.drinks_menu.append(drink)
-            return f"Added {name} ({brand}) to the drink menu"
-
-        except ValueError as error:
-            return str(error)
+        drink = self.drink_factory.create_drunk(drink_type, name, portion, brand)
+        self.drinks_menu.append(drink)
+        return f"Added {name} ({brand}) to the drink menu"
 
     def add_table(self, table_type: str, table_number: int, capacity: int):
-        try:
-            table = self.table_factory.create_table(table_type, table_number, capacity, self.tables_repository)
-            self.tables_repository.append(table)
-            return f"Added table number {table_number} in the bakery"
+        if any(x.table_number == table_number for x in self.tables_repository):
+            raise Exception(f"Table {table_number} is already in the bakery!")
 
-        except ValueError as error:
-            return str(error)
+        table = self.table_factory.create_table(table_type, table_number, capacity)
+        self.tables_repository.append(table)
+        return f"Added table number {table_number} in the bakery"
+
 
     def reserve_table(self, number_of_people: int):
         for table in self.tables_repository:
