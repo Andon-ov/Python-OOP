@@ -114,21 +114,22 @@ class Bakery:
         return order_drink + skype_order_drink.strip()
 
     def leave_table(self, table_number: int):
-        result = f"Table: {table_number}" + '\n'
 
-        for table in self.tables_repository:
-            if table_number == table.table_number:
-                bill = sum([x.price for x in table.food_orders]) + sum([x.price for x in table.drink_orders])
-                table.clear()
-                result += f"Bill: {bill:.02f}"
-                self.total_income += bill
+        table = self.found_table_by_number(table_number)
+        bill = table.get_bill()
+        self.total_income += bill
 
-        return result
+        table.clear()
+
+        return f"Table: {table_number}\nBill: {bill:.02f}"
 
     def get_free_tables_info(self):
+        result = ''
         for table in self.tables_repository:
-            if table.is_reserved is False:
-                return table.free_table_info()
+            if not table.is_reserved:
+                result += table.free_table_info() + '\n'
+
+        return result.strip()
 
     def get_total_income(self):
         return f"Total income: {self.total_income:.02f}lv"
