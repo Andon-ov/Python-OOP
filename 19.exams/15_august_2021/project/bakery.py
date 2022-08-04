@@ -52,11 +52,12 @@ class Bakery:
         self.tables_repository.append(table)
         return f"Added table number {table_number} in the bakery"
 
-
     def reserve_table(self, number_of_people: int):
         for table in self.tables_repository:
-            if table.is_reserved is False and table.capacity >= number_of_people:
-                table.is_reserved = True
+            if table.is_reserved:
+                continue
+            if table.capacity >= number_of_people:
+                table.reserve(number_of_people)
                 return f"Table {table.table_number} has been reserved for {number_of_people} people"
 
         return f"No available table for {number_of_people} people"
@@ -68,6 +69,7 @@ class Bakery:
 
         if table is None:
             return f"Could not find table {table_number}"
+
 
         result = f'Table {table_number} ordered:' + '\n'
 
