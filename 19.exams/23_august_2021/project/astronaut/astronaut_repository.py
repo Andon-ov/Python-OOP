@@ -1,13 +1,9 @@
-from typing import List
-
 from project.astronaut.astronaut import Astronaut
 
 
-#  It is a repository for the astronauts that are on the Space Station.
 class AstronautRepository:
-
     def __init__(self):
-        self.astronauts: List[Astronaut] = []
+        self.astronauts: list = []
 
     def add(self, astronaut: Astronaut):
         self.astronauts.append(astronaut)
@@ -17,7 +13,7 @@ class AstronautRepository:
             self.astronauts.remove(astronaut)
 
     def find_by_name(self, name: str):
-        for astronauts in self.astronauts:
-            if astronauts.name == name:
-                return astronauts
-
+        for astronaut in self.astronauts:
+            if astronaut.name == name:
+                return astronaut
+        return None

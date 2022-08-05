@@ -1,12 +1,9 @@
-from typing import List
-
 from project.planet.planet import Planet
 
 
 class PlanetRepository:
-    # It is a repository for planets that await to be explored.
     def __init__(self):
-        self.planets: List[Planet] = []
+        self.planets: list = []
 
     def add(self, planet: Planet):
         self.planets.append(planet)
@@ -19,3 +16,4 @@ class PlanetRepository:
         for planet in self.planets:
             if planet.name == name:
                 return planet
+        return None

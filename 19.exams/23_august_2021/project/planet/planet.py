@@ -2,11 +2,10 @@ from project.validator import Validator
 
 
 class Planet:
-    def __init__(self, name):
+    def __init__(self, name: str):
         self.name = name
-
         self.items = []
-        # list of strings holding each item that could be found on that planet
+        # strings holding each item that could be found on that planet
 
     @property
     def name(self):
@@ -14,8 +13,5 @@ class Planet:
 
     @name.setter
     def name(self, value):
-        Validator.raise_error_if_empty_string_or_whitespace(value,"Planet name cannot be empty string or whitespace!")
+        Validator.cannot_be_empty_string_or_whitespace(value, "Planet name cannot be empty string or whitespace!")
         self.__name = value
-
-    # def __repr__(self): # samo za probata
-    #     return f'Planet: {self.name}, Items {self.items}'
