@@ -14,8 +14,8 @@ class Controller:
     POSSIBLE_AQUARIUM_TYPE = {"FreshwaterAquarium": FreshwaterAquarium,
                               "SaltwaterAquarium": SaltwaterAquarium}
 
-    POSSIBLE_DECORATION_TYPE = {"Ornament": Ornament(),
-                                "Plant": Plant()}
+    POSSIBLE_DECORATION_TYPE = {"Ornament": Ornament,
+                                "Plant": Plant}
     POSSIBLE_FISH_TYPE = {"FreshwaterFish": FreshwaterFish,
                           "SaltwaterFish": SaltwaterFish}
 
@@ -34,7 +34,7 @@ class Controller:
         if decoration_type not in self.POSSIBLE_DECORATION_TYPE:
             return "Invalid decoration type."
 
-        self.decorations_repository.decorations.append(self.POSSIBLE_DECORATION_TYPE[decoration_type])
+        self.decorations_repository.decorations.append(self.POSSIBLE_DECORATION_TYPE[decoration_type]())
         return f"Successfully added {decoration_type}."
 
     def insert_decoration(self, aquarium_name: str, decoration_type: str):
@@ -63,7 +63,7 @@ class Controller:
 
     def calculate_value(self, aquarium_name: str):
         aquarium = self.found_aquarium(aquarium_name)
-        result = sum(x.price for x in aquarium.fish) + sum(x.price for x in aquarium.decorations)
+        result = sum([x.price for x in aquarium.fish]) + sum([x.price for x in aquarium.decorations])
         return f"The value of Aquarium {aquarium_name} is {result:.2f}."
 
     def report(self):
@@ -72,13 +72,12 @@ class Controller:
             result += str(aquarium) + '\n'
             result += '\n'
 
-        return result
+        return result.strip()
 
     def found_aquarium(self, aquarium_name):
         for aquarium in self.aquariums:
             if aquarium.name == aquarium_name:
                 return aquarium
         return None
-
 
 # ToDo  144 / 150
