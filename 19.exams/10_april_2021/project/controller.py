@@ -11,100 +11,74 @@ from project.fish.saltwater_fish import SaltwaterFish
 
 
 class Controller:
+    POSSIBLE_AQUARIUM_TYPE = {"FreshwaterAquarium": FreshwaterAquarium,
+                              "SaltwaterAquarium": SaltwaterAquarium}
+
+    POSSIBLE_DECORATION_TYPE = {"Ornament": Ornament(),
+                                "Plant": Plant()}
+    POSSIBLE_FISH_TYPE = {"FreshwaterFish": FreshwaterFish,
+                          "SaltwaterFish": SaltwaterFish}
+
     def __init__(self):
         self.decorations_repository = DecorationRepository()
         self.aquariums: List[BaseAquarium] = []
 
     def add_aquarium(self, aquarium_type: str, aquarium_name: str):
-
-        if aquarium_type not in ['FreshwaterAquarium', 'SaltwaterAquarium']:
+        if aquarium_type not in self.POSSIBLE_AQUARIUM_TYPE:
             return "Invalid aquarium type."
 
-        if aquarium_type == 'FreshwaterAquarium':
-            self.aquariums.append(FreshwaterAquarium(aquarium_name))
-            return f"Successfully added {aquarium_type}."
-
-        else:
-            self.aquariums.append(SaltwaterAquarium(aquarium_name))
-            return f"Successfully added {aquarium_type}."
+        self.aquariums.append(self.POSSIBLE_AQUARIUM_TYPE[aquarium_type](aquarium_name))
+        return f"Successfully added {aquarium_type}."
 
     def add_decoration(self, decoration_type: str):
-        if decoration_type not in ["Ornament", "Plant"]:
+        if decoration_type not in self.POSSIBLE_DECORATION_TYPE:
             return "Invalid decoration type."
 
-        if decoration_type == 'Ornament':
-            self.decorations_repository.add(Ornament())
-            return f"Successfully added {decoration_type}."
-
-        else:
-            self.decorations_repository.add(Plant())
-            return f"Successfully added {decoration_type}."
+        self.decorations_repository.decorations.append(self.POSSIBLE_DECORATION_TYPE[decoration_type])
+        return f"Successfully added {decoration_type}."
 
     def insert_decoration(self, aquarium_name: str, decoration_type: str):
-        aquarium = self.__found_aquarium(aquarium_name)
-        for d in self.decorations_repository.decorations:
-            if d.__clas__.__name__ == decoration_type:
 
-                aquarium.decorations.append(d)
-                self.decorations_repository.decorations.remove(d)
-                return f"Successfully added {decoration_type} to {aquarium_name}."
+        decoration = self.decorations_repository.find_by_type(decoration_type)
+        if decoration == 'None':
+            return f"There isn't a decoration of type {decoration_type}."
 
-            else:
-                return f"There isn't a decoration of type {decoration_type}."
+        aquarium = self.found_aquarium(aquarium_name)
+        aquarium.decorations.append(decoration)
+        self.decorations_repository.remove(decoration)
+        return f"Successfully added {decoration_type} to {aquarium_name}."
 
     def add_fish(self, aquarium_name: str, fish_type: str, fish_name: str, fish_species: str, price: float):
-        aquarium = self.__found_aquarium(aquarium_name)
-
-        if fish_type not in ["FreshwaterFish", "SaltwaterFish"]:
+        if fish_type not in self.POSSIBLE_FISH_TYPE:
             return f"There isn't a fish of type {fish_type}."
 
-        if fish_type == "FreshwaterFish":
-            fish = FreshwaterFish(fish_name, fish_species, price)
-            return aquarium.add_fish(fish)
+        aquarium = self.found_aquarium(aquarium_name)
 
-        else:
-            fish = SaltwaterFish(fish_name, fish_species, price)
-            return aquarium.add_fish(fish)
-
+        return aquarium.add_fish(self.POSSIBLE_FISH_TYPE[fish_type](fish_name, fish_species, price))
 
     def feed_fish(self, aquarium_name: str):
-        aquarium = self.__found_aquarium(aquarium_name)
+        aquarium = self.found_aquarium(aquarium_name)
         aquarium.feed()
         return f"Fish fed: {len(aquarium.fish)}"
 
     def calculate_value(self, aquarium_name: str):
-        result = 0
-        aquarium = self.__found_aquarium(aquarium_name)
-        for f in aquarium.fish:
-            result += f.price
-        for d in aquarium.decorations:
-            result += d.price
-        return f"The value of Aquarium {aquarium_name} is {result:.02f}."
+        aquarium = self.found_aquarium(aquarium_name)
+        result = sum(x.price for x in aquarium.fish) + sum(x.price for x in aquarium.decorations)
+        return f"The value of Aquarium {aquarium_name} is {result:.2f}."
 
     def report(self):
         result = ''
-        for a in self.aquariums:
-            result += str(a)
+        for aquarium in self.aquariums:
+            result += str(aquarium) + '\n'
+            result += '\n'
+
         return result
 
+    def found_aquarium(self, aquarium_name):
+        for aquarium in self.aquariums:
+            if aquarium.name == aquarium_name:
+                return aquarium
+        return None
 
-    # Returns information about each aquarium. You can use the overridden __str__ Aquarium method.
-    # "{aquarium name1}:
-    # Fish: {fish_name1} {fish_name2} {fish_name3} (…) / none
-    # Decorations: {decorations_count}
-    # Comfort: {aquarium_comfort}
 
-    # {aquarium name2}:
-    # Fish: {fish_name1} {fish_name2} {fish_name3} (…) / none
-    # Decorations: {decorations_count}
-    # Comfort: {aquarium_comfort}
-    # …
-    # {aquarium nameN}:
-    # Fish: {fish_name1} {fish_name2} {fish_name3} (…) / none
-    # Decorations: {decorations_count}
-    # Comfort: {aquarium_comfort}"
-
-    def __found_aquarium(self, aquarium_name):
-        for a in self.aquariums:
-            if a.name == aquarium_name:
-                return a
+# ToDo  144 / 150
