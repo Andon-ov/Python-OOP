@@ -1,155 +1,101 @@
 from project.player import Player
+from project.supply.drink import Drink
+from project.supply.food import Food
 from project.supply.supply import Supply
 
 
 class Controller:
     def __init__(self):
         self.players: list = []
-        # An empty list that will contain all the players (objects)
         self.supplies: list = []
-        # An empty list that will contain all the supplies (objects)
 
-    def add_player(self, *players: Player):
-        result = []
-        for player in players:
-            if player not in self.players:
-                result.append(player.name)
-                self.players.append(player)
-        return f"Successfully added: {', '.join([x for x in result])}"
+    def add_player(self, *player: Player):
+        player_name = []
 
-        # Add the players to the players' list.
-        # You should not add a player who has already been added.
-        # In the end, return a message  (", ") in the format: "Successfully added: {name1}, {name2}, … {nameN}"
+        for pl in player:
+            if pl not in self.players:
+                self.players.append(pl)
+                player_name.append(pl.name)
 
-    def add_supply(self, *supplys: Supply):
-        for supply in supplys:
-            self.supplies.append(supply)
+        return f"Successfully added: {', '.join([x for x in player_name])}"
 
-        # Add all supplies to the supplies list
-        # A supply could be added multiple times
+    def add_supply(self, *supply: Supply):
+        for sp in supply:
+            self.supplies.append(sp)
 
     def sustain(self, player_name: str, sustenance_type: str):
-        food = sum([1 for x in self.supplies if x.__class__.__name__ == 'Food'])
-        drink = sum([1 for x in self.supplies if x.__class__.__name__ == 'Drink'])
-
-        # The valid sustenance types are "Food" and "Drink". In any other case, ignore the command.
-        # If the player is not in the players list, ignore the command.
-
-        player = self.found_player(player_name)
-        if sustenance_type not in "Food""Drink":
-            return
+        supply_type = {"Food": Food,
+                       "Drink": Drink}
+        player = self.found_player_by_name(player_name)
         if player is None:
             return
-        if not player.need_sustenance:
+        if sustenance_type not in supply_type:
+            return
+        supply, index = self.found_supply_by_type(sustenance_type)
+
+        if supply is None:
+            raise Exception(f"There are no {sustenance_type.lower()} supplies left!")
+
+        if player.need_sustenance is False:
             return f"{player_name} have enough stamina."
 
-        # If the player doesn't need sustenance, it won't be appropriate to waste a supply.
-        # Just return the message "{player_name} have enough stamina."
-        if sustenance_type == "Food" and food == 0:
-            raise Exception("There are no food supplies left!")
-        # If the given type is food, but there is no food left,
-        # raise an Exception with the message
-
-        if sustenance_type == "Drink" and drink == 0:
-            raise Exception("There are no drink supplies left!")
-        # If the given type is drink, but there are no drinks left,
-        # raise an Exception with the message "There are no drink supplies left!"
-        supply = self.supplies[::-1]
-        sustenance = None
-        for sp in supply:
-            if sp.__class__.__name__ == sustenance_type:
-                sustenance = sp
-                break
-        if player.stamina + sustenance.energy > 100:
-            player.stamina = 100
-        else:
-            player.stamina += sustenance.energy
-        self.supplies.remove(sustenance)
-        return f"{player.name} sustained successfully with {sustenance.name}."
-
-        # Use the last supply added from the given type to sustain the player
-        # (increase his stamina with the supply's energy value and remove the supply from the list)
-        # and return the message "{player_name} sustained successfully with {supply_name}."
-
-        # A player always uses the whole amount (units) of the given supply,
-        # but his stamina cannot enhance above 100 (it should be set to 100).
+        player.stamina = min(player.stamina + supply.energy, 100)
+        self.supplies.pop(index)
+        return f"{player_name} sustained successfully with {supply.name}."
 
     def duel(self, first_player_name: str, second_player_name: str):
-        # Note: there will be no case where both players will have equal stamina values at the beginning or in the end.
-        # Note: the players will always exist in the players list.
 
-        player1 = self.found_player(first_player_name)
-        player2 = self.found_player(second_player_name)
-        if player1.stamina == 0:
-            return f"Player {player1.name} does not have enough stamina."
-        if player2.stamina == 0:
-            return f"Player {player2.name} does not have enough stamina."
-        # If a player's stamina is 0, he could not participate in a duel.
-        # In that case, return a message "Player {player_name} does not have enough stamina."
-        # and discontinue the duel. If both players' stamina is 0,
-        # return the message for both players on separate lines, starting from the first one given.
-        players = sorted([player1, player2], key=lambda pl: pl.stamina)
-        first = players[0]
-        second = players[1]
-        # The two players participate in a duel, each of them could only attack once.
-        # If both players have a positive value of stamina, the duel begins:
-        # The player with a lower value of stamina attacks first.
+        first_player = self.found_player_by_name(first_player_name)
+        second_player = self.found_player_by_name(second_player_name)
 
-        # while player1.stamina > 0 or player2.stamina > 0:
+        result = self.any_player_have_low_stamina(first_player, second_player)
+        if result:
+            return result
 
-        # He reduces the other player's stamina by a value equal to one-half of his own (the attacker's) stamina.
-        if second.stamina - (first.stamina / 2) < 0:
-            second.stamina = 0
-            return f"Winner: {first.name}"
+        player_one, player_two = sorted([first_player, second_player], key=lambda x: x.stamina)
 
-        else:
-            second.stamina -= first.stamina / 2
+        player_two.stamina = max(player_two.stamina - (player_one.stamina / 2), 0)
+        if player_two.stamina == 0:
+            return f"Winner: {player_one.name}"
+        player_one.stamina = max(player_one.stamina - (player_two.stamina / 2), 0)
+        if player_one.stamina == 0:
+            return f"Winner: {player_two.name}"
 
-        # Next, the other player attacks the same way
-        # (reduces the first player's stamina by a value equal to one-half of his own (the second attacker's) stamina).
-        if first.stamina - (second.stamina / 2) < 0:
-            second.stamina = 0
-            return f"Winner: {second.name}"
-        else:
-            first.stamina -= second.stamina / 2
-
-        # If, during the duel, a player's stamina becomes equal to or less than 0, it should be set to 0.
-        # The player immediately loses the duel, and the other player becomes a winner.
-
-        # if first.stamina == 0 or second.stamina == 0:
-
-        winner_is = sorted([player1, player2], key=lambda pl: -pl.stamina)[0]
-        return f"Winner: {winner_is.name}"
-
-        # Otherwise, the winner is the player who has left with more stamina.
-        # oReturn the winner's name in the format: "Winner: {winner_name}"
+        winner = sorted([first_player, second_player], key=lambda x: -x.stamina)[0]
+        return f"Winner: {winner.name}"
 
     def next_day(self):
-        # First, the stamina of each added player gets reduced by the result of multiplying their age by 2
         for player in self.players:
-            # If a player's stamina becomes less than 0, it should be set to 0
-            if player.stamina - (player.age * 2) < 0:
-                player.stamina = 0
-            else:
-                player.stamina -= player.age * 2
-        # Then, you need to sustain each player by giving them one food (first) and one drink (second)
-        for player in self.players:
+            player.stamina = max(player.stamina - (player.age * 2), 0)
             self.sustain(player.name, "Food")
             self.sustain(player.name, "Drink")
 
-
     def __str__(self):
         result = ''
-        for pl in self.players:
-            result += str(pl)
-            result += '\n'
-        for sp in self.supplies:
-            result += sp.details()
-            result += '\n'
+        for player in self.players:
+            result += str(player) + '\n'
+        for supply in self.supplies:
+            result += supply.details() + '\n'
+
         return result.strip()
 
-    def found_player(self, player_name):
+    def found_supply_by_type(self, sustenance_type):
+        for idx in range(len(self.supplies) - 1, -1, -1):
+            if self.supplies[idx].__class__.__name__ == sustenance_type:
+                return self.supplies[idx], idx
+        return None, -1
+
+    def found_player_by_name(self, player_name):
         for player in self.players:
             if player.name == player_name:
                 return player
         return None
+
+    @staticmethod
+    def any_player_have_low_stamina(first_player, second_player):
+        return_result = ''
+        if first_player.stamina == 0:
+            return_result += f"Player {first_player.name} does not have enough stamina.\n"
+        if second_player.stamina == 0:
+            return_result += f"Player {second_player.name} does not have enough stamina."
+        return return_result.strip()
