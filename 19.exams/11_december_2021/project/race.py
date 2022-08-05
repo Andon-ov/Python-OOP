@@ -1,13 +1,10 @@
-from typing import List
-
-from project.driver import Driver
 from project.validator import Validator
 
 
 class Race:
     def __init__(self, name: str):
         self.name = name
-        self.drivers: List[Driver] = []
+        self.drivers: list = []
 
     @property
     def name(self):
@@ -15,6 +12,5 @@ class Race:
 
     @name.setter
     def name(self, value):
-        Validator.contains_only_white_spaces_or_empty_string(value, "Name cannot be an empty string!")
+        Validator.cannot_be_empty_string_or_whitespace(value, "Name cannot be an empty string!")
         self.__name = value
-        # Tuk tyrsim samo prazen string!!!
