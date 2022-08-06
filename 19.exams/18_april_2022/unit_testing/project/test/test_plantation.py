@@ -41,15 +41,17 @@ class PlantationTest(TestCase):
         self.assertEqual(str(ex.exception), "Worker already hired!")
         self.assertIn(worker, self.test_plantation.workers)
 
-    # Da go razbera!!!
-    def test_len_not_addition(self):
-        self.pl = Plantation(1)
-        self.pl.hire_worker('Martin')
-        self.pl.hire_worker('Alexandra')
+    def test_len_work_correctly(self):
+        worker = 'Kolio'
+        worker1 = 'Joro'
+        plant = 'Tomatoes'
+        plant1 = 'plant'
+        self.test_plantation.hire_worker(worker)
+        self.test_plantation.hire_worker(worker1)
+        self.test_plantation.planting(worker, plant)
+        self.test_plantation.planting(worker1, plant1)
+        self.assertEqual(len(self.test_plantation), 2)
 
-        self.pl.plants['Martin'] = ['Tomatoes']
-        self.pl.plants['Alexandra'] = ['plant']
-        self.assertEqual(self.pl.__len__(), 2)
 
     def test_planting_raise_value_error_worker_not_hired(self):
         worker = 'Stefo'
@@ -102,7 +104,6 @@ class PlantationTest(TestCase):
         self.test_plantation.planting(worker, plant)
         result = 'Size: 10\nWorkers: Stefo'
         self.assertEqual(self.test_plantation.__repr__(), result)
-
 
 
 if __name__ == '__main__':
