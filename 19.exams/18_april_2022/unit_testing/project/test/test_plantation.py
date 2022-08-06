@@ -1,104 +1,109 @@
-from project.plantation import Plantation
-
 from unittest import TestCase, main
+
+from project.plantation import Plantation
 
 
 class PlantationTest(TestCase):
+    size = 10
 
-    def setUp(self):
-        self.test_plantation = Plantation(1)
+    def setUp(self) -> None:
+        self.test_plantation = Plantation(self.size)
 
-    def test_plantation_init(self):
-        expected_result = self.test_plantation.size
-        actual_result = 1
+    def test_init_work_correctly(self):
+        self.assertEqual(self.test_plantation.size, self.size)
+        self.assertDictEqual(self.test_plantation.plants, {})
+        self.assertListEqual(self.test_plantation.workers, [])
 
-        self.assertEqual(expected_result, actual_result)
+    def test_size_setter_work_correctly(self):
+        new_size = 1
+        self.test_plantation.size = new_size
+        self.assertEqual(self.test_plantation.size, new_size)
 
-    def test_size_set_positive_number(self):
-        expected_result = self.test_plantation.size = 500
-        actual_result = 500
-
-        self.assertEqual(expected_result, actual_result)
-
-    def test_size_set_negative_number(self):
+    def test_size_raise_value_error(self):
         with self.assertRaises(ValueError) as ex:
-            self.test_plantation.size = -500
-        self.assertEqual("Size must be positive number!", str(ex.exception))
+            self.test_plantation.size = -1
+        self.assertEqual(str(ex.exception), "Size must be positive number!")
+        self.assertEqual(self.test_plantation.size, self.size)
 
-    def test_hire_worker_unsuccessfully(self):
-        self.test_plantation.hire_worker('Tosho')
+    def test_hire_worker_work_correctly(self):
+        worker = "Kolio"
+        result = self.test_plantation.hire_worker(worker)
+        self.assertEqual(result, f"{worker} successfully hired.")
+        self.assertIn(worker, self.test_plantation.workers)
+        self.assertEqual(self.test_plantation.workers[0], worker)
 
-        with self.assertRaises(ValueError) as ex:
-            self.test_plantation.hire_worker('Tosho')
-        self.assertEqual("Worker already hired!", str(ex.exception))
-
-    def test_hire_worker_successfully(self):
-        name = 'Tosho'
-        expected_result = 'Tosho successfully hired.'
-        actual_result = self.test_plantation.hire_worker(name)
-        self.assertEqual(expected_result, actual_result)
-        self.assertTrue(name in self.test_plantation.workers)
-
-    def test_planting_worker_not_hired(self):
-        worker = 'Tosho'
-        with self.assertRaises(ValueError) as ex:
-            self.test_plantation.planting('Tosho', 'Treva')
-        self.assertEqual(f"Worker with name {worker} is not hired!", str(ex.exception))
-
-    def test_planting_is_full(self):
-        name = 'Tosho'
-        plant = 'Treva'
-
-        self.test_plantation.hire_worker(name)
-        self.test_plantation.planting(name, plant)
+    def test_hire_worker_raise_value_error(self):
+        worker = "Kolio"
+        self.test_plantation.hire_worker(worker)
 
         with self.assertRaises(ValueError) as ex:
-            self.test_plantation.planting(name, plant)
-        self.assertEqual("The plantation is full!", str(ex.exception))
+            self.test_plantation.hire_worker(worker)
+        self.assertEqual(str(ex.exception), "Worker already hired!")
+        self.assertIn(worker, self.test_plantation.workers)
+
+    # Da go razbera!!!
+    def test_len_not_addition(self):
+        self.pl = Plantation(1)
+        self.pl.hire_worker('Martin')
+        self.pl.hire_worker('Alexandra')
+
+        self.pl.plants['Martin'] = ['Tomatoes']
+        self.pl.plants['Alexandra'] = ['plant']
+        self.assertEqual(self.pl.__len__(), 2)
+
+    def test_planting_raise_value_error_worker_not_hired(self):
+        worker = 'Stefo'
+        with self.assertRaises(ValueError) as ex:
+            self.test_plantation.planting(worker, 'Trewa')
+        self.assertEqual(str(ex.exception), f"Worker with name {worker} is not hired!")
+        self.assertNotIn(worker, self.test_plantation.workers)
+
+    def test_planting_raise_value_error_is_full(self):
+        self.test_plantation.size = 0
+        worker = 'Stefo'
+        self.test_plantation.hire_worker(worker)
+
+        with self.assertRaises(ValueError) as ex:
+            self.test_plantation.planting(worker, 'Trewa')
+        self.assertEqual(str(ex.exception), "The plantation is full!")
 
     def test_planting_first_plant(self):
-        worker = 'Tosho'
-        plant = 'Treva'
+        worker = 'Stefo'
+        plant = 'Trewa'
         self.test_plantation.hire_worker(worker)
-        expected_result = f"{worker} planted it's first {plant}."
-        actual_result = self.test_plantation.planting(worker, plant)
-
-        self.assertEqual(expected_result, actual_result)
+        result = self.test_plantation.planting(worker, plant)
+        self.assertEqual(result, f"{worker} planted it's first {plant}.")
+        self.assertEqual(self.test_plantation.plants[worker], [plant])
 
     def test_planting_second_plant(self):
-        self.test_plantation.size = 10
-        worker = 'Tosho'
-        plant = 'Treva'
-
+        worker = 'Stefo'
+        plant = 'Trewa'
         self.test_plantation.hire_worker(worker)
         self.test_plantation.planting(worker, plant)
 
-        expected_result = f"{worker} planted {plant}."
-        actual_result = self.test_plantation.planting(worker, plant)
-        self.assertEqual(expected_result, actual_result)
-        # len Test
+        result = self.test_plantation.planting(worker, plant)
+        self.assertEqual(result, f"{worker} planted {plant}.")
+
+        self.assertEqual(self.test_plantation.plants[worker], [plant, plant])
         self.assertEqual(2, len(self.test_plantation))
 
-    def test_str(self):
-        worker = 'Tosho'
-        plant = 'Treva'
-
+    def test__str__work_correctly(self):
+        worker = 'Stefo'
+        plant = 'Trewa'
         self.test_plantation.hire_worker(worker)
         self.test_plantation.planting(worker, plant)
+        result = 'Plantation size: 10\nStefo\nStefo planted: Trewa'
+        self.assertEqual(self.test_plantation.__str__(), result)
 
-        actual_result = str(self.test_plantation)
-        expected_result = 'Plantation size: 1\nTosho\nTosho planted: Treva'
-
-        self.assertEqual(actual_result,expected_result)
-
-    def test_repr(self):
-        worker = 'Tosho'
-
+    def test__repr__work_correctly(self):
+        worker = 'Stefo'
+        plant = 'Trewa'
         self.test_plantation.hire_worker(worker)
-        actual_result = f'Size: {self.test_plantation.size}\n' + f'Workers: {", ".join(self.test_plantation.workers)}'
-        expected_result = f'Size: 1''\n''Workers: Tosho'
-        self.assertEqual(actual_result, expected_result)
+        self.test_plantation.planting(worker, plant)
+        result = 'Size: 10\nWorkers: Stefo'
+        self.assertEqual(self.test_plantation.__repr__(), result)
 
 
-if __name__ == "__main__":
+
+if __name__ == '__main__':
     main()
