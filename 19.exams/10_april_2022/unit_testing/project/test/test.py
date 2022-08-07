@@ -1,75 +1,72 @@
 from project.movie import Movie
 
-
 from unittest import TestCase, main
 
 
 class MovieTest(TestCase):
+    name: str = 'Test Movie'
+    year: int = 1980
+    rating: float = 9.9
+
     def setUp(self) -> None:
-        name: str = "The Lord of the Rings"
-        year: int = 2001
-        rating: float = 8.8
+        self.test_movie = Movie(self.name, self.year, self.rating)
 
-        self.test_movie = Movie(name, year, rating)
-        self.other_test_movie = Movie("Test", 1999, 6.6)
-
-    def test_movie_init(self):
-        name: str = "The Lord of the Rings"
-        year: int = 2001
-        rating: float = 8.8
-
-        self.assertEqual(self.test_movie.name, name)
-        self.assertEqual(self.test_movie.year, year)
-        self.assertEqual(self.test_movie.rating, rating)
-        self.assertEqual(self.test_movie.actors, [])
-
-    def test_name_setter_work_correctly(self):
-        name = "DC League of Super-Pets"
-        self.test_movie.name = name
-        self.assertEqual(self.test_movie.name, name)
+    def test_init_work_correctly(self):
+        self.assertEqual(self.test_movie.name, self.name)
+        self.assertEqual(self.test_movie.year, self.year)
+        self.assertEqual(self.test_movie.rating, self.rating)
+        self.assertListEqual(self.test_movie.actors, [])
 
     def test_name_setter_raise_value_error(self):
-        name = ""
         with self.assertRaises(ValueError) as ex:
-            self.test_movie.name = name
-        self.assertEqual("Name cannot be an empty string!", str(ex.exception))
-
-    def test_year_setter_work_correctly(self):
-        year: int = 2222
-        self.test_movie.year = year
-        self.assertEqual(self.test_movie.year, year)
+            self.test_movie.name = ''
+        self.assertEqual(str(ex.exception), "Name cannot be an empty string!")
+        self.assertEqual(self.test_movie.name, self.name)
 
     def test_year_setter_raise_value_error(self):
-        year: int = 1600
         with self.assertRaises(ValueError) as ex:
-            self.test_movie.year = year
-        self.assertEqual("Year is not valid!", str(ex.exception))
+            self.test_movie.year = 1886
+        self.assertEqual(str(ex.exception), "Year is not valid!")
+        self.assertEqual(self.test_movie.year, self.year)
 
     def test_add_actor_work_correctly(self):
-        name = 'Sponge Bob'
-        self.test_movie.add_actor(name)
-        self.assertEqual(*self.test_movie.actors, name)
+        actor = 'Kolio'
+        self.test_movie.add_actor(actor)
+        self.assertIn(actor, self.test_movie.actors)
+        self.assertEqual(self.test_movie.actors[0], actor)
 
     def test_add_actor_already_added(self):
-        name = 'Sponge Bob'
-        self.test_movie.add_actor(name)
+        actor = 'Kolio'
+        self.test_movie.add_actor(actor)
+        self.assertEqual(self.test_movie.add_actor(actor), f"{actor} is already added in the list of actors!")
+        self.assertEqual(len(self.test_movie.actors), 1)
 
-        actual_result = self.test_movie.add_actor(name)
-        expected_result = f"{name} is already added in the list of actors!"
+    def test___gt__work_correctly(self):
+        new_name: str = 'New Test Movie'
+        new_year: int = 2000
+        new_rating: float = 8.9
+        new_test_movie = Movie(new_name, new_year, new_rating)
 
-        self.assertEqual(actual_result, expected_result)
+        self.assertEqual(self.test_movie.__gt__(new_test_movie),
+                         f'"{self.name}" is better than "{new_test_movie.name}"')
 
-    def test__gt__work_correctly(self):
-        result = self.test_movie.__gt__(self.other_test_movie)
-        self.assertEqual('"The Lord of the Rings" is better than "Test"', result)
+        new_test_movie.rating += 2
+
+        self.assertEqual(self.test_movie.__gt__(new_test_movie),
+                         f'"{new_test_movie.name}" is better than "{self.name}"')
 
     def test___repr__work_correctly(self):
-        actual_result = str(self.test_movie)
-        expected_result = f"Name: {self.test_movie.name}\n"f"Year of Release: {self.test_movie.year}\n"f"Rating: {self.test_movie.rating:.2f}\n"f"Cast: {', '.join(self.test_movie.actors)}"
+        actor = 'Kolio'
+        actor1 = 'Tosho'
+
+        self.test_movie.add_actor(actor)
+        self.test_movie.add_actor(actor1)
+
+        expected_result = repr(self.test_movie)
+        actual_result = f"Name: {self.name}\nYear of Release: {self.year}\nRating: {self.rating:.2f}\nCast: {', '.join(self.test_movie.actors)}"
+
         self.assertEqual(actual_result, expected_result)
 
 
 if __name__ == "__main__":
     main()
-
-
