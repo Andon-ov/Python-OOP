@@ -4,86 +4,78 @@ from project.team import Team
 
 
 class TeamTest(TestCase):
+    name = "MyTeam"
+
     def setUp(self) -> None:
-        name = 'MyTeam'
-        name2 = 'OtherTeam'
+        self.test_team = Team(self.name)
 
-        self.team_test = Team(name)
-        self.other_team_test = Team(name2)
-
-    def test_team_init(self):
-        expected_result = 'MyTeam'
-        actual_result = self.team_test.name
-
-        self.assertEqual(expected_result, actual_result)
-        self.assertEqual({}, self.team_test.members)
-
-    def test_property_name(self):
-        expected_result = 'MyTeam'
-        actual_result = self.team_test.name
-
-        self.assertEqual(expected_result, actual_result)
+    def test_init_work_correctly(self):
+        self.assertEqual(self.name, self.test_team.name)
+        self.assertEqual(self.test_team.members, {})
 
     def test_name_setter_raise_value_error(self):
         with self.assertRaises(ValueError) as ex:
-            self.team_test.name = 'My Team'
-        self.assertEqual("Team Name can contain only letters!", str(ex.exception))
+            self.test_team.name = "My Team"
+        self.assertEqual(str(ex.exception), "Team Name can contain only letters!")
+        self.assertEqual(self.test_team.name, self.name)
 
     def test_add_member_work_correctly(self):
-        actual_result = self.team_test.add_member(Kolio=20, Pesho=22)
-        expected_result = "Successfully added: Kolio, Pesho"
+        result = self.test_team.add_member(Kolio=30, Joro=20, Vanjo=33)
 
-        self.assertEqual(actual_result, expected_result)
-        self.assertEqual(self.team_test.members, {'Kolio': 20, 'Pesho': 22})
+        self.assertEqual(result, 'Successfully added: Kolio, Joro, Vanjo')
+
+        self.assertDictEqual(self.test_team.members, {'Joro': 20, 'Kolio': 30, 'Vanjo': 33})
+        self.assertEqual(len(self.test_team.members), 3)
 
     def test_remove_member_work_correctly(self):
-        self.team_test.add_member(Kolio=20, Pesho=22)
-        actual_result = self.team_test.remove_member('Kolio')
-        expected_result = "Member Kolio removed"
+        self.test_team.members['Jivo'] = 20
+        self.test_team.members['Ivo'] = 22
 
-        self.assertEqual(actual_result, expected_result)
-        self.assertEqual(self.team_test.members, {'Pesho': 22})
+        name = 'Jivo'
+        result = self.test_team.remove_member(name)
+        self.assertEqual(result, f'Member {name} removed')
+        self.assertTrue(name not in self.test_team.members)
 
     def test_remove_member_does_not_exist(self):
-        self.team_test.add_member(Kolio=20, Pesho=22)
-        actual_result = self.team_test.remove_member('Joro')
-        expected_result = f"Member with name Joro does not exist"
+        self.test_team.members['Kolio'] = 32
 
-        self.assertEqual(actual_result, expected_result)
-        self.assertEqual(self.team_test.members, {'Kolio': 20, 'Pesho': 22})
+        name = 'Jivo'
+        result = self.test_team.remove_member(name)
+        self.assertEqual(result, f'Member with name {name} does not exist')
 
-    def test__gt__if_false(self):
-        result = self.team_test.__gt__(self.other_team_test)
-        self.assertFalse(result)
+    def test__gt__work_correctly(self):
+        self.test_team.members["Joro"] = 18
+        self.test_team.members["Kolio"] = 22
 
-    def test__gt__if_true(self):
-        self.team_test.add_member(Kolio=20, Pesho=22)
-        result = self.team_test.__gt__(self.other_team_test)
-        self.assertTrue(result)
+        new_test_team = Team("NewTestTeam")
+        new_test_team.members["Zoro"] = 33
 
-    def test___len__(self):
-        self.team_test.add_member(Kolio=20, Pesho=22)
-        expected_result = 2
-        actual_result = self.team_test.__len__()
+        self.assertEqual(True, self.test_team > new_test_team)
+        self.assertEqual(False, self.test_team < new_test_team)
 
-        self.assertEqual(actual_result, expected_result)
+        # Do not work correctly
+        # self.assertTrue(self.test_team.__gt__(new_test_team))
+        # self.assertFalse(new_test_team.__gt__(self.test_team))
 
-    def test___add__(self):
-        self.team_test.add_member(Kolio=20, Pesho=22)
-        self.other_team_test.add_member(Joro=20, Valio=22)
+    def test__len__work_correctly(self):
+        self.test_team.add_member(Jivo=20, Kolio=30)
+        self.assertEqual(len(self.test_team), 2)
 
-        last_team = self.team_test.__add__(self.other_team_test)
-        expected_result = f"{self.team_test.name}{self.other_team_test.name}"
-        actual_result = last_team.name
-        self.assertEqual(expected_result, actual_result)
-        all_members = {'Joro': 20, 'Kolio': 20, 'Pesho': 22, 'Valio': 22}
-        self.assertEqual(last_team.members, all_members)
+    def test__add__work_correctly(self):
+        new_test_team = Team("NewTestTeam")
+        new_test_team.add_member(Valio=50)
 
-    def test___str__(self):
-        self.team_test.add_member(Kolio=20, Pesho=22)
-        actual_result = str(self.team_test)
-        expected_result = 'Team name: MyTeam\nMember: Pesho - 22-years old\nMember: Kolio - 20-years old'
-        self.assertEqual(actual_result, expected_result)
+        self.test_team.add_member(Jivo=20, Kolio=30)
+
+        result = self.test_team.__add__(new_test_team)
+
+        self.assertEqual(result.name, 'MyTeamNewTestTeam')
+        self.assertEqual(result.members, {'Jivo': 20, 'Kolio': 30, 'Valio': 50})
+
+    def test__str__work_correctly(self):
+        self.test_team.add_member(Jivo=20, Kolio=30)
+        result = str(self.test_team)
+        self.assertEqual(result, 'Team name: MyTeam\nMember: Kolio - 30-years old\nMember: Jivo - 20-years old')
 
 
 if __name__ == "__main__":
