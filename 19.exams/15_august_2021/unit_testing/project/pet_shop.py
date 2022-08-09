@@ -128,3 +128,139 @@ class PetShopTest(TestCase):
 
 if __name__ == '__main__':
     main()
+
+
+# class PetShop:
+#     def __init__(self, name: str):
+#         self.name = name
+#         self.food = {}
+#         self.pets = []
+#
+#     def add_food(self, name: str, quantity: float):
+#         if quantity <= 0:
+#             raise ValueError('Quantity cannot be equal to or less than 0')
+#
+#         if name not in self.food:
+#             self.food[name] = 0
+#         self.food[name] += quantity
+#         return f"Successfully added {quantity:.2f} grams of {name}."
+#
+#     def add_pet(self, name: str):
+#         if name not in self.pets:
+#             self.pets.append(name)
+#             return f"Successfully added {name}."
+#         raise Exception("Cannot add a pet with the same name")
+#
+#     def feed_pet(self, food_name: str, pet_name: str):
+#         if pet_name not in self.pets:
+#             raise Exception(f"Please insert a valid pet name")
+#
+#         if food_name not in self.food:
+#             return f'You do not have {food_name}'
+#
+#         if self.food[food_name] < 100:
+#             self.add_food(food_name, 1000.00)
+#             return "Adding food..."
+#
+#         self.food[food_name] -= 100
+#         return f"{pet_name} was successfully fed"
+#
+#     def __repr__(self):
+#         return f'Shop {self.name}:\n' \
+#                f'Pets: {", ".join(self.pets)}'
+#
+#
+# from unittest import TestCase, main
+#
+#
+# class PetShopTest(TestCase):
+#     name = 'Test Shop'
+#
+#     def setUp(self) -> None:
+#         self.shop = PetShop(self.name)
+#
+#     def test_init_work_correctly(self):
+#         self.assertEqual(self.shop.name, self.name)
+#         self.assertDictEqual(self.shop.food, {})
+#         self.assertListEqual(self.shop.pets, [])
+#
+#     def test_add_food_raise_value_error(self):
+#         with self.assertRaises(ValueError) as ex:
+#             self.shop.add_food('Meat', 0)
+#         self.assertEqual(str(ex.exception), 'Quantity cannot be equal to or less than 0')
+#
+#     def test_add_food_work_correctly(self):
+#         quantity = 1
+#         name = 'Meat'
+#         result = self.shop.add_food(name, quantity)
+#         self.assertEqual(result, f"Successfully added {quantity:.2f} grams of {name}.")
+#         self.assertIn(name, self.shop.food)
+#         # dali da testwam i 2riq scenarij samo s obawqne
+#
+#     def test_add_pet_work_correctly(self):
+#         name = "Sharo"
+#         result = self.shop.add_pet(name)
+#         self.assertEqual(result, f"Successfully added {name}.")
+#         self.assertIn(name, self.shop.pets)
+#
+#     def test_add_pet_raise_exception(self):
+#         name = "Sharo"
+#         self.shop.add_pet(name)
+#         with self.assertRaises(Exception) as ex:
+#             self.shop.add_pet(name)
+#
+#         self.assertEqual(str(ex.exception), "Cannot add a pet with the same name")
+#
+#     def test_feed_pet_work_correctly(self):
+#         pet_name = "Sharo"
+#         self.shop.add_pet(pet_name)
+#         quantity = 100
+#         food_name = 'Meat'
+#         self.shop.add_food(food_name, quantity)
+#         result = self.shop.feed_pet(food_name, pet_name)
+#         self.assertEqual(result, f"{pet_name} was successfully fed")
+#         self.assertEqual(self.shop.food, {food_name: 0})
+#
+#     def test_feed_pet_raise_exception(self):
+#         pet_name = "Sharo"
+#         self.shop.add_pet(pet_name)
+#         quantity = 100
+#         food_name = 'Meat'
+#         self.shop.add_food(food_name, quantity)
+#         with self.assertRaises(Exception) as ex:
+#             self.shop.feed_pet(food_name, "Puh")
+#         self.assertEqual(str(ex.exception), f"Please insert a valid pet name")
+#
+#     def test_feed_pet_do_not_have_food(self):
+#         pet_name = "Sharo"
+#         self.shop.add_pet(pet_name)
+#         quantity = 100
+#         food_name = 'Meat'
+#         self.shop.add_food("honey", quantity)
+#         result = self.shop.feed_pet(food_name, pet_name)
+#         self.assertEqual(result, 'You do not have Meat')
+#
+#     def test_feed_pet_low_food(self):
+#         pet_name = "Sharo"
+#         self.shop.add_pet(pet_name)
+#         quantity = 1
+#         food_name = 'Meat'
+#         self.shop.add_food(food_name, quantity)
+#         result = self.shop.feed_pet(food_name, pet_name)
+#
+#         self.assertEqual(result, 'Adding food...')
+#         self.assertEqual(self.shop.food, {food_name: 1001.0})
+#
+#     def test_repr_work_correctly(self):
+#         pet_name = "Sharo"
+#         self.shop.add_pet(pet_name)
+#         quantity = 100
+#         food_name = 'Meat'
+#         self.shop.add_food(food_name, quantity)
+#
+#         result = repr(self.shop)
+#         self.assertEqual(result, 'Shop Test Shop:\nPets: Sharo')
+#
+#
+# if __name__ == '__main__':
+#     main()
