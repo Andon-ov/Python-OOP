@@ -1,4 +1,27 @@
+from project.validator import Validator
+
+
 class Jockey:
-    def __int__(self, name: str, age: int):
-        self.age = age
+    def __init__(self, name: str, age: int):
         self.name = name
+        self.age = age
+        self.horse = None
+        # Keep in mind that one jockey can ride only one horse.
+
+    @property
+    def name(self):
+        return self.__name
+
+    @name.setter
+    def name(self, value):
+        Validator.raise_error_if_empty_string_or_whitespace(value, "Name should contain at least one character!")
+        self.__name = value
+
+    @property
+    def age(self):
+        return self.__age
+
+    @age.setter
+    def age(self, value):
+        Validator.raise_error_if_value_less_18(value,"Jockeys must be at least 18 to participate in the race!")
+        self.__age = value
