@@ -11,7 +11,7 @@ class HorseRaceApp:
         if any(x.name == horse_name for x in self.horses):
             raise Exception(f"Horse {horse_name} has been already added!")
 
-        horse = Factory.create_horse(horse_type,horse_name,horse_speed)
+        horse = Factory.create_horse(horse_type, horse_name, horse_speed)
         if horse is not None:
             self.horses.append(horse)
             return f"{horse_type} horse {horse_name} is added."
@@ -20,7 +20,7 @@ class HorseRaceApp:
         if any(x.name == jockey_name for x in self.jockeys):
             raise Exception(f"Jockey {jockey_name} has been already added!")
 
-        jockey = Factory.create_jockey(jockey_name,age)
+        jockey = Factory.create_jockey(jockey_name, age)
         if jockey is not None:
             self.jockeys.append(jockey)
             return f"Jockey {jockey_name} is added."
@@ -30,9 +30,9 @@ class HorseRaceApp:
             raise Exception(f"Race {race_type} has been already created!")
 
         race = Factory.create_race(race_type)
-        # The method creates a race and adds it to the horse races' list.
-        #     • When it is successfully created and added, the method returns the message "Race {race_type} is created."
-
+        if race is not None:
+            self.horse_races.append(race)
+            return f"Race {race_type} is created."
 
     def add_horse_to_jockey(self, jockey_name: str, horse_type: str):
         pass
